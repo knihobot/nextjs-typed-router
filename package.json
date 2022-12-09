@@ -1,6 +1,6 @@
 {
   "name": "@knihobot/nextjs-typed-router",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Typed NextJS router",
   "main": "index.js",
   "scripts": {
