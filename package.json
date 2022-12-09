@@ -1,0 +1,19 @@
+{
+  "name": "@knihobot/nextjs-typed-router",
+  "version": "1.0.0",
+  "description": "Typed NextJS router",
+  "main": "index.js",
+  "scripts": {
+    "test": "exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/knihobot/nextjs-typed-router.git"
+  },
+  "author": "Vladimír Kopejska",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/knihobot/nextjs-typed-router/issues"
+  },
+  "homepage": "https://github.com/knihobot/nextjs-typed-router#readme"
+}
