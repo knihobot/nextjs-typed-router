@@ -21,8 +21,6 @@
   },
   "homepage": "https://github.com/knihobot/nextjs-typed-router#readme",
   "dependencies": {
-    "cosmiconfig": "8.0.0",
-    "cosmiconfig-typescript-loader": "^4.3.0",
     "next": ">= 12"
   },
   "devDependencies": {
@@ -31,6 +29,7 @@
     "typescript": "4.9.4"
   },
   "peerDependencies": {
+    "@types/node": "*",
     "next": ">= 12",
     "typescript": "*"
   }

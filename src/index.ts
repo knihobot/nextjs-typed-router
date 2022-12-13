@@ -1,5 +1,5 @@
-import { cfg } from "./config/resolveConfig";
+import { RouteProps, useRouterTyped } from "./main/useRouterTyped";
 
-cfg.then((res) => {
-  console.log(res);
-});
+export function useRouterKnihobot() {
+  return useRouterTyped<{ index: RouteProps }>({ index: "/" });
+}

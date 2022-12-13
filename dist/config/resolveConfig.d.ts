@@ -1,1 +1,1 @@
-export declare const cfg: Promise<import("cosmiconfig/dist/types").CosmiconfigResult>;
+export declare function resolveConfig(): import("cosmiconfig/dist/types").CosmiconfigResult;

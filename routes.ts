@@ -1,3 +1,0 @@
-const routes = {
-  test: "/test",
-};
