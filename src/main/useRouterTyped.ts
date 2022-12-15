@@ -1,57 +1,50 @@
 import { NextRouter, useRouter } from "next/router";
+import { resolveExactAddressByRouteName } from "./resolveExactAddressByRouteName";
+import {
+  GetCurrentDomain,
+  GetCurrentRoute,
+  GetRouteByName,
+  IsCurrentRoute,
+  Push,
+  PushShallow,
+  RouteProps,
+} from "./types";
 
-export interface RouteProps<
-  Params extends Record<string, string> | undefined =
-    | Record<string, string>
-    | undefined,
-  Query extends Record<string, string> | undefined =
-    | Record<string, string>
-    | undefined
+interface EnhancedNextRouter<
+  RouteDefinitions extends Record<string, RouteProps>
 > {
-  params: Params;
-  query: Query;
+  getRouteByName: GetRouteByName<RouteDefinitions>;
+  push: Push<RouteDefinitions>;
+  pushShallow: PushShallow<RouteDefinitions>;
+  getCurrentRoute: GetCurrentRoute<RouteDefinitions>;
+  isCurrentRoute: IsCurrentRoute<RouteDefinitions>;
+  getCurrentDomain: GetCurrentDomain;
 }
 
 export function useRouterTyped<
   RouteDefinitions extends Record<string, RouteProps>
 >(
   routes: Record<keyof RouteDefinitions, string>
-): {
-  getRouteByName: (
-    route: keyof RouteDefinitions,
-    params: RouteDefinitions[keyof RouteDefinitions]["params"]
-  ) => Record<keyof RouteDefinitions, string>[keyof RouteDefinitions];
-} & NextRouter {
+): EnhancedNextRouter<RouteDefinitions> & Omit<NextRouter, "push"> {
   const router = useRouter();
 
-  /*async function pushShallow(
-    route: keyof RouteDefinitions,
-    as?: UrlObject | keyof RouteDefinitions
-  ): Promise<void> {
-    await router.push(
-      resolveExactAddressByRouteName(route),
-      as ? resolveExactAddressByRouteName(as) : undefined,
-      { shallow: true }
-    );
-  }*/
+  const pushShallow: PushShallow<RouteDefinitions> = async (route, as?) => {
+    await push(route, as, { shallow: true });
+  };
 
-  /*async function push<RouteName extends RoutesKeys>(
-    route: RouteInputType<RouteName>,
-    as?: RouteInputType<RoutesKeys>,
-    options?: TransitionOptions
-  ): Promise<void> {
+  const push: Push<RouteDefinitions> = async (route, as?, options?) => {
     await router.push(
-      resolveExactAddressByRouteName(route),
-      as ? resolveExactAddressByRouteName(as) : undefined,
+      resolveExactAddressByRouteName(route, routes),
+      as ? resolveExactAddressByRouteName(as, routes) : undefined,
       options
     );
-  }*/
+  };
 
-  function isCurrentRoute(route: keyof RouteDefinitions): boolean {
+  const isCurrentRoute: IsCurrentRoute<RouteDefinitions> = (route) => {
     return routes[route] === router.pathname;
-  }
+  };
 
-  function getCurrentRoute(): keyof RouteDefinitions | undefined {
+  const getCurrentRoute: GetCurrentRoute<RouteDefinitions> = () => {
     let result;
 
     // Object.keys removes types from keys - "as" needed
@@ -64,9 +57,9 @@ export function useRouterTyped<
     });
 
     return result;
-  }
+  };
 
-  function getCurrentDomain() {
+  const getCurrentDomain: GetCurrentDomain = () => {
     const { locale, domainLocales } = router;
     if (!locale || !domainLocales) {
       return;
@@ -75,12 +68,9 @@ export function useRouterTyped<
       (domainLocale) => domainLocale?.defaultLocale === locale
     );
     return currentDomain?.domain;
-  }
+  };
 
-  const getRouteByName = (
-    route: keyof RouteDefinitions,
-    params: RouteDefinitions[keyof RouteDefinitions]["params"]
-  ) => {
+  const getRouteByName: GetRouteByName<RouteDefinitions> = (route, params) => {
     const routeAddress = routes[route];
 
     if (!params) {
@@ -99,6 +89,11 @@ export function useRouterTyped<
 
   return {
     ...router,
+    getCurrentDomain,
+    getCurrentRoute,
     getRouteByName,
+    isCurrentRoute,
+    push,
+    pushShallow,
   };
 }
