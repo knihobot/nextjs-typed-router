@@ -1,4 +1,4 @@
-import { RouteInputType, RouteProps } from "./useRouterTyped";
+import { RouteInputType, RouteProps } from "./types";
 
 export function resolveExactAddressByRouteName<
   RouteDefinitions extends Record<string, RouteProps>
