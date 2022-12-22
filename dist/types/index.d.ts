@@ -86,4 +86,5 @@ export type GetServerSidePropsResult<Props> = {
  * Utility
  */
 type GetRoutePropType<RouteDefinitions extends Record<string, RouteProps>, RouteName extends keyof RouteDefinitions, RouteProp extends keyof RouteProps, NotAvailableRoutePropType extends object | undefined> = RouteDefinitions[RouteName] extends RouteProps ? RouteDefinitions[RouteName][RouteProp] : NotAvailableRoutePropType;
+export type RouteDefinitions<RouteName extends string> = Record<RouteName, RouteProps>;
 export {};

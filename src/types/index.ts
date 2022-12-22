@@ -192,3 +192,8 @@ type GetRoutePropType<
 > = RouteDefinitions[RouteName] extends RouteProps
   ? RouteDefinitions[RouteName][RouteProp]
   : NotAvailableRoutePropType;
+
+export type RouteDefinitions<RouteName extends string> = Record<
+  RouteName,
+  RouteProps
+>;
