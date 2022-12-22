@@ -6,6 +6,7 @@ import {
   GetRouteByName,
   IsCurrentRoute,
   Push,
+  PushCustomUrl,
   PushShallow,
   RouteProps,
 } from "./types";
@@ -19,6 +20,7 @@ interface EnhancedNextRouter<
   getCurrentRoute: GetCurrentRoute<RouteDefinitions>;
   isCurrentRoute: IsCurrentRoute<RouteDefinitions>;
   getCurrentDomain: GetCurrentDomain;
+  pushCustomUrl: PushCustomUrl;
 }
 
 export function useRouterTyped<
@@ -30,6 +32,10 @@ export function useRouterTyped<
 
   const pushShallow: PushShallow<RouteDefinitions> = async (route, as?) => {
     await push(route, as, { shallow: true });
+  };
+
+  const pushCustomUrl: PushCustomUrl = async (url, as, options) => {
+    await router.push(url, as, options);
   };
 
   const push: Push<RouteDefinitions> = async (route, as?, options?) => {
@@ -94,6 +100,7 @@ export function useRouterTyped<
     getRouteByName,
     isCurrentRoute,
     push,
+    pushCustomUrl,
     pushShallow,
   };
 }

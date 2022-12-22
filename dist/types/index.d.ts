@@ -46,6 +46,9 @@ export interface IsCurrentRoute<RouteDefinitions extends Record<string, RoutePro
 export interface GetCurrentDomain {
     (): string | undefined;
 }
+export interface PushCustomUrl {
+    (url: UrlObject | string, as?: UrlObject | string, options?: TransitionOptions): Promise<void>;
+}
 /**
  * NextPage
  */

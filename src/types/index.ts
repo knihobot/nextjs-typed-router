@@ -99,6 +99,14 @@ export interface GetCurrentDomain {
   (): string | undefined;
 }
 
+export interface PushCustomUrl {
+  (
+    url: UrlObject | string,
+    as?: UrlObject | string,
+    options?: TransitionOptions
+  ): Promise<void>;
+}
+
 /**
  * NextPage
  */

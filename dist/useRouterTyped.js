@@ -17,6 +17,9 @@ function useRouterTyped(routes) {
     const pushShallow = (route, as) => __awaiter(this, void 0, void 0, function* () {
         yield push(route, as, { shallow: true });
     });
+    const pushCustomUrl = (url, as, options) => __awaiter(this, void 0, void 0, function* () {
+        yield router.push(url, as, options);
+    });
     const push = (route, as, options) => __awaiter(this, void 0, void 0, function* () {
         yield router.push((0, resolveExactAddressByRouteName_1.resolveExactAddressByRouteName)(route, routes), as ? (0, resolveExactAddressByRouteName_1.resolveExactAddressByRouteName)(as, routes) : undefined, options);
     });
@@ -58,6 +61,7 @@ function useRouterTyped(routes) {
         getRouteByName,
         isCurrentRoute,
         push,
+        pushCustomUrl,
         pushShallow });
 }
 exports.useRouterTyped = useRouterTyped;
