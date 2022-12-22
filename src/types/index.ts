@@ -41,7 +41,7 @@ export interface TransitionOptions {
 export interface UrlObjectGeneric<
   RouteDefinitions extends Record<string, RouteProps>
 > extends Omit<UrlObject, "pathname" | "query"> {
-  pathname: keyof RouteDefinitions;
+  pathname: keyof RouteDefinitions | string;
   query: GetRoutePropType<
     RouteDefinitions,
     keyof RouteDefinitions,
