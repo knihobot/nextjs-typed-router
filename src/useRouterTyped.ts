@@ -40,8 +40,10 @@ export function useRouterTyped<
 
   const push: Push<RouteDefinitions> = async (route, as?, options?) => {
     await router.push(
-      resolveExactAddressByRouteName(route, routes),
-      as ? resolveExactAddressByRouteName(as, routes) : undefined,
+      resolveExactAddressByRouteName<RouteDefinitions>(route, routes),
+      as
+        ? resolveExactAddressByRouteName<RouteDefinitions>(as, routes)
+        : undefined,
       options
     );
   };
