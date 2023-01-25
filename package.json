@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/knihobot/nextjs-typed-router#readme",
   "dependencies": {
-    "next": "12.3.4"
+    "next": "^12.3.4"
   },
   "devDependencies": {
     "@types/node": "^18.11.17",
@@ -31,7 +31,7 @@
   },
   "peerDependencies": {
     "@types/node": "*",
-    "next": ">= 12",
+    "next": "12.x",
     "typescript": "*"
   }
 }
