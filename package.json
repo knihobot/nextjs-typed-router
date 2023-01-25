@@ -1,6 +1,6 @@
 {
   "name": "@knihobot/nextjs-typed-router",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Typed NextJS router",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/knihobot/nextjs-typed-router#readme",
   "dependencies": {
-    "next": "12.x"
+    "next": "^12.3.4"
   },
   "devDependencies": {
     "@types/node": "^18.11.18",
@@ -33,7 +33,7 @@
   },
   "peerDependencies": {
     "@types/node": "*",
-    "next": "12.x",
+    "next": ">= 12",
     "typescript": "*"
   }
 }
