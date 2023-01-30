@@ -21,7 +21,9 @@ function useRouterTyped(routes) {
         yield router.push(url, as, options);
     });
     const push = (route, as, options) => __awaiter(this, void 0, void 0, function* () {
-        yield router.push((0, resolveExactAddressByRouteName_1.resolveExactAddressByRouteName)(route, routes), as ? (0, resolveExactAddressByRouteName_1.resolveExactAddressByRouteName)(as, routes) : undefined, options);
+        yield router.push((0, resolveExactAddressByRouteName_1.resolveExactAddressByRouteName)(route, routes), as
+            ? (0, resolveExactAddressByRouteName_1.resolveExactAddressByRouteName)(as, routes)
+            : undefined, options);
     });
     const isCurrentRoute = (route) => {
         return routes[route] === router.pathname;
