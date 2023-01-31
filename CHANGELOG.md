@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.6](https://github.com/knihobot/nextjs-typed-router/compare/v0.1.5...v0.1.6) (2023-01-31)
+
+
+### Features
+
+* add enhanced link ([aae3a46](https://github.com/knihobot/nextjs-typed-router/commit/aae3a4648ad4debffb49c237a7d5993555d7f445))
+* catch all routes type for link ([3f9e3a7](https://github.com/knihobot/nextjs-typed-router/commit/3f9e3a7b28dd1ec6702b535815328bfb4ee3f606))
+
 ### [0.1.5](https://github.com/knihobot/nextjs-typed-router/compare/v0.1.4...v0.1.5) (2023-01-25)
 
 ### [0.1.4](https://github.com/knihobot/nextjs-typed-router/compare/v0.1.3...v0.1.4) (2023-01-25)

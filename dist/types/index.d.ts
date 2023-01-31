@@ -7,7 +7,7 @@ import { GetServerSidePropsContext as GetServerSidePropsContextNext, GetStaticPr
 /**
  * Optional route props
  */
-export interface RouteProps<Params extends Record<string, string> | undefined = Record<string, string> | undefined, Query extends Record<string, string> | undefined = Record<string, string> | undefined> {
+export interface RouteProps<Params extends Record<string, string | string[]> | undefined = Record<string, string | string[]> | undefined, Query extends Record<string, string> | undefined = Record<string, string> | undefined> {
     params: Params;
     query: Query;
 }
