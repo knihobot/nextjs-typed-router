@@ -48,7 +48,7 @@ export const Link = <
       <NextLink
         href={{
           pathname: routes[route],
-          query: query || params ? { ...params, ...query } : undefined,
+          query: params || query ? { ...params, ...query } : undefined,
         }}
         locale={locale}
         passHref

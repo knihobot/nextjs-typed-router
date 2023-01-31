@@ -17,8 +17,8 @@ import {
  * Optional route props
  */
 export interface RouteProps<
-  Params extends Record<string, string | string[]> | undefined =
-    | Record<string, string | string[]>
+  Params extends Record<string, string | (string | undefined)[]> | undefined =
+    | Record<string, string | (string | undefined)[]>
     | undefined,
   Query extends Record<string, string> | undefined =
     | Record<string, string>

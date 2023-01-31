@@ -21,7 +21,7 @@ const Link = (props) => {
     if (route) {
         return (<link_1.default href={{
                 pathname: routes[route],
-                query: query || params ? Object.assign(Object.assign({}, params), query) : undefined,
+                query: params || query ? Object.assign(Object.assign({}, params), query) : undefined,
             }} locale={locale} passHref prefetch={prefetch} replace={replace} scroll={scroll} shallow={shallow}>
         <a ref={ref} {...anchorProps}>
           {children}

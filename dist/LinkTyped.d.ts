@@ -12,7 +12,7 @@ type LinkEnhancedProps<RouteDefinitions extends Record<string, RouteProps>, Rout
     params?: RouteDefinitions[RouteName]["params"];
 };
 export declare const Link: {
-    <RouteDefinitions extends Record<string, RouteProps<Record<string, string | string[]> | undefined, Record<string, string> | undefined>>, RouteName extends keyof RouteDefinitions>(props: Omit<{
+    <RouteDefinitions extends Record<string, RouteProps<Record<string, string | (string | undefined)[]> | undefined, Record<string, string> | undefined>>, RouteName extends keyof RouteDefinitions>(props: Omit<{
         href: string | import("url").UrlObject;
         as?: (string | import("url").UrlObject) | undefined;
         replace?: boolean | undefined;
