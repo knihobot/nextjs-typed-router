@@ -15,18 +15,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LinkTyped = void 0;
+const jsx_runtime_1 = require("react/jsx-runtime");
 const link_1 = __importDefault(require("next/link"));
-const react_1 = __importDefault(require("react"));
 const LinkTyped = (props) => {
     const { children, href, locale, query, prefetch, replace, route, scroll, shallow, params, ref, routes } = props, anchorProps = __rest(props, ["children", "href", "locale", "query", "prefetch", "replace", "route", "scroll", "shallow", "params", "ref", "routes"]);
     const paramsAndQuery = params || query ? Object.assign(Object.assign({}, params), query) : undefined;
     if (route) {
-        return (react_1.default.createElement(link_1.default, { href: {
+        return ((0, jsx_runtime_1.jsx)(link_1.default, Object.assign({ href: {
                 pathname: routes[route],
                 query: paramsAndQuery,
-            }, locale: locale, passHref: true, prefetch: prefetch, replace: replace, scroll: scroll, shallow: shallow },
-            react_1.default.createElement("a", Object.assign({ ref: ref }, anchorProps), children)));
+            }, locale: locale, passHref: true, prefetch: prefetch, replace: replace, scroll: scroll, shallow: shallow }, { children: (0, jsx_runtime_1.jsx)("a", Object.assign({ ref: ref }, anchorProps, { children: children })) })));
     }
-    return (react_1.default.createElement("a", Object.assign({ ref: ref, href: href ? href.toString() : " " }, anchorProps), children));
+    return ((0, jsx_runtime_1.jsx)("a", Object.assign({ ref: ref, href: href ? href.toString() : " " }, anchorProps, { children: children })));
 };
 exports.LinkTyped = LinkTyped;

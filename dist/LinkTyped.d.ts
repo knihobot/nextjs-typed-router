@@ -2,6 +2,7 @@
 import { LinkProps as NextLinkProps } from "next/link";
 import { AnchorHTMLAttributes, MouseEventHandler, Ref } from "react";
 import { RouteProps } from "@types-app/index";
+import React from "react";
 type LinkTypedProps<RouteDefinitions extends Record<string, RouteProps>, RouteName extends keyof RouteDefinitions> = Omit<NextLinkProps, "href" | "onClick" | "onMouseEnter"> & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href" | "onClick" | "onMouseEnter"> & {
     routes: Record<keyof RouteDefinitions, string>;
     route?: RouteName;
@@ -21,9 +22,9 @@ export declare const LinkTyped: <RouteDefinitions extends Record<string, RoutePr
     prefetch?: boolean | undefined;
     locale?: string | false | undefined;
     legacyBehavior?: boolean | undefined;
-    onMouseEnter?: ((e: any) => void) | undefined;
-    onTouchStart?: ((e: any) => void) | undefined;
-    onClick?: ((e: any) => void) | undefined;
+    onMouseEnter?: MouseEventHandler<HTMLAnchorElement> | undefined;
+    onTouchStart?: React.TouchEventHandler<HTMLAnchorElement> | undefined;
+    onClick?: MouseEventHandler<HTMLAnchorElement> | undefined;
 }, "href" | "onClick" | "onMouseEnter"> & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href" | "onClick" | "onMouseEnter"> & {
     routes: Record<keyof RouteDefinitions, string>;
     route?: RouteName | undefined;
