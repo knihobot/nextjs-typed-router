@@ -35,4 +35,4 @@ export declare const LinkTyped: <RouteDefinitions extends Record<string, RoutePr
 } & {
     ref?: Ref<HTMLAnchorElement> | undefined;
 }) => JSX.Element;
-export default LinkTyped;
+export {};

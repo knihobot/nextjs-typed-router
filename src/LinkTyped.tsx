@@ -1,6 +1,7 @@
 import NextLink, { LinkProps as NextLinkProps } from "next/link";
 import { AnchorHTMLAttributes, MouseEventHandler, Ref } from "react";
 import { RouteProps } from "@types-app/index";
+import React from "react";
 
 type LinkTypedProps<
   RouteDefinitions extends Record<string, RouteProps>,
@@ -72,5 +73,3 @@ export const LinkTyped = <
     </a>
   );
 };
-
-export default LinkTyped;
