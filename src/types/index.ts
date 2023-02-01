@@ -142,12 +142,16 @@ export interface GetStaticProps<
     | GetStaticPropsResult<Props>;
 }
 
+// TODO: Why?
+// @ts-ignore
 export interface GetStaticPropsContext<
   RouteDefinitions extends Record<string, RouteProps>,
   RouteName extends keyof RouteDefinitions,
   Data extends PreviewData = PreviewData
 > extends Exclude<GetStaticPropsContextNext<ParsedUrlQuery, Data>, "params"> {
-  params: GetRoutePropType<RouteDefinitions, RouteName, "params", undefined>;
+  params: RouteDefinitions[RouteName] extends RouteProps
+    ? RouteDefinitions[RouteName]["params"]
+    : undefined;
 }
 
 /**

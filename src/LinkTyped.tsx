@@ -43,12 +43,14 @@ export const Link = <
     ...anchorProps
   } = props;
 
+  const paramsAndQuery = params || query ? { ...params, ...query } : undefined;
+
   if (route) {
     return (
       <NextLink
         href={{
           pathname: routes[route],
-          query: params || query ? { ...params, ...query } : undefined,
+          query: paramsAndQuery,
         }}
         locale={locale}
         passHref

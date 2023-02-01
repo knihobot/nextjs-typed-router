@@ -63,7 +63,7 @@ export interface GetStaticProps<RouteDefinitions extends Record<string, RoutePro
     (context: GetStaticPropsContext<RouteDefinitions, RouteName, Data>): Promise<GetStaticPropsResult<Props>> | GetStaticPropsResult<Props>;
 }
 export interface GetStaticPropsContext<RouteDefinitions extends Record<string, RouteProps>, RouteName extends keyof RouteDefinitions, Data extends PreviewData = PreviewData> extends Exclude<GetStaticPropsContextNext<ParsedUrlQuery, Data>, "params"> {
-    params: GetRoutePropType<RouteDefinitions, RouteName, "params", undefined>;
+    params: RouteDefinitions[RouteName] extends RouteProps ? RouteDefinitions[RouteName]["params"] : undefined;
 }
 /**
  * GetServerSideProps

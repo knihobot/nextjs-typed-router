@@ -18,10 +18,11 @@ exports.Link = void 0;
 const link_1 = __importDefault(require("next/link"));
 const Link = (props) => {
     const { children, href, locale, query, prefetch, replace, route, scroll, shallow, params, ref, routes } = props, anchorProps = __rest(props, ["children", "href", "locale", "query", "prefetch", "replace", "route", "scroll", "shallow", "params", "ref", "routes"]);
+    const paramsAndQuery = params || query ? Object.assign(Object.assign({}, params), query) : undefined;
     if (route) {
         return (<link_1.default href={{
                 pathname: routes[route],
-                query: params || query ? Object.assign(Object.assign({}, params), query) : undefined,
+                query: paramsAndQuery,
             }} locale={locale} passHref prefetch={prefetch} replace={replace} scroll={scroll} shallow={shallow}>
         <a ref={ref} {...anchorProps}>
           {children}
