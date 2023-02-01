@@ -2,7 +2,7 @@ import NextLink, { LinkProps as NextLinkProps } from "next/link";
 import { AnchorHTMLAttributes, MouseEventHandler, Ref } from "react";
 import { RouteProps } from "@types-app/index";
 
-type LinkEnhancedProps<
+type LinkTypedProps<
   RouteDefinitions extends Record<string, RouteProps>,
   RouteName extends keyof RouteDefinitions
 > = Omit<NextLinkProps, "href" | "onClick" | "onMouseEnter"> &
@@ -19,11 +19,11 @@ type LinkEnhancedProps<
     params?: RouteDefinitions[RouteName]["params"];
   };
 
-export const Link = <
+export const LinkTyped = <
   RouteDefinitions extends Record<string, RouteProps>,
   RouteName extends keyof RouteDefinitions
 >(
-  props: LinkEnhancedProps<RouteDefinitions, RouteName> & {
+  props: LinkTypedProps<RouteDefinitions, RouteName> & {
     ref?: Ref<HTMLAnchorElement>;
   }
 ) => {
@@ -73,4 +73,4 @@ export const Link = <
   );
 };
 
-Link.displayName = "Link";
+export default LinkTyped;

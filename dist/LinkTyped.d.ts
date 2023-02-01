@@ -2,7 +2,7 @@
 import { LinkProps as NextLinkProps } from "next/link";
 import { AnchorHTMLAttributes, MouseEventHandler, Ref } from "react";
 import { RouteProps } from "@types-app/index";
-type LinkEnhancedProps<RouteDefinitions extends Record<string, RouteProps>, RouteName extends keyof RouteDefinitions> = Omit<NextLinkProps, "href" | "onClick" | "onMouseEnter"> & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href" | "onClick" | "onMouseEnter"> & {
+type LinkTypedProps<RouteDefinitions extends Record<string, RouteProps>, RouteName extends keyof RouteDefinitions> = Omit<NextLinkProps, "href" | "onClick" | "onMouseEnter"> & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href" | "onClick" | "onMouseEnter"> & {
     routes: Record<keyof RouteDefinitions, string>;
     route?: RouteName;
     href?: string;
@@ -11,31 +11,28 @@ type LinkEnhancedProps<RouteDefinitions extends Record<string, RouteProps>, Rout
     query?: RouteDefinitions[RouteName]["query"];
     params?: RouteDefinitions[RouteName]["params"];
 };
-export declare const Link: {
-    <RouteDefinitions extends Record<string, RouteProps<Record<string, string | (string | undefined)[]> | undefined, Record<string, string> | undefined>>, RouteName extends keyof RouteDefinitions>(props: Omit<{
-        href: string | import("url").UrlObject;
-        as?: (string | import("url").UrlObject) | undefined;
-        replace?: boolean | undefined;
-        scroll?: boolean | undefined;
-        shallow?: boolean | undefined;
-        passHref?: boolean | undefined;
-        prefetch?: boolean | undefined;
-        locale?: string | false | undefined;
-        legacyBehavior?: boolean | undefined;
-        onMouseEnter?: ((e: any) => void) | undefined;
-        onTouchStart?: ((e: any) => void) | undefined;
-        onClick?: ((e: any) => void) | undefined;
-    }, "href" | "onClick" | "onMouseEnter"> & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href" | "onClick" | "onMouseEnter"> & {
-        routes: Record<keyof RouteDefinitions, string>;
-        route?: RouteName | undefined;
-        href?: string | undefined;
-        onClick?: MouseEventHandler<HTMLAnchorElement> | undefined;
-        onMouseEnter?: MouseEventHandler<HTMLAnchorElement> | undefined;
-        query?: RouteDefinitions[RouteName]["query"] | undefined;
-        params?: RouteDefinitions[RouteName]["params"] | undefined;
-    } & {
-        ref?: Ref<HTMLAnchorElement> | undefined;
-    }): JSX.Element;
-    displayName: string;
-};
-export {};
+export declare const LinkTyped: <RouteDefinitions extends Record<string, RouteProps<Record<string, string | (string | undefined)[]> | undefined, Record<string, string> | undefined>>, RouteName extends keyof RouteDefinitions>(props: Omit<{
+    href: string | import("url").UrlObject;
+    as?: (string | import("url").UrlObject) | undefined;
+    replace?: boolean | undefined;
+    scroll?: boolean | undefined;
+    shallow?: boolean | undefined;
+    passHref?: boolean | undefined;
+    prefetch?: boolean | undefined;
+    locale?: string | false | undefined;
+    legacyBehavior?: boolean | undefined;
+    onMouseEnter?: ((e: any) => void) | undefined;
+    onTouchStart?: ((e: any) => void) | undefined;
+    onClick?: ((e: any) => void) | undefined;
+}, "href" | "onClick" | "onMouseEnter"> & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href" | "onClick" | "onMouseEnter"> & {
+    routes: Record<keyof RouteDefinitions, string>;
+    route?: RouteName | undefined;
+    href?: string | undefined;
+    onClick?: MouseEventHandler<HTMLAnchorElement> | undefined;
+    onMouseEnter?: MouseEventHandler<HTMLAnchorElement> | undefined;
+    query?: RouteDefinitions[RouteName]["query"] | undefined;
+    params?: RouteDefinitions[RouteName]["params"] | undefined;
+} & {
+    ref?: Ref<HTMLAnchorElement> | undefined;
+}) => JSX.Element;
+export default LinkTyped;

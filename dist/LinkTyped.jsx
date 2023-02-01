@@ -14,9 +14,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Link = void 0;
+exports.LinkTyped = void 0;
 const link_1 = __importDefault(require("next/link"));
-const Link = (props) => {
+const LinkTyped = (props) => {
     const { children, href, locale, query, prefetch, replace, route, scroll, shallow, params, ref, routes } = props, anchorProps = __rest(props, ["children", "href", "locale", "query", "prefetch", "replace", "route", "scroll", "shallow", "params", "ref", "routes"]);
     const paramsAndQuery = params || query ? Object.assign(Object.assign({}, params), query) : undefined;
     if (route) {
@@ -33,5 +33,5 @@ const Link = (props) => {
       {children}
     </a>);
 };
-exports.Link = Link;
-exports.Link.displayName = "Link";
+exports.LinkTyped = LinkTyped;
+exports.default = exports.LinkTyped;

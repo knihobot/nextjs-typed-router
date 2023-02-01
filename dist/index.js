@@ -17,3 +17,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./types"), exports);
 __exportStar(require("./useRouterTyped"), exports);
 __exportStar(require("./resolveExactAddressByRouteName"), exports);
+__exportStar(require("./LinkTyped"), exports);
