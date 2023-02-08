@@ -17,9 +17,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.LinkTyped = void 0;
 const jsx_runtime_1 = require("react/jsx-runtime");
 const link_1 = __importDefault(require("next/link"));
+const removeUndefined_1 = require("./helpers/removeUndefined");
 const LinkTyped = (props) => {
     const { children, href, locale, query, prefetch, replace, route, scroll, shallow, params, ref, routes } = props, anchorProps = __rest(props, ["children", "href", "locale", "query", "prefetch", "replace", "route", "scroll", "shallow", "params", "ref", "routes"]);
-    const paramsAndQuery = params || query ? Object.assign(Object.assign({}, params), query) : undefined;
+    const keys = params ? Object.keys(params) : undefined;
+    const paramsExtracted = params && keys && keys.length > 0 ? params[keys[0]] : undefined;
+    const paramsAndQuery = params || query
+        ? Object.assign(Object.assign({}, (Array.isArray(paramsExtracted)
+            ? { [keys ? keys[0] : "params"]: (0, removeUndefined_1.removeUndefined)(paramsExtracted) }
+            : params)), query) : undefined;
     if (route) {
         return ((0, jsx_runtime_1.jsx)(link_1.default, Object.assign({ href: {
                 pathname: routes[route],

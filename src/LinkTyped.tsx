@@ -2,6 +2,7 @@ import NextLink, { LinkProps as NextLinkProps } from "next/link";
 import { AnchorHTMLAttributes, MouseEventHandler, Ref } from "react";
 import { RouteProps } from "@types-app/index";
 import React from "react";
+import { removeUndefined } from "./helpers/removeUndefined";
 
 type LinkTypedProps<
   RouteDefinitions extends Record<string, RouteProps>,
@@ -44,7 +45,20 @@ export const LinkTyped = <
     ...anchorProps
   } = props;
 
-  const paramsAndQuery = params || query ? { ...params, ...query } : undefined;
+  const keys = params ? Object.keys(params) : undefined;
+
+  const paramsExtracted =
+    params && keys && keys.length > 0 ? params[keys[0]] : undefined;
+
+  const paramsAndQuery =
+    params || query
+      ? {
+          ...(Array.isArray(paramsExtracted)
+            ? { [keys ? keys[0] : "params"]: removeUndefined(paramsExtracted) }
+            : params),
+          ...query,
+        }
+      : undefined;
 
   if (route) {
     return (
