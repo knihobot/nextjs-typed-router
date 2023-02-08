@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.8](https://github.com/knihobot/nextjs-typed-router/compare/v0.1.5...v0.1.8) (2023-02-08)
+
+
+### Features
+
+* add enhanced link ([aae3a46](https://github.com/knihobot/nextjs-typed-router/commit/aae3a4648ad4debffb49c237a7d5993555d7f445))
+* add jest, removeUndefined from array ([72df43a](https://github.com/knihobot/nextjs-typed-router/commit/72df43a3c303b5242f0b241ea4187722a8937616))
+* catch all routes type for link ([3f9e3a7](https://github.com/knihobot/nextjs-typed-router/commit/3f9e3a7b28dd1ec6702b535815328bfb4ee3f606))
+
+
+### Bug Fixes
+
+* change tsconfig jsx option to react ([52096a1](https://github.com/knihobot/nextjs-typed-router/commit/52096a135e42ebb9b9afeff0b77a5ddc4a60d0f7))
+* change tsconfig jsx option to react-jsx ([c6e31a7](https://github.com/knihobot/nextjs-typed-router/commit/c6e31a784e6c6e98c91c89371f5c6ca626721410))
+* cleanup, exports ([c441de3](https://github.com/knihobot/nextjs-typed-router/commit/c441de3c1074b8cd7f855e793a831fcb4528ed70))
+* deps ([f48d9d3](https://github.com/knihobot/nextjs-typed-router/commit/f48d9d301e5dc9250c993c58724851b374c443c6))
+* remove peer deps ([d43539b](https://github.com/knihobot/nextjs-typed-router/commit/d43539b01c23ebeed7138cff282470b61ac9d391))
+* types ([4d98ecc](https://github.com/knihobot/nextjs-typed-router/commit/4d98eccdd5a7a2746d31e4fd71a16d17c5ccd774))
+
 ### [0.1.7](https://github.com/knihobot/nextjs-typed-router/compare/v0.1.5...v0.1.7) (2023-01-31)
 
 
