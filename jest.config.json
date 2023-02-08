@@ -1,0 +1,7 @@
+{
+  "preset": "ts-jest",
+  "testMatch": ["**/*.spec.ts"],
+  "moduleNameMapper": {
+    "^@types-app": "<rootDir>/src/types/index.ts"
+  }
+}
