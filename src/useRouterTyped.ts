@@ -5,17 +5,18 @@ import {
   GetCurrentRoute,
   GetRouteByName,
   IsCurrentRoute,
-  Push,
   PushCustomUrl,
+  PushReplace,
   PushShallow,
   RouteProps,
 } from "./types";
+import { translatePushReplaceArgs } from "next-translate-routes/react/translatePushReplaceArgs";
 
 interface EnhancedNextRouter<
   RouteDefinitions extends Record<string, RouteProps>
 > {
   getRouteByName: GetRouteByName<RouteDefinitions>;
-  push: Push<RouteDefinitions>;
+  pushReplace: PushReplace<RouteDefinitions>;
   pushShallow: PushShallow<RouteDefinitions>;
   getCurrentRoute: GetCurrentRoute<RouteDefinitions>;
   isCurrentRoute: IsCurrentRoute<RouteDefinitions>;
@@ -30,23 +31,52 @@ export function useRouterTyped<
 ): EnhancedNextRouter<RouteDefinitions> & Omit<NextRouter, "push"> {
   const router = useRouter();
 
-  const pushShallow: PushShallow<RouteDefinitions> = async (route, as?) => {
-    await push(route, as, { shallow: true });
+  const pushShallow: PushShallow<RouteDefinitions> = async (
+    route,
+    as?,
+    translate?
+  ) => {
+    const push = pushReplace("push");
+
+    await push(route, as, { shallow: true }, translate);
   };
 
   const pushCustomUrl: PushCustomUrl = async (url, as, options) => {
     await router.push(url, as, options);
   };
 
-  const push: Push<RouteDefinitions> = async (route, as?, options?) => {
-    await router.push(
-      resolveExactAddressByRouteName<RouteDefinitions>(route, routes),
-      as
+  const pushReplace: (
+    fnName: "push" | "replace"
+  ) => PushReplace<RouteDefinitions> =
+    (fnName: "push" | "replace") =>
+    async (route, as?, options?, translate?) => {
+      const url = resolveExactAddressByRouteName<RouteDefinitions>(
+        route,
+        routes
+      );
+      const urlAs = as
         ? resolveExactAddressByRouteName<RouteDefinitions>(as, routes)
-        : undefined,
-      options
-    );
-  };
+        : undefined;
+
+      const translatedArgs = translate
+        ? translatePushReplaceArgs({
+            router,
+            url,
+            as: urlAs,
+            locale: options?.locale,
+          })
+        : undefined;
+
+      const translatedUrl = translatedArgs?.url;
+      const translatedAsUrl = translatedArgs?.as;
+      const translatedLocale = translatedArgs?.locale;
+
+      await router[fnName](
+        translatedUrl ? translatedUrl : url,
+        translatedAsUrl ? translatedAsUrl : urlAs,
+        translatedLocale ? { ...options, locale: translatedLocale } : options
+      );
+    };
 
   const isCurrentRoute: IsCurrentRoute<RouteDefinitions> = (route) => {
     return routes[route] === router.pathname;
@@ -101,8 +131,9 @@ export function useRouterTyped<
     getCurrentRoute,
     getRouteByName,
     isCurrentRoute,
-    push,
+    push: pushReplace("push"),
     pushCustomUrl,
     pushShallow,
+    replace: pushReplace("replace"),
   };
 }

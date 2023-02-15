@@ -3,6 +3,8 @@ import { AnchorHTMLAttributes, MouseEventHandler, Ref } from "react";
 import { RouteProps } from "@types-app/index";
 import React from "react";
 import { removeUndefined } from "./helpers/removeUndefined";
+import { translatePushReplaceArgs } from "next-translate-routes/react/translatePushReplaceArgs";
+import { useRouter } from "next/router";
 
 type LinkTypedProps<
   RouteDefinitions extends Record<string, RouteProps>,
@@ -19,6 +21,7 @@ type LinkTypedProps<
     onMouseEnter?: MouseEventHandler<HTMLAnchorElement>;
     query?: RouteDefinitions[RouteName]["query"];
     params?: RouteDefinitions[RouteName]["params"];
+    translate?: boolean;
   };
 
 export const LinkTyped = <
@@ -42,6 +45,8 @@ export const LinkTyped = <
     params,
     ref,
     routes,
+    translate,
+    as,
     ...anchorProps
   } = props;
 
@@ -60,14 +65,25 @@ export const LinkTyped = <
         }
       : undefined;
 
+  const router = useRouter();
+
   if (route) {
+    const hrefObject = {
+      pathname: routes[route],
+      query: paramsAndQuery,
+    };
+
+    const translatedArgs = translatePushReplaceArgs({
+      router,
+      url: hrefObject,
+      locale,
+    });
+
     return (
       <NextLink
-        href={{
-          pathname: routes[route],
-          query: paramsAndQuery,
-        }}
-        locale={locale}
+        as={translate ? translatedArgs.as : as}
+        href={translate ? translatedArgs.url : hrefObject}
+        locale={translate ? translatedArgs.locale : locale}
         passHref
         prefetch={prefetch}
         replace={replace}

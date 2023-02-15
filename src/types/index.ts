@@ -66,11 +66,14 @@ export interface GetRouteByName<
   ): Record<keyof RouteDefinitions, string>[keyof RouteDefinitions];
 }
 
-export interface Push<RouteDefinitions extends Record<string, RouteProps>> {
+export interface PushReplace<
+  RouteDefinitions extends Record<string, RouteProps>
+> {
   (
     route: RouteInputType<RouteDefinitions>,
     as?: RouteInputType<RouteDefinitions>,
-    options?: TransitionOptions
+    options?: TransitionOptions,
+    translate?: boolean
   ): Promise<void>;
 }
 
@@ -79,7 +82,8 @@ export interface PushShallow<
 > {
   (
     route: RouteInputType<RouteDefinitions>,
-    as?: RouteInputType<RouteDefinitions>
+    as?: RouteInputType<RouteDefinitions>,
+    translate?: boolean
   ): Promise<void>;
 }
 
