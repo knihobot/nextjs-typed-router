@@ -31,11 +31,11 @@ export type RouteInputType<RouteDefinitions extends Record<string, RouteProps>> 
 export interface GetRouteByName<RouteDefinitions extends Record<string, RouteProps>> {
     (route: keyof RouteDefinitions, params: RouteDefinitions[keyof RouteDefinitions]["params"]): Record<keyof RouteDefinitions, string>[keyof RouteDefinitions];
 }
-export interface Push<RouteDefinitions extends Record<string, RouteProps>> {
-    (route: RouteInputType<RouteDefinitions>, as?: RouteInputType<RouteDefinitions>, options?: TransitionOptions): Promise<void>;
+export interface PushReplace<RouteDefinitions extends Record<string, RouteProps>> {
+    (route: RouteInputType<RouteDefinitions>, as?: RouteInputType<RouteDefinitions>, options?: TransitionOptions, translate?: boolean): Promise<void>;
 }
 export interface PushShallow<RouteDefinitions extends Record<string, RouteProps>> {
-    (route: RouteInputType<RouteDefinitions>, as?: RouteInputType<RouteDefinitions>): Promise<void>;
+    (route: RouteInputType<RouteDefinitions>, as?: RouteInputType<RouteDefinitions>, translate?: boolean): Promise<void>;
 }
 export interface GetCurrentRoute<RouteDefinitions extends Record<string, RouteProps>> {
     (): keyof RouteDefinitions | undefined;

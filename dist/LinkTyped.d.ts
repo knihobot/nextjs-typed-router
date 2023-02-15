@@ -11,6 +11,7 @@ type LinkTypedProps<RouteDefinitions extends Record<string, RouteProps>, RouteNa
     onMouseEnter?: MouseEventHandler<HTMLAnchorElement>;
     query?: RouteDefinitions[RouteName]["query"];
     params?: RouteDefinitions[RouteName]["params"];
+    translate?: boolean;
 };
 export declare const LinkTyped: <RouteDefinitions extends Record<string, RouteProps<Record<string, string | (string | undefined)[]> | undefined, Record<string, string> | undefined>>, RouteName extends keyof RouteDefinitions>(props: Omit<{
     href: string | import("url").UrlObject;
@@ -33,6 +34,7 @@ export declare const LinkTyped: <RouteDefinitions extends Record<string, RoutePr
     onMouseEnter?: MouseEventHandler<HTMLAnchorElement> | undefined;
     query?: RouteDefinitions[RouteName]["query"] | undefined;
     params?: RouteDefinitions[RouteName]["params"] | undefined;
+    translate?: boolean | undefined;
 } & {
     ref?: Ref<HTMLAnchorElement> | undefined;
 }) => JSX.Element;

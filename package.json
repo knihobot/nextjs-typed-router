@@ -36,7 +36,8 @@
     "ts-jest": "^29.0.5",
     "@types/jest": "^29.4.0",
     "@jest/globals": "^29.4.2",
-    "next-translate-routes": "^1.9.1"
+    "next-translate-routes": "^1.9.1",
+    "@testing-library/react": "^13.4.0"
   },
   "peerDependencies": {
     "@types/node": "*",

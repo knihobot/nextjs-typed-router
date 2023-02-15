@@ -16,7 +16,8 @@ interface EnhancedNextRouter<
   RouteDefinitions extends Record<string, RouteProps>
 > {
   getRouteByName: GetRouteByName<RouteDefinitions>;
-  pushReplace: PushReplace<RouteDefinitions>;
+  push: PushReplace<RouteDefinitions>;
+  replace: PushReplace<RouteDefinitions>;
   pushShallow: PushShallow<RouteDefinitions>;
   getCurrentRoute: GetCurrentRoute<RouteDefinitions>;
   isCurrentRoute: IsCurrentRoute<RouteDefinitions>;
@@ -28,7 +29,7 @@ export function useRouterTyped<
   RouteDefinitions extends Record<string, RouteProps>
 >(
   routes: Record<keyof RouteDefinitions, string>
-): EnhancedNextRouter<RouteDefinitions> & Omit<NextRouter, "push"> {
+): EnhancedNextRouter<RouteDefinitions> & Omit<NextRouter, "push" | "replace"> {
   const router = useRouter();
 
   const pushShallow: PushShallow<RouteDefinitions> = async (
