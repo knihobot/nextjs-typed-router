@@ -45,7 +45,7 @@ export interface UrlObjectGeneric<
   query: GetRoutePropType<
     RouteDefinitions,
     keyof RouteDefinitions,
-    "query",
+    "query" | "params",
     undefined
   >;
 }

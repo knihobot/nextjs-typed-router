@@ -1,4 +1,4 @@
 export * from "./types";
 export * from "./useRouterTyped";
-export * from "./resolveExactAddressByRouteName";
+export * from "./helpers/matchRealAddressByRouteName";
 export * from "./LinkTyped";

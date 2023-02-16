@@ -11,19 +11,37 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.useRouterTyped = void 0;
 const router_1 = require("next/router");
-const resolveExactAddressByRouteName_1 = require("./resolveExactAddressByRouteName");
+const matchRealAddressByRouteName_1 = require("./helpers/matchRealAddressByRouteName");
+const translatePushReplaceArgs_1 = require("next-translate-routes/react/translatePushReplaceArgs");
 function useRouterTyped(routes) {
     const router = (0, router_1.useRouter)();
-    const pushShallow = (route, as) => __awaiter(this, void 0, void 0, function* () {
-        yield push(route, as, { shallow: true });
+    const pushShallow = (route, as, translate) => __awaiter(this, void 0, void 0, function* () {
+        const push = pushReplace("push");
+        yield push(route, as, { shallow: true }, translate);
     });
     const pushCustomUrl = (url, as, options) => __awaiter(this, void 0, void 0, function* () {
         yield router.push(url, as, options);
     });
-    const push = (route, as, options) => __awaiter(this, void 0, void 0, function* () {
-        yield router.push((0, resolveExactAddressByRouteName_1.resolveExactAddressByRouteName)(route, routes), as
-            ? (0, resolveExactAddressByRouteName_1.resolveExactAddressByRouteName)(as, routes)
-            : undefined, options);
+    const pushReplace = (fnName) => (route, as, options, translate) => __awaiter(this, void 0, void 0, function* () {
+        const url = (0, matchRealAddressByRouteName_1.matchRealAddressByRouteName)(route, routes);
+        const urlAs = as
+            ? (0, matchRealAddressByRouteName_1.matchRealAddressByRouteName)(as, routes)
+            : undefined;
+        const translatedArgs = translate && url && urlAs
+            ? (0, translatePushReplaceArgs_1.translatePushReplaceArgs)({
+                router,
+                // TODO: not good
+                url: url,
+                as: urlAs,
+                locale: options === null || options === void 0 ? void 0 : options.locale,
+            })
+            : undefined;
+        const translatedUrl = translatedArgs === null || translatedArgs === void 0 ? void 0 : translatedArgs.url;
+        const translatedAsUrl = translatedArgs === null || translatedArgs === void 0 ? void 0 : translatedArgs.as;
+        const translatedLocale = translatedArgs === null || translatedArgs === void 0 ? void 0 : translatedArgs.locale;
+        yield router[fnName](
+        // TODO: not good
+        translatedUrl ? translatedUrl : url, translatedAsUrl ? translatedAsUrl : urlAs, translatedLocale ? Object.assign(Object.assign({}, options), { locale: translatedLocale }) : options);
     });
     const isCurrentRoute = (route) => {
         return routes[route] === router.pathname;
@@ -61,9 +79,7 @@ function useRouterTyped(routes) {
     return Object.assign(Object.assign({}, router), { getCurrentDomain,
         getCurrentRoute,
         getRouteByName,
-        isCurrentRoute,
-        push,
-        pushCustomUrl,
-        pushShallow });
+        isCurrentRoute, push: pushReplace("push"), pushCustomUrl,
+        pushShallow, replace: pushReplace("replace") });
 }
 exports.useRouterTyped = useRouterTyped;

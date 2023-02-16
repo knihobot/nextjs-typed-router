@@ -22,7 +22,7 @@ export interface TransitionOptions {
 }
 export interface UrlObjectGeneric<RouteDefinitions extends Record<string, RouteProps>> extends Omit<UrlObject, "pathname" | "query"> {
     pathname: keyof RouteDefinitions | string;
-    query: GetRoutePropType<RouteDefinitions, keyof RouteDefinitions, "query", undefined>;
+    query: GetRoutePropType<RouteDefinitions, keyof RouteDefinitions, "query" | "params", undefined>;
 }
 export type RouteInputType<RouteDefinitions extends Record<string, RouteProps>> = UrlObjectGeneric<RouteDefinitions> | keyof RouteDefinitions;
 /**
