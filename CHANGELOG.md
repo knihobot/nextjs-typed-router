@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.11](https://github.com/knihobot/nextjs-typed-router/compare/v0.1.10...v0.1.11) (2023-02-16)
+
+
+### Features
+
+* optional dynamic params support for router functions ([058786d](https://github.com/knihobot/nextjs-typed-router/commit/058786daaf43d4f509b113f452fb3e1b7523a1cf))
+
+
+### Bug Fixes
+
+* peer deps ([fbb90c7](https://github.com/knihobot/nextjs-typed-router/commit/fbb90c7789d25498d81398a4c1adb7c1502d92f5))
+* types ([ee5742b](https://github.com/knihobot/nextjs-typed-router/commit/ee5742b4428d246696f736c3640d927f594d5b8c))
+
 ### [0.1.10](https://github.com/knihobot/nextjs-typed-router/compare/v0.1.9...v0.1.10) (2023-02-08)
 
 
