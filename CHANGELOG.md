@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.12](https://github.com/knihobot/nextjs-typed-router/compare/v0.1.11...v0.1.12) (2023-02-16)
+
+
+### Bug Fixes
+
+* remove undefined for router push dynamic params ([a299357](https://github.com/knihobot/nextjs-typed-router/commit/a299357b0b23251aaf9ebc6bb08bbc18230ab1cd))
+
 ### [0.1.11](https://github.com/knihobot/nextjs-typed-router/compare/v0.1.10...v0.1.11) (2023-02-16)
 
 
