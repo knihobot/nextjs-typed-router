@@ -11,6 +11,7 @@ import {
 } from "./types";
 import { matchRealAddressByRouteName } from "./helpers/matchRealAddressByRouteName";
 import { UrlObject } from "url";
+import { removeUndefined } from "./helpers/removeUndefined";
 
 interface EnhancedNextRouter<
   RouteDefinitions extends Record<string, RouteProps>

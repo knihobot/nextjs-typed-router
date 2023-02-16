@@ -3,7 +3,28 @@ import { RouteProps } from "@types-app/index";
 
 type RoutesType = {
   catchAllOptional: RouteProps<
-    { optionalParams: ["testParam", "testParamValue"] },
+    {
+      optionalParams: [
+        queryKey?: "q",
+        queryValue?: string,
+        caregoryKey?: "category",
+        categoryValue?: string,
+        yearKey?: "year",
+        yearValue?: string,
+        languageKey?: "language",
+        languageValue?: string,
+        conditionKey?: "condition",
+        conditionValue?: string,
+        bindingKey?: "binding",
+        bindingValue?: string,
+        priceKey?: "price",
+        priceValue?: string,
+        pageKey?: "page",
+        pageValue?: string,
+        userKey?: "user",
+        userValue?: string
+      ];
+    },
     { query?: string }
   >;
   catchAll: RouteProps<
@@ -37,13 +58,30 @@ describe("Match real route address by route name", () => {
       matchRealAddressByRouteName<RoutesType>(
         {
           pathname: "catchAllOptional",
-          query: { params: ["testParam", "testParamValue"] },
+          query: { optionalParams: ["q", "abc"] },
         },
         routes
       )
     ).toStrictEqual({
       pathname: "/catch-all-optional/[[...params]]",
-      query: { params: ["testParam", "testParamValue"] },
+      query: { optionalParams: ["q", "abc"] },
+    });
+  });
+
+  it("Match route with optional dynamic params with some empty fields", () => {
+    expect(
+      matchRealAddressByRouteName<RoutesType>(
+        {
+          pathname: "catchAllOptional",
+          query: {
+            optionalParams: ["q", "abc", undefined, undefined, "year", "2011"],
+          },
+        },
+        routes
+      )
+    ).toStrictEqual({
+      pathname: "/catch-all-optional/[[...params]]",
+      query: { optionalParams: ["q", "abc", "year", "2011"] },
     });
   });
 

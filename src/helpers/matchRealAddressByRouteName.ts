@@ -1,4 +1,5 @@
 import { RouteInputType, RouteProps, UrlObjectGeneric } from "@types-app/index";
+import { removeUndefined } from "./removeUndefined";
 
 export function matchRealAddressByRouteName<
   RouteDefinitions extends Record<string, RouteProps>
@@ -11,6 +12,20 @@ export function matchRealAddressByRouteName<
 
     if (!matched) {
       return undefined;
+    }
+
+    const query = routeName.query;
+
+    const keys = query ? Object.keys(query) : undefined;
+
+    if (query) {
+      keys?.map((key) => {
+        const params = query[key];
+
+        if (Array.isArray(params)) {
+          query[key] = removeUndefined(params);
+        }
+      });
     }
 
     return {
