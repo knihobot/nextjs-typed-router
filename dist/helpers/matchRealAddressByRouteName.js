@@ -5,7 +5,7 @@ function matchRealAddressByRouteName(routeName, routes) {
     if (typeof routeName === "object") {
         const matched = routes[routeName.pathname];
         if (!matched) {
-            return null;
+            return undefined;
         }
         return {
             pathname: routes[routeName.pathname],
@@ -14,7 +14,7 @@ function matchRealAddressByRouteName(routeName, routes) {
     }
     const matched = routes[routeName];
     if (!matched) {
-        return null;
+        return undefined;
     }
     return matched;
 }

@@ -29,7 +29,7 @@ describe("Match real route address by route name", () => {
         },
         routes
       )
-    ).toBeNull();
+    ).toBeUndefined();
   });
 
   it("Match route with optional dynamic params and query", () => {

@@ -1,5 +1,4 @@
 import { NextRouter, useRouter } from "next/router";
-import { resolveExactAddressByRouteName } from "./resolveExactAddressByRouteName";
 import {
   GetCurrentDomain,
   GetCurrentRoute,
@@ -10,6 +9,8 @@ import {
   PushShallow,
   RouteProps,
 } from "./types";
+import { matchRealAddressByRouteName } from "./helpers/matchRealAddressByRouteName";
+import { UrlObject } from "url";
 
 interface EnhancedNextRouter<
   RouteDefinitions extends Record<string, RouteProps>
@@ -39,10 +40,15 @@ export function useRouterTyped<
   };
 
   const push: Push<RouteDefinitions> = async (route, as?, options?) => {
+    const url = matchRealAddressByRouteName<RouteDefinitions>(route, routes);
+
+    // TODO: fix type casting
     await router.push(
-      resolveExactAddressByRouteName<RouteDefinitions>(route, routes),
+      url as string | UrlObject,
       as
-        ? resolveExactAddressByRouteName<RouteDefinitions>(as, routes)
+        ? (matchRealAddressByRouteName<RouteDefinitions>(as, routes) as
+            | string
+            | UrlObject)
         : undefined,
       options
     );

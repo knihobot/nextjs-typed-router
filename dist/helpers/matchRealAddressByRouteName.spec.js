@@ -11,7 +11,7 @@ describe("Match real route address by route name", () => {
         expect((0, matchRealAddressByRouteName_1.matchRealAddressByRouteName)({
             pathname: "non-existent-route",
             query: { params: ["testParam", "testParamValue"] },
-        }, routes)).toBeNull();
+        }, routes)).toBeUndefined();
     });
     it("Match route with optional dynamic params and query", () => {
         expect((0, matchRealAddressByRouteName_1.matchRealAddressByRouteName)({

@@ -5,12 +5,12 @@ export function matchRealAddressByRouteName<
 >(
   routeName: RouteInputType<RouteDefinitions>,
   routes: Record<keyof RouteDefinitions, string>
-): string | UrlObjectGeneric<RouteDefinitions> | null {
+): string | UrlObjectGeneric<RouteDefinitions> | undefined {
   if (typeof routeName === "object") {
     const matched = routes[routeName.pathname];
 
     if (!matched) {
-      return null;
+      return undefined;
     }
 
     return {
@@ -22,7 +22,7 @@ export function matchRealAddressByRouteName<
   const matched = routes[routeName];
 
   if (!matched) {
-    return null;
+    return undefined;
   }
 
   return matched;
