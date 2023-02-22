@@ -15,17 +15,18 @@ type LinkTypedProps<
     AnchorHTMLAttributes<HTMLAnchorElement>,
     "href" | "onClick" | "onMouseEnter"
   > & {
-  routes: Record<
-    keyof RouteDefinitions,
-    LocalizedRoute<Locales, DefaultLocale>
-  >;
-  route?: RouteName;
-  href?: string;
-  onClick?: MouseEventHandler<HTMLAnchorElement>;
-  onMouseEnter?: MouseEventHandler<HTMLAnchorElement>;
-  query?: RouteDefinitions[RouteName]["query"];
-  params?: RouteDefinitions[RouteName]["params"];
-};
+    routes: Record<
+      keyof RouteDefinitions,
+      LocalizedRoute<Locales, DefaultLocale>
+    >;
+    defaultLocale: DefaultLocale;
+    route?: RouteName;
+    href?: string;
+    onClick?: MouseEventHandler<HTMLAnchorElement>;
+    onMouseEnter?: MouseEventHandler<HTMLAnchorElement>;
+    query?: RouteDefinitions[RouteName]["query"];
+    params?: RouteDefinitions[RouteName]["params"];
+  };
 
 export const LinkTyped = <
   RouteDefinitions extends Record<string, RouteProps>,
@@ -50,12 +51,13 @@ export const LinkTyped = <
     params,
     ref,
     routes,
+    defaultLocale,
     ...anchorProps
   } = props;
 
   const keys = params ? Object.keys(params) : undefined;
 
-  const { locale: routerLocale, defaultLocale } = useRouter();
+  const { locale: routerLocale } = useRouter();
 
   const paramsExtracted =
     params && keys && keys.length > 0 ? params[keys[0]] : undefined;
@@ -63,20 +65,22 @@ export const LinkTyped = <
   const paramsAndQuery =
     params || query
       ? {
-        ...(Array.isArray(paramsExtracted)
-          ? { [keys ? keys[0] : "params"]: removeUndefined(paramsExtracted) }
-          : params),
-        ...query,
-      }
+          ...(Array.isArray(paramsExtracted)
+            ? { [keys ? keys[0] : "params"]: removeUndefined(paramsExtracted) }
+            : params),
+          ...query,
+        }
       : undefined;
 
   if (route) {
-    const localizedPathname = routes[route][routerLocale as Locales]
+    const localizedPathname = routes[route][routerLocale as Locales];
 
     return (
       <NextLink
         href={{
-          pathname: localizedPathname ? localizedPathname : routes[route][defaultLocale as Locales],
+          pathname: localizedPathname
+            ? localizedPathname
+            : routes[route][defaultLocale as DefaultLocale],
           query: paramsAndQuery,
         }}
         locale={locale}

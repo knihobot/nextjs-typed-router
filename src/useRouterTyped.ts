@@ -13,9 +13,7 @@ import {
   RouteInputType,
   RouteProps,
 } from "./types";
-import {
-  matchRealAddressByRouteName as matchRealAddressByRouteNameStandalone
-} from "./enhancement-functions/matchRealAddressByRouteName";
+import { matchRealAddressByRouteName as matchRealAddressByRouteNameStandalone } from "./enhancement-functions/matchRealAddressByRouteName";
 import { getRouteByName as getRouteByNameStandalone } from "./enhancement-functions/getRouteByName";
 import { UrlObject } from "url";
 import { getRouteName as getRouteNameStandalone } from "./enhancement-functions/getRouteName";
@@ -39,7 +37,11 @@ export function useRouterTyped<
   Locales extends string,
   DefaultLocale extends Locales
 >(
-  routes: Record<keyof RouteDefinitions, LocalizedRoute<Locales, DefaultLocale>>
+  routes: Record<
+    keyof RouteDefinitions,
+    LocalizedRoute<Locales, DefaultLocale>
+  >,
+  defaultLocale: DefaultLocale
 ): EnhancedNextRouter<RouteDefinitions> & Omit<NextRouter, "push"> {
   const router = useRouter();
 
@@ -71,7 +73,7 @@ export function useRouterTyped<
       const currentNode = routes[routeKey][router.locale as Locales];
 
       if (!currentNode) {
-        const fallbackCurrentNode = routes[routeKey][router.defaultLocale as DefaultLocale];
+        const fallbackCurrentNode = routes[routeKey][defaultLocale];
 
         if (fallbackCurrentNode && fallbackCurrentNode === router.pathname) {
           return routeKey;
@@ -104,7 +106,7 @@ export function useRouterTyped<
       routes,
       params,
       router.locale as Locales,
-      router.defaultLocale as DefaultLocale
+      defaultLocale
     );
 
   const matchRealAddressByRouteName: MatchRealAddressByRouteName<
@@ -114,7 +116,7 @@ export function useRouterTyped<
       routeName,
       routes,
       router.locale as Locales,
-      router.defaultLocale as DefaultLocale
+      defaultLocale
     );
 
   return {

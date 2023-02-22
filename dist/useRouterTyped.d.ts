@@ -11,5 +11,5 @@ interface EnhancedNextRouter<RouteDefinitions extends Record<string, RouteProps>
     pushShallow: PushShallow<RouteDefinitions>;
     matchRealAddressByRouteName: MatchRealAddressByRouteName<RouteDefinitions>;
 }
-export declare function useRouterTyped<RouteDefinitions extends Record<string, RouteProps>, Locales extends string, DefaultLocale extends Locales>(routes: Record<keyof RouteDefinitions, LocalizedRoute<Locales, DefaultLocale>>): EnhancedNextRouter<RouteDefinitions> & Omit<NextRouter, "push">;
+export declare function useRouterTyped<RouteDefinitions extends Record<string, RouteProps>, Locales extends string, DefaultLocale extends Locales>(routes: Record<keyof RouteDefinitions, LocalizedRoute<Locales, DefaultLocale>>, defaultLocale: DefaultLocale): EnhancedNextRouter<RouteDefinitions> & Omit<NextRouter, "push">;
 export {};

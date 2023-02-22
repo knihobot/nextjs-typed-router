@@ -5,6 +5,7 @@ import { LocalizedRoute, RouteProps } from "@types-app/index";
 import React from "react";
 type LinkTypedProps<RouteDefinitions extends Record<string, RouteProps>, RouteName extends keyof RouteDefinitions, Locales extends string, DefaultLocale extends Locales> = Omit<NextLinkProps, "href" | "onClick" | "onMouseEnter"> & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href" | "onClick" | "onMouseEnter"> & {
     routes: Record<keyof RouteDefinitions, LocalizedRoute<Locales, DefaultLocale>>;
+    defaultLocale: DefaultLocale;
     route?: RouteName;
     href?: string;
     onClick?: MouseEventHandler<HTMLAnchorElement>;
@@ -27,6 +28,7 @@ export declare const LinkTyped: <RouteDefinitions extends Record<string, RoutePr
     onClick?: MouseEventHandler<HTMLAnchorElement> | undefined;
 }, "href" | "onClick" | "onMouseEnter"> & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href" | "onClick" | "onMouseEnter"> & {
     routes: Record<keyof RouteDefinitions, LocalizedRoute<Locales, DefaultLocale>>;
+    defaultLocale: DefaultLocale;
     route?: RouteName | undefined;
     href?: string | undefined;
     onClick?: MouseEventHandler<HTMLAnchorElement> | undefined;

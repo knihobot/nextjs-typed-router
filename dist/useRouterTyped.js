@@ -14,7 +14,7 @@ const router_1 = require("next/router");
 const matchRealAddressByRouteName_1 = require("./enhancement-functions/matchRealAddressByRouteName");
 const getRouteByName_1 = require("./enhancement-functions/getRouteByName");
 const getRouteName_1 = require("./enhancement-functions/getRouteName");
-function useRouterTyped(routes) {
+function useRouterTyped(routes, defaultLocale) {
     const router = (0, router_1.useRouter)();
     const pushShallow = (route, as) => __awaiter(this, void 0, void 0, function* () {
         yield push(route, as, { shallow: true });
@@ -34,7 +34,7 @@ function useRouterTyped(routes) {
         for (const routeKey in routes) {
             const currentNode = routes[routeKey][router.locale];
             if (!currentNode) {
-                const fallbackCurrentNode = routes[routeKey][router.defaultLocale];
+                const fallbackCurrentNode = routes[routeKey][defaultLocale];
                 if (fallbackCurrentNode && fallbackCurrentNode === router.pathname) {
                     return routeKey;
                 }
@@ -53,8 +53,8 @@ function useRouterTyped(routes) {
         return currentDomain === null || currentDomain === void 0 ? void 0 : currentDomain.domain;
     };
     const getRouteName = (url) => (0, getRouteName_1.getRouteName)(url, routes);
-    const getRouteByName = (route, params) => (0, getRouteByName_1.getRouteByName)(route, routes, params, router.locale, router.defaultLocale);
-    const matchRealAddressByRouteName = (routeName) => (0, matchRealAddressByRouteName_1.matchRealAddressByRouteName)(routeName, routes, router.locale, router.defaultLocale);
+    const getRouteByName = (route, params) => (0, getRouteByName_1.getRouteByName)(route, routes, params, router.locale, defaultLocale);
+    const matchRealAddressByRouteName = (routeName) => (0, matchRealAddressByRouteName_1.matchRealAddressByRouteName)(routeName, routes, router.locale, defaultLocale);
     return Object.assign(Object.assign({}, router), { getCurrentDomain,
         getCurrentRoute,
         getRouteByName,
