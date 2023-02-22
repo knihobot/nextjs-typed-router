@@ -14,6 +14,12 @@ export function getRouteByName<
   locale?: Locales,
   defaultLocale?: DefaultLocale
 ): Record<keyof RouteDefinitions, string>[keyof RouteDefinitions] | undefined {
+  const matchedRoute = routes[route];
+
+  if (!matchedRoute) {
+    return undefined;
+  }
+
   const routeAddress = routes[route][locale as Locales];
   const fallbackRouteAddress = routes[route][defaultLocale as Locales];
 

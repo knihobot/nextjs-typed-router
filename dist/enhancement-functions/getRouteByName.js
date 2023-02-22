@@ -2,6 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getRouteByName = void 0;
 function getRouteByName(route, routes, params, locale, defaultLocale) {
+    const matchedRoute = routes[route];
+    if (!matchedRoute) {
+        return undefined;
+    }
     const routeAddress = routes[route][locale];
     const fallbackRouteAddress = routes[route][defaultLocale];
     if (!params) {
