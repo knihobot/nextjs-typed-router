@@ -3,9 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getRouteByName = void 0;
 function getRouteByName(route, routes, params, locale, defaultLocale) {
     const routeAddress = routes[route][locale];
+    const fallbackRouteAddress = routes[route][defaultLocale];
     if (!params) {
         if (!routeAddress) {
-            const fallbackRouteAddress = routes[route][defaultLocale];
             if (fallbackRouteAddress) {
                 return fallbackRouteAddress;
             }
@@ -15,7 +15,7 @@ function getRouteByName(route, routes, params, locale, defaultLocale) {
     }
     const paramsKeys = Object.keys(params);
     const key = paramsKeys[0];
-    return routeAddress.replace(new RegExp(`\\[${key}\\]`, "gi"), 
+    return (routeAddress || fallbackRouteAddress).replace(new RegExp(`\\[${key}\\]`, "gi"), 
     // @ts-ignore TODO: assign correct type for paramKey
     params[key]);
 }

@@ -15,11 +15,10 @@ export function getRouteByName<
   defaultLocale?: DefaultLocale
 ): Record<keyof RouteDefinitions, string>[keyof RouteDefinitions] | undefined {
   const routeAddress = routes[route][locale as Locales];
+  const fallbackRouteAddress = routes[route][defaultLocale as Locales];
 
   if (!params) {
     if (!routeAddress) {
-      const fallbackRouteAddress = routes[route][defaultLocale as Locales];
-
       if (fallbackRouteAddress) {
         return fallbackRouteAddress;
       }
@@ -33,7 +32,7 @@ export function getRouteByName<
   const paramsKeys = Object.keys(params);
   const key = paramsKeys[0];
 
-  return routeAddress.replace(
+  return (routeAddress || fallbackRouteAddress).replace(
     new RegExp(`\\[${key}\\]`, "gi"),
     // @ts-ignore TODO: assign correct type for paramKey
     params[key]
