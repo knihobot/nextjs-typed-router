@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.17](https://github.com/knihobot/nextjs-typed-router/compare/v0.1.16...v0.1.17) (2023-02-22)
+
+
+### Bug Fixes
+
+* add fallbacks to default locale to all functions ([79b5cc0](https://github.com/knihobot/nextjs-typed-router/commit/79b5cc0f2739359f21043cf501e6efacb6df9784))
+
 ### [0.1.16](https://github.com/knihobot/nextjs-typed-router/compare/v0.1.15...v0.1.16) (2023-02-22)
 
 
