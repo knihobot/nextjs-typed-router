@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.matchRealAddressByRouteName = void 0;
-const removeUndefined_1 = require("./removeUndefined");
+const removeUndefined_1 = require("../helpers/removeUndefined");
 function matchRealAddressByRouteName(routeName, routes, locale) {
     if (!locale) {
         return undefined;

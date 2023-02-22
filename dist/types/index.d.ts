@@ -40,8 +40,14 @@ export interface PushShallow<RouteDefinitions extends Record<string, RouteProps>
 export interface GetCurrentRoute<RouteDefinitions extends Record<string, RouteProps>> {
     (): keyof RouteDefinitions | undefined;
 }
+export interface GetRouteName<RouteDefinitions extends Record<string, RouteProps>> {
+    (url: string): keyof RouteDefinitions | undefined;
+}
 export interface IsCurrentRoute<RouteDefinitions extends Record<string, RouteProps>> {
     (route: keyof RouteDefinitions): boolean;
+}
+export interface MatchRealAddressByRouteName<RouteDefinitions extends Record<string, RouteProps>> {
+    (routeName: RouteInputType<RouteDefinitions>): string | UrlObjectGeneric<RouteDefinitions> | undefined;
 }
 export interface GetCurrentDomain {
     (): string | undefined;
@@ -87,4 +93,9 @@ export type GetServerSidePropsResult<Props> = {
  */
 type GetRoutePropType<RouteDefinitions extends Record<string, RouteProps>, RouteName extends keyof RouteDefinitions, RouteProp extends keyof RouteProps, NotAvailableRoutePropType extends object | undefined> = RouteDefinitions[RouteName] extends RouteProps ? RouteDefinitions[RouteName][RouteProp] : NotAvailableRoutePropType;
 export type RouteDefinitions<RouteName extends string> = Record<RouteName, RouteProps>;
+export type LocalizedRoute<Locales extends string, DefaultLocale extends Locales> = {
+    [LocaleLabel in Locales]?: string;
+} & {
+    [Locale in DefaultLocale]: string;
+};
 export {};

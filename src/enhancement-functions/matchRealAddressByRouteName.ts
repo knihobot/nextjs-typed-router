@@ -1,12 +1,27 @@
-import { RouteInputType, RouteProps, UrlObjectGeneric } from "@types-app/index";
-import { removeUndefined } from "./removeUndefined";
+import {
+  LocalizedRoute,
+  RouteInputType,
+  RouteProps,
+  UrlObjectGeneric,
+} from "@types-app/index";
+import { removeUndefined } from "../helpers/removeUndefined";
 
 export function matchRealAddressByRouteName<
-  RouteDefinitions extends Record<string, RouteProps>
+  RouteDefinitions extends Record<string, RouteProps>,
+  Locales extends string,
+  DefaultLocale extends Locales
 >(
   routeName: RouteInputType<RouteDefinitions>,
-  routes: Record<keyof RouteDefinitions, string>
+  routes: Record<
+    keyof RouteDefinitions,
+    LocalizedRoute<Locales, DefaultLocale>
+  >,
+  locale?: Locales
 ): string | UrlObjectGeneric<RouteDefinitions> | undefined {
+  if (!locale) {
+    return undefined;
+  }
+
   if (typeof routeName === "object") {
     const matched = routes[routeName.pathname];
 
@@ -28,13 +43,15 @@ export function matchRealAddressByRouteName<
       });
     }
 
+    const localizedRouteObject = routes[routeName.pathname];
+
     return {
-      pathname: routes[routeName.pathname],
+      pathname: localizedRouteObject[locale],
       query: routeName.query,
     };
   }
 
-  const matched = routes[routeName];
+  const matched = routes[routeName][locale];
 
   if (!matched) {
     return undefined;
