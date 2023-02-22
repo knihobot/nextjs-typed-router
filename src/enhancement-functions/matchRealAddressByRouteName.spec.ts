@@ -1,5 +1,5 @@
 import { matchRealAddressByRouteName } from "./matchRealAddressByRouteName";
-import { RouteProps } from "@types-app/index";
+import { LocalizedRoute, RouteProps } from "@types-app/index";
 
 type RoutesType = {
   catchAllOptional: RouteProps<
@@ -34,33 +34,41 @@ type RoutesType = {
   slug: RouteProps<{ slug: "slug" }, { query?: string }>;
 };
 
+type Locales = "cs" | "en" | "sk" | "de-AT" | "de-DE";
+type DefaultLocale = "en";
+
 describe("Match real route address by route name", () => {
-  const routes: Record<keyof RoutesType, string> = {
-    catchAllOptional: "/catch-all-optional/[[...params]]",
-    catchAll: "/catch-all/[...params]",
-    slug: "/slug/[slug]",
+  const routes: Record<
+    keyof RoutesType,
+    LocalizedRoute<Locales, DefaultLocale>
+  > = {
+    catchAllOptional: { en: "/catch-all-optional/[[...params]]" },
+    catchAll: { en: "/catch-all/[...params]" },
+    slug: { en: "/slug/[slug]" },
   };
 
   it("Non-existent route", () => {
     expect(
-      matchRealAddressByRouteName<RoutesType>(
+      matchRealAddressByRouteName<RoutesType, Locales, DefaultLocale>(
         {
           pathname: "non-existent-route",
           query: { params: ["testParam", "testParamValue"] },
         },
-        routes
+        routes,
+        "en"
       )
     ).toBeUndefined();
   });
 
   it("Match route with optional dynamic params and query", () => {
     expect(
-      matchRealAddressByRouteName<RoutesType>(
+      matchRealAddressByRouteName<RoutesType, Locales, DefaultLocale>(
         {
           pathname: "catchAllOptional",
           query: { optionalParams: ["q", "abc"] },
         },
-        routes
+        routes,
+        "en"
       )
     ).toStrictEqual({
       pathname: "/catch-all-optional/[[...params]]",
@@ -70,14 +78,15 @@ describe("Match real route address by route name", () => {
 
   it("Match route with optional dynamic params with some empty fields", () => {
     expect(
-      matchRealAddressByRouteName<RoutesType>(
+      matchRealAddressByRouteName<RoutesType, Locales, DefaultLocale>(
         {
           pathname: "catchAllOptional",
           query: {
             optionalParams: ["q", "abc", undefined, undefined, "year", "2011"],
           },
         },
-        routes
+        routes,
+        "en"
       )
     ).toStrictEqual({
       pathname: "/catch-all-optional/[[...params]]",
@@ -87,7 +96,7 @@ describe("Match real route address by route name", () => {
 
   it("Match route with dynamic params and query", () => {
     expect(
-      matchRealAddressByRouteName<RoutesType>(
+      matchRealAddressByRouteName<RoutesType, Locales, DefaultLocale>(
         {
           pathname: "catchAll",
           query: {
@@ -95,7 +104,8 @@ describe("Match real route address by route name", () => {
             query: "testQuery",
           },
         },
-        routes
+        routes,
+        "en"
       )
     ).toStrictEqual({
       pathname: "/catch-all/[...params]",
@@ -105,14 +115,15 @@ describe("Match real route address by route name", () => {
 
   it("Match route with slug param", () => {
     expect(
-      matchRealAddressByRouteName<RoutesType>(
+      matchRealAddressByRouteName<RoutesType, Locales, DefaultLocale>(
         {
           pathname: "slug",
           query: {
             slug: "slug",
           },
         },
-        routes
+        routes,
+        "en"
       )
     ).toStrictEqual({
       pathname: "/slug/[slug]",

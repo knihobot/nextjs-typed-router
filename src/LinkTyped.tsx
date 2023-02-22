@@ -1,18 +1,24 @@
 import NextLink, { LinkProps as NextLinkProps } from "next/link";
 import { AnchorHTMLAttributes, MouseEventHandler, Ref } from "react";
-import { RouteProps } from "@types-app/index";
+import { LocalizedRoute, RouteProps } from "@types-app/index";
 import React from "react";
 import { removeUndefined } from "./helpers/removeUndefined";
+import { useRouter } from "next/router";
 
 type LinkTypedProps<
   RouteDefinitions extends Record<string, RouteProps>,
-  RouteName extends keyof RouteDefinitions
+  RouteName extends keyof RouteDefinitions,
+  Locales extends string,
+  DefaultLocale extends Locales
 > = Omit<NextLinkProps, "href" | "onClick" | "onMouseEnter"> &
   Omit<
     AnchorHTMLAttributes<HTMLAnchorElement>,
     "href" | "onClick" | "onMouseEnter"
   > & {
-    routes: Record<keyof RouteDefinitions, string>;
+    routes: Record<
+      keyof RouteDefinitions,
+      LocalizedRoute<Locales, DefaultLocale>
+    >;
     route?: RouteName;
     href?: string;
     onClick?: MouseEventHandler<HTMLAnchorElement>;
@@ -23,9 +29,11 @@ type LinkTypedProps<
 
 export const LinkTyped = <
   RouteDefinitions extends Record<string, RouteProps>,
-  RouteName extends keyof RouteDefinitions
+  RouteName extends keyof RouteDefinitions,
+  Locales extends string,
+  DefaultLocale extends Locales
 >(
-  props: LinkTypedProps<RouteDefinitions, RouteName> & {
+  props: LinkTypedProps<RouteDefinitions, RouteName, Locales, DefaultLocale> & {
     ref?: Ref<HTMLAnchorElement>;
   }
 ) => {
@@ -47,6 +55,8 @@ export const LinkTyped = <
 
   const keys = params ? Object.keys(params) : undefined;
 
+  const { locale: routerLocale } = useRouter();
+
   const paramsExtracted =
     params && keys && keys.length > 0 ? params[keys[0]] : undefined;
 
@@ -64,7 +74,7 @@ export const LinkTyped = <
     return (
       <NextLink
         href={{
-          pathname: routes[route],
+          pathname: routes[route][routerLocale as Locales],
           query: paramsAndQuery,
         }}
         locale={locale}

@@ -3,32 +3,40 @@ import {
   GetCurrentDomain,
   GetCurrentRoute,
   GetRouteByName,
+  GetRouteName,
   IsCurrentRoute,
+  LocalizedRoute,
+  MatchRealAddressByRouteName,
   Push,
   PushCustomUrl,
   PushShallow,
+  RouteInputType,
   RouteProps,
 } from "./types";
-import { matchRealAddressByRouteName } from "./helpers/matchRealAddressByRouteName";
+import { matchRealAddressByRouteName as matchRealAddressByRouteNameStandalone } from "./enhancement-functions/matchRealAddressByRouteName";
+import { getRouteByName as getRouteByNameStandalone } from "./enhancement-functions/getRouteByName";
 import { UrlObject } from "url";
-import { removeUndefined } from "./helpers/removeUndefined";
 
 interface EnhancedNextRouter<
   RouteDefinitions extends Record<string, RouteProps>
 > {
-  getRouteByName: GetRouteByName<RouteDefinitions>;
-  push: Push<RouteDefinitions>;
-  pushShallow: PushShallow<RouteDefinitions>;
-  getCurrentRoute: GetCurrentRoute<RouteDefinitions>;
-  isCurrentRoute: IsCurrentRoute<RouteDefinitions>;
   getCurrentDomain: GetCurrentDomain;
+  getCurrentRoute: GetCurrentRoute<RouteDefinitions>;
+  getRouteByName: GetRouteByName<RouteDefinitions>;
+  getRouteName: GetRouteName<RouteDefinitions>;
+  isCurrentRoute: IsCurrentRoute<RouteDefinitions>;
+  push: Push<RouteDefinitions>;
   pushCustomUrl: PushCustomUrl;
+  pushShallow: PushShallow<RouteDefinitions>;
+  matchRealAddressByRouteName: MatchRealAddressByRouteName<RouteDefinitions>;
 }
 
 export function useRouterTyped<
-  RouteDefinitions extends Record<string, RouteProps>
+  RouteDefinitions extends Record<string, RouteProps>,
+  Locales extends string,
+  DefaultLocale extends Locales
 >(
-  routes: Record<keyof RouteDefinitions, string>
+  routes: Record<keyof RouteDefinitions, LocalizedRoute<Locales, DefaultLocale>>
 ): EnhancedNextRouter<RouteDefinitions> & Omit<NextRouter, "push"> {
   const router = useRouter();
 
@@ -41,37 +49,28 @@ export function useRouterTyped<
   };
 
   const push: Push<RouteDefinitions> = async (route, as?, options?) => {
-    const url = matchRealAddressByRouteName<RouteDefinitions>(route, routes);
+    const url = matchRealAddressByRouteName(route);
 
     // TODO: fix type casting
     await router.push(
       url as string | UrlObject,
-      as
-        ? (matchRealAddressByRouteName<RouteDefinitions>(as, routes) as
-            | string
-            | UrlObject)
-        : undefined,
+      as ? (matchRealAddressByRouteName(as) as string | UrlObject) : undefined,
       options
     );
   };
 
   const isCurrentRoute: IsCurrentRoute<RouteDefinitions> = (route) => {
-    return routes[route] === router.pathname;
+    return routes[route][router.locale as Locales] === router.pathname;
   };
 
   const getCurrentRoute: GetCurrentRoute<RouteDefinitions> = () => {
-    let result;
-
-    // Object.keys removes types from keys - "as" needed
-    Object.keys(routes).map((routeKey) => {
-      const currentNode = routes[routeKey as keyof RouteDefinitions];
+    for (const routeKey in routes) {
+      const currentNode = routes[routeKey][router.locale as Locales];
 
       if (currentNode === router.pathname) {
-        result = routeKey as keyof RouteDefinitions;
+        return routeKey;
       }
-    });
-
-    return result;
+    }
   };
 
   const getCurrentDomain: GetCurrentDomain = () => {
@@ -85,29 +84,40 @@ export function useRouterTyped<
     return currentDomain?.domain;
   };
 
-  const getRouteByName: GetRouteByName<RouteDefinitions> = (route, params) => {
-    const routeAddress = routes[route];
+  const getRouteName: GetRouteName<RouteDefinitions> = (url) => {
+    for (const routeName in routes) {
+      const selectedRoute = routes[routeName];
 
-    if (!params) {
-      return routeAddress;
+      for (const localeKey in selectedRoute) {
+        const localizedRoute = selectedRoute[localeKey];
+
+        if (localizedRoute === url) {
+          return routeName;
+        }
+      }
     }
-
-    const paramsKeys = Object.keys(params);
-    const key = paramsKeys[0];
-
-    return routeAddress.replace(
-      new RegExp(`\\[${key}\\]`, "gi"),
-      // @ts-ignore TODO: assign correct type for paramKey
-      params[key]
-    );
   };
+
+  const getRouteByName: GetRouteByName<RouteDefinitions> = (route, params) =>
+    getRouteByNameStandalone(route, routes, params, router.locale as Locales);
+
+  const matchRealAddressByRouteName: MatchRealAddressByRouteName<
+    RouteDefinitions
+  > = (routeName: RouteInputType<RouteDefinitions>) =>
+    matchRealAddressByRouteNameStandalone(
+      routeName,
+      routes,
+      router.locale as Locales
+    );
 
   return {
     ...router,
     getCurrentDomain,
     getCurrentRoute,
     getRouteByName,
+    getRouteName,
     isCurrentRoute,
+    matchRealAddressByRouteName,
     push,
     pushCustomUrl,
     pushShallow,

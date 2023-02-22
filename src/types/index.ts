@@ -89,10 +89,25 @@ export interface GetCurrentRoute<
   (): keyof RouteDefinitions | undefined;
 }
 
+export interface GetRouteName<
+  RouteDefinitions extends Record<string, RouteProps>
+> {
+  (url: string): keyof RouteDefinitions | undefined;
+}
+
 export interface IsCurrentRoute<
   RouteDefinitions extends Record<string, RouteProps>
 > {
   (route: keyof RouteDefinitions): boolean;
+}
+
+export interface MatchRealAddressByRouteName<
+  RouteDefinitions extends Record<string, RouteProps>
+> {
+  (routeName: RouteInputType<RouteDefinitions>):
+    | string
+    | UrlObjectGeneric<RouteDefinitions>
+    | undefined;
 }
 
 export interface GetCurrentDomain {
@@ -201,3 +216,10 @@ export type RouteDefinitions<RouteName extends string> = Record<
   RouteName,
   RouteProps
 >;
+
+export type LocalizedRoute<
+  Locales extends string,
+  DefaultLocale extends Locales
+> = {
+  [LocaleLabel in Locales]?: string;
+} & { [Locale in DefaultLocale]: string };

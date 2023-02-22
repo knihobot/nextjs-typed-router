@@ -16,5 +16,6 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./types"), exports);
 __exportStar(require("./useRouterTyped"), exports);
-__exportStar(require("./helpers/matchRealAddressByRouteName"), exports);
+__exportStar(require("./enhancement-functions/matchRealAddressByRouteName"), exports);
+__exportStar(require("./enhancement-functions/getRouteByName"), exports);
 __exportStar(require("./LinkTyped"), exports);

@@ -1,10 +1,10 @@
 /// <reference types="node" />
 import { LinkProps as NextLinkProps } from "next/link";
 import { AnchorHTMLAttributes, MouseEventHandler, Ref } from "react";
-import { RouteProps } from "@types-app/index";
+import { LocalizedRoute, RouteProps } from "@types-app/index";
 import React from "react";
-type LinkTypedProps<RouteDefinitions extends Record<string, RouteProps>, RouteName extends keyof RouteDefinitions> = Omit<NextLinkProps, "href" | "onClick" | "onMouseEnter"> & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href" | "onClick" | "onMouseEnter"> & {
-    routes: Record<keyof RouteDefinitions, string>;
+type LinkTypedProps<RouteDefinitions extends Record<string, RouteProps>, RouteName extends keyof RouteDefinitions, Locales extends string, DefaultLocale extends Locales> = Omit<NextLinkProps, "href" | "onClick" | "onMouseEnter"> & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href" | "onClick" | "onMouseEnter"> & {
+    routes: Record<keyof RouteDefinitions, LocalizedRoute<Locales, DefaultLocale>>;
     route?: RouteName;
     href?: string;
     onClick?: MouseEventHandler<HTMLAnchorElement>;
@@ -12,7 +12,7 @@ type LinkTypedProps<RouteDefinitions extends Record<string, RouteProps>, RouteNa
     query?: RouteDefinitions[RouteName]["query"];
     params?: RouteDefinitions[RouteName]["params"];
 };
-export declare const LinkTyped: <RouteDefinitions extends Record<string, RouteProps<Record<string, string | (string | undefined)[]> | undefined, Record<string, string> | undefined>>, RouteName extends keyof RouteDefinitions>(props: Omit<{
+export declare const LinkTyped: <RouteDefinitions extends Record<string, RouteProps<Record<string, string | (string | undefined)[]> | undefined, Record<string, string> | undefined>>, RouteName extends keyof RouteDefinitions, Locales extends string, DefaultLocale extends Locales>(props: Omit<{
     href: string | import("url").UrlObject;
     as?: (string | import("url").UrlObject) | undefined;
     replace?: boolean | undefined;
@@ -26,7 +26,7 @@ export declare const LinkTyped: <RouteDefinitions extends Record<string, RoutePr
     onTouchStart?: React.TouchEventHandler<HTMLAnchorElement> | undefined;
     onClick?: MouseEventHandler<HTMLAnchorElement> | undefined;
 }, "href" | "onClick" | "onMouseEnter"> & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href" | "onClick" | "onMouseEnter"> & {
-    routes: Record<keyof RouteDefinitions, string>;
+    routes: Record<keyof RouteDefinitions, LocalizedRoute<Locales, DefaultLocale>>;
     route?: RouteName | undefined;
     href?: string | undefined;
     onClick?: MouseEventHandler<HTMLAnchorElement> | undefined;
