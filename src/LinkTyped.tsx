@@ -25,6 +25,7 @@ type LinkTypedProps<
     onMouseEnter?: MouseEventHandler<HTMLAnchorElement>;
     query?: RouteDefinitions[RouteName]["query"];
     params?: RouteDefinitions[RouteName]["params"];
+    appLocale: Locales;
   };
 
 export const LinkTyped = <
@@ -38,6 +39,7 @@ export const LinkTyped = <
   }
 ) => {
   const {
+    appLocale,
     children,
     href,
     locale,
@@ -54,8 +56,6 @@ export const LinkTyped = <
   } = props;
 
   const keys = params ? Object.keys(params) : undefined;
-
-  const { locale: routerLocale } = useRouter();
 
   const paramsExtracted =
     params && keys && keys.length > 0 ? params[keys[0]] : undefined;
@@ -74,7 +74,7 @@ export const LinkTyped = <
     return (
       <NextLink
         href={{
-          pathname: routes[route][routerLocale as Locales],
+          pathname: routes[route][appLocale],
           query: paramsAndQuery,
         }}
         locale={locale}
