@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.14](https://github.com/knihobot/nextjs-typed-router/compare/v0.1.13...v0.1.14) (2023-02-22)
+
+
+### Features
+
+* expose getRouteName function ([e1e6748](https://github.com/knihobot/nextjs-typed-router/commit/e1e674878526cbb5b25c0af6531f5c07c983bb93))
+
 ### [0.1.13](https://github.com/knihobot/nextjs-typed-router/compare/v0.1.12...v0.1.13) (2023-02-22)
 
 
