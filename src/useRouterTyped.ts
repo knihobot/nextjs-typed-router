@@ -16,6 +16,7 @@ import {
 import { matchRealAddressByRouteName as matchRealAddressByRouteNameStandalone } from "./enhancement-functions/matchRealAddressByRouteName";
 import { getRouteByName as getRouteByNameStandalone } from "./enhancement-functions/getRouteByName";
 import { UrlObject } from "url";
+import { getRouteName as getRouteNameStandalone } from "./enhancement-functions/getRouteName";
 
 interface EnhancedNextRouter<
   RouteDefinitions extends Record<string, RouteProps>
@@ -84,19 +85,8 @@ export function useRouterTyped<
     return currentDomain?.domain;
   };
 
-  const getRouteName: GetRouteName<RouteDefinitions> = (url) => {
-    for (const routeName in routes) {
-      const selectedRoute = routes[routeName];
-
-      for (const localeKey in selectedRoute) {
-        const localizedRoute = selectedRoute[localeKey];
-
-        if (localizedRoute === url) {
-          return routeName;
-        }
-      }
-    }
-  };
+  const getRouteName: GetRouteName<RouteDefinitions> = (url) =>
+    getRouteNameStandalone(url, routes);
 
   const getRouteByName: GetRouteByName<RouteDefinitions> = (route, params) =>
     getRouteByNameStandalone(route, routes, params, router.locale as Locales);
