@@ -16,7 +16,8 @@ export function matchRealAddressByRouteName<
     keyof RouteDefinitions,
     LocalizedRoute<Locales, DefaultLocale>
   >,
-  locale?: Locales
+  locale?: Locales,
+  defaultLocale?: DefaultLocale
 ): string | UrlObjectGeneric<RouteDefinitions> | undefined {
   if (!locale) {
     return undefined;
@@ -54,6 +55,12 @@ export function matchRealAddressByRouteName<
   const matched = routes[routeName][locale];
 
   if (!matched) {
+    const fallbackMatch = routes[routeName][defaultLocale as DefaultLocale];
+
+    if (fallbackMatch) {
+      return fallbackMatch;
+    }
+
     return undefined;
   }
 

@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.matchRealAddressByRouteName = void 0;
 const removeUndefined_1 = require("../helpers/removeUndefined");
-function matchRealAddressByRouteName(routeName, routes, locale) {
+function matchRealAddressByRouteName(routeName, routes, locale, defaultLocale) {
     if (!locale) {
         return undefined;
     }
@@ -29,6 +29,10 @@ function matchRealAddressByRouteName(routeName, routes, locale) {
     }
     const matched = routes[routeName][locale];
     if (!matched) {
+        const fallbackMatch = routes[routeName][defaultLocale];
+        if (fallbackMatch) {
+            return fallbackMatch;
+        }
         return undefined;
     }
     return matched;

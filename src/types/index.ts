@@ -63,7 +63,7 @@ export interface GetRouteByName<
   (
     route: keyof RouteDefinitions,
     params: RouteDefinitions[keyof RouteDefinitions]["params"]
-  ): Record<keyof RouteDefinitions, string>[keyof RouteDefinitions];
+  ): Record<keyof RouteDefinitions, string>[keyof RouteDefinitions] | undefined;
 }
 
 export interface Push<RouteDefinitions extends Record<string, RouteProps>> {

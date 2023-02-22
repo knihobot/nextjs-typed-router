@@ -11,11 +11,22 @@ export function getRouteByName<
     LocalizedRoute<Locales, DefaultLocale>
   >,
   params: RouteDefinitions[keyof RouteDefinitions]["params"],
-  locale?: Locales
-): Record<keyof RouteDefinitions, string>[keyof RouteDefinitions] {
+  locale?: Locales,
+  defaultLocale?: DefaultLocale
+): Record<keyof RouteDefinitions, string>[keyof RouteDefinitions] | undefined {
   const routeAddress = routes[route][locale as Locales];
 
   if (!params) {
+    if (!routeAddress) {
+      const fallbackRouteAddress = routes[route][defaultLocale as Locales];
+
+      if (fallbackRouteAddress) {
+        return fallbackRouteAddress;
+      }
+
+      return undefined;
+    }
+
     return routeAddress;
   }
 

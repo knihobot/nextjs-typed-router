@@ -1,9 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getRouteByName = void 0;
-function getRouteByName(route, routes, params, locale) {
+function getRouteByName(route, routes, params, locale, defaultLocale) {
     const routeAddress = routes[route][locale];
     if (!params) {
+        if (!routeAddress) {
+            const fallbackRouteAddress = routes[route][defaultLocale];
+            if (fallbackRouteAddress) {
+                return fallbackRouteAddress;
+            }
+            return undefined;
+        }
         return routeAddress;
     }
     const paramsKeys = Object.keys(params);

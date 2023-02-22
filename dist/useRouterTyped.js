@@ -33,6 +33,12 @@ function useRouterTyped(routes) {
     const getCurrentRoute = () => {
         for (const routeKey in routes) {
             const currentNode = routes[routeKey][router.locale];
+            if (!currentNode) {
+                const fallbackCurrentNode = routes[routeKey][router.defaultLocale];
+                if (fallbackCurrentNode && fallbackCurrentNode === router.pathname) {
+                    return routeKey;
+                }
+            }
             if (currentNode === router.pathname) {
                 return routeKey;
             }
@@ -47,8 +53,8 @@ function useRouterTyped(routes) {
         return currentDomain === null || currentDomain === void 0 ? void 0 : currentDomain.domain;
     };
     const getRouteName = (url) => (0, getRouteName_1.getRouteName)(url, routes);
-    const getRouteByName = (route, params) => (0, getRouteByName_1.getRouteByName)(route, routes, params, router.locale);
-    const matchRealAddressByRouteName = (routeName) => (0, matchRealAddressByRouteName_1.matchRealAddressByRouteName)(routeName, routes, router.locale);
+    const getRouteByName = (route, params) => (0, getRouteByName_1.getRouteByName)(route, routes, params, router.locale, router.defaultLocale);
+    const matchRealAddressByRouteName = (routeName) => (0, matchRealAddressByRouteName_1.matchRealAddressByRouteName)(routeName, routes, router.locale, router.defaultLocale);
     return Object.assign(Object.assign({}, router), { getCurrentDomain,
         getCurrentRoute,
         getRouteByName,

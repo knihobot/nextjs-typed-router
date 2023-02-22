@@ -29,7 +29,7 @@ export type RouteInputType<RouteDefinitions extends Record<string, RouteProps>> 
  * Enhanced router functions types
  */
 export interface GetRouteByName<RouteDefinitions extends Record<string, RouteProps>> {
-    (route: keyof RouteDefinitions, params: RouteDefinitions[keyof RouteDefinitions]["params"]): Record<keyof RouteDefinitions, string>[keyof RouteDefinitions];
+    (route: keyof RouteDefinitions, params: RouteDefinitions[keyof RouteDefinitions]["params"]): Record<keyof RouteDefinitions, string>[keyof RouteDefinitions] | undefined;
 }
 export interface Push<RouteDefinitions extends Record<string, RouteProps>> {
     (route: RouteInputType<RouteDefinitions>, as?: RouteInputType<RouteDefinitions>, options?: TransitionOptions): Promise<void>;
