@@ -15,18 +15,17 @@ type LinkTypedProps<
     AnchorHTMLAttributes<HTMLAnchorElement>,
     "href" | "onClick" | "onMouseEnter"
   > & {
-    routes: Record<
-      keyof RouteDefinitions,
-      LocalizedRoute<Locales, DefaultLocale>
-    >;
-    route?: RouteName;
-    href?: string;
-    onClick?: MouseEventHandler<HTMLAnchorElement>;
-    onMouseEnter?: MouseEventHandler<HTMLAnchorElement>;
-    query?: RouteDefinitions[RouteName]["query"];
-    params?: RouteDefinitions[RouteName]["params"];
-    appLocale: Locales;
-  };
+  routes: Record<
+    keyof RouteDefinitions,
+    LocalizedRoute<Locales, DefaultLocale>
+  >;
+  route?: RouteName;
+  href?: string;
+  onClick?: MouseEventHandler<HTMLAnchorElement>;
+  onMouseEnter?: MouseEventHandler<HTMLAnchorElement>;
+  query?: RouteDefinitions[RouteName]["query"];
+  params?: RouteDefinitions[RouteName]["params"];
+};
 
 export const LinkTyped = <
   RouteDefinitions extends Record<string, RouteProps>,
@@ -39,7 +38,6 @@ export const LinkTyped = <
   }
 ) => {
   const {
-    appLocale,
     children,
     href,
     locale,
@@ -57,24 +55,28 @@ export const LinkTyped = <
 
   const keys = params ? Object.keys(params) : undefined;
 
+  const { locale: routerLocale, defaultLocale } = useRouter();
+
   const paramsExtracted =
     params && keys && keys.length > 0 ? params[keys[0]] : undefined;
 
   const paramsAndQuery =
     params || query
       ? {
-          ...(Array.isArray(paramsExtracted)
-            ? { [keys ? keys[0] : "params"]: removeUndefined(paramsExtracted) }
-            : params),
-          ...query,
-        }
+        ...(Array.isArray(paramsExtracted)
+          ? { [keys ? keys[0] : "params"]: removeUndefined(paramsExtracted) }
+          : params),
+        ...query,
+      }
       : undefined;
 
   if (route) {
+    const localizedPathname = routes[route][routerLocale as Locales]
+
     return (
       <NextLink
         href={{
-          pathname: routes[route][appLocale],
+          pathname: localizedPathname ? localizedPathname : routes[route][defaultLocale as Locales],
           query: paramsAndQuery,
         }}
         locale={locale}
