@@ -21,9 +21,9 @@ function matchRealAddressByRouteName(routeName, routes, locale, defaultLocale) {
                 }
             });
         }
-        const localizedRouteObject = routes[routeName.pathname];
+        const localizedAddress = matched[locale];
         return {
-            pathname: localizedRouteObject[locale],
+            pathname: localizedAddress ? localizedAddress : matched[defaultLocale],
             query: routeName.query,
         };
     }

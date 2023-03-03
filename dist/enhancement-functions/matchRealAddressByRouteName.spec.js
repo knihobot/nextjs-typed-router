@@ -28,7 +28,7 @@ describe("Match real route address by route name", () => {
             query: {
                 optionalParams: ["q", "abc", undefined, undefined, "year", "2011"],
             },
-        }, routes, "en")).toStrictEqual({
+        }, routes, "cs", "en")).toStrictEqual({
             pathname: "/catch-all-optional/[[...params]]",
             query: { optionalParams: ["q", "abc", "year", "2011"] },
         });

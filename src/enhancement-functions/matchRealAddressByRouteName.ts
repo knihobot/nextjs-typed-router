@@ -44,10 +44,10 @@ export function matchRealAddressByRouteName<
       });
     }
 
-    const localizedRouteObject = routes[routeName.pathname];
+    const localizedAddress = matched[locale];
 
     return {
-      pathname: localizedRouteObject[locale],
+      pathname: localizedAddress ? localizedAddress : matched[defaultLocale as DefaultLocale],
       query: routeName.query,
     };
   }
