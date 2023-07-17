@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.23](https://github.com/knihobot/nextjs-typed-router/compare/v0.1.22...v0.1.23) (2023-07-17)
+
+
+### Bug Fixes
+
+* **#6:** allow to pass other url props to next link href ([f2250ab](https://github.com/knihobot/nextjs-typed-router/commit/f2250abc46b36fbd78c2bd8be2fa73cb2a716fa1)), closes [#6](https://github.com/knihobot/nextjs-typed-router/issues/6)
+
 ### [0.1.22](https://github.com/knihobot/nextjs-typed-router/compare/v0.1.21...v0.1.22) (2023-03-03)
 
 
