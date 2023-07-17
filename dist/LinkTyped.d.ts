@@ -3,19 +3,21 @@ import { LinkProps as NextLinkProps } from "next/link";
 import { AnchorHTMLAttributes, MouseEventHandler, Ref } from "react";
 import { LocalizedRoute, RouteProps } from "@types-app/index";
 import React from "react";
+import { UrlObject } from "url";
 type LinkTypedProps<RouteDefinitions extends Record<string, RouteProps>, RouteName extends keyof RouteDefinitions, Locales extends string, DefaultLocale extends Locales> = Omit<NextLinkProps, "href" | "onClick" | "onMouseEnter"> & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href" | "onClick" | "onMouseEnter"> & {
-    routes: Record<keyof RouteDefinitions, LocalizedRoute<Locales, DefaultLocale>>;
     defaultLocale: DefaultLocale;
-    route?: RouteName;
     href?: string;
+    hrefNext?: Omit<UrlObject, "pathname" | "query">;
     onClick?: MouseEventHandler<HTMLAnchorElement>;
     onMouseEnter?: MouseEventHandler<HTMLAnchorElement>;
-    query?: RouteDefinitions[RouteName]["query"];
     params?: RouteDefinitions[RouteName]["params"];
+    query?: RouteDefinitions[RouteName]["query"];
+    route?: RouteName;
+    routes: Record<keyof RouteDefinitions, LocalizedRoute<Locales, DefaultLocale>>;
 };
 export declare const LinkTyped: <RouteDefinitions extends Record<string, RouteProps<Record<string, string | (string | undefined)[]> | undefined, Record<string, string> | undefined>>, RouteName extends keyof RouteDefinitions, Locales extends string, DefaultLocale extends Locales>(props: Omit<{
-    href: string | import("url").UrlObject;
-    as?: (string | import("url").UrlObject) | undefined;
+    href: string | UrlObject;
+    as?: (string | UrlObject) | undefined;
     replace?: boolean | undefined;
     scroll?: boolean | undefined;
     shallow?: boolean | undefined;
@@ -27,14 +29,15 @@ export declare const LinkTyped: <RouteDefinitions extends Record<string, RoutePr
     onTouchStart?: React.TouchEventHandler<HTMLAnchorElement> | undefined;
     onClick?: MouseEventHandler<HTMLAnchorElement> | undefined;
 }, "href" | "onClick" | "onMouseEnter"> & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href" | "onClick" | "onMouseEnter"> & {
-    routes: Record<keyof RouteDefinitions, LocalizedRoute<Locales, DefaultLocale>>;
     defaultLocale: DefaultLocale;
-    route?: RouteName | undefined;
     href?: string | undefined;
+    hrefNext?: Omit<UrlObject, "pathname" | "query"> | undefined;
     onClick?: MouseEventHandler<HTMLAnchorElement> | undefined;
     onMouseEnter?: MouseEventHandler<HTMLAnchorElement> | undefined;
-    query?: RouteDefinitions[RouteName]["query"] | undefined;
     params?: RouteDefinitions[RouteName]["params"] | undefined;
+    query?: RouteDefinitions[RouteName]["query"] | undefined;
+    route?: RouteName | undefined;
+    routes: Record<keyof RouteDefinitions, LocalizedRoute<Locales, DefaultLocale>>;
 } & {
     ref?: Ref<HTMLAnchorElement> | undefined;
 }) => JSX.Element;

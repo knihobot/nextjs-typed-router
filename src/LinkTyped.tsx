@@ -4,6 +4,7 @@ import { LocalizedRoute, RouteProps } from "@types-app/index";
 import React from "react";
 import { removeUndefined } from "./helpers/removeUndefined";
 import { useRouter } from "next/router";
+import { UrlObject } from "url";
 
 type LinkTypedProps<
   RouteDefinitions extends Record<string, RouteProps>,
@@ -15,17 +16,18 @@ type LinkTypedProps<
     AnchorHTMLAttributes<HTMLAnchorElement>,
     "href" | "onClick" | "onMouseEnter"
   > & {
+    defaultLocale: DefaultLocale;
+    href?: string;
+    hrefNext?: Omit<UrlObject, "pathname" | "query">;
+    onClick?: MouseEventHandler<HTMLAnchorElement>;
+    onMouseEnter?: MouseEventHandler<HTMLAnchorElement>;
+    params?: RouteDefinitions[RouteName]["params"];
+    query?: RouteDefinitions[RouteName]["query"];
+    route?: RouteName;
     routes: Record<
       keyof RouteDefinitions,
       LocalizedRoute<Locales, DefaultLocale>
     >;
-    defaultLocale: DefaultLocale;
-    route?: RouteName;
-    href?: string;
-    onClick?: MouseEventHandler<HTMLAnchorElement>;
-    onMouseEnter?: MouseEventHandler<HTMLAnchorElement>;
-    query?: RouteDefinitions[RouteName]["query"];
-    params?: RouteDefinitions[RouteName]["params"];
   };
 
 export const LinkTyped = <
@@ -40,18 +42,19 @@ export const LinkTyped = <
 ) => {
   const {
     children,
+    defaultLocale,
     href,
+    hrefNext,
     locale,
-    query,
+    params,
     prefetch,
+    query,
+    ref,
     replace,
     route,
+    routes,
     scroll,
     shallow,
-    params,
-    ref,
-    routes,
-    defaultLocale,
     ...anchorProps
   } = props;
 
@@ -78,6 +81,7 @@ export const LinkTyped = <
     return (
       <NextLink
         href={{
+          ...hrefNext,
           pathname: localizedPathname
             ? localizedPathname
             : routes[route][defaultLocale as DefaultLocale],
