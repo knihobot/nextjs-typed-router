@@ -80,6 +80,7 @@ export const LinkTyped = <
 
     return (
       <NextLink
+        legacyBehavior // TODO: fix
         href={{
           ...hrefNext,
           pathname: localizedPathname

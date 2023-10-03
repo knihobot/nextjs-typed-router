@@ -30,7 +30,8 @@ const LinkTyped = (props) => {
             : params)), query) : undefined;
     if (route) {
         const localizedPathname = routes[route][routerLocale];
-        return ((0, jsx_runtime_1.jsx)(link_1.default, Object.assign({ href: Object.assign(Object.assign({}, hrefNext), { pathname: localizedPathname
+        return ((0, jsx_runtime_1.jsx)(link_1.default, Object.assign({ legacyBehavior // TODO: fix
+            : true, href: Object.assign(Object.assign({}, hrefNext), { pathname: localizedPathname
                     ? localizedPathname
                     : routes[route][defaultLocale], query: paramsAndQuery }), locale: locale, passHref: true, prefetch: prefetch, replace: replace, scroll: scroll, shallow: shallow }, { children: (0, jsx_runtime_1.jsx)("a", Object.assign({ ref: ref }, anchorProps, { children: children })) })));
     }
