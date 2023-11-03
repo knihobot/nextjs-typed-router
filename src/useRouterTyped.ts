@@ -19,7 +19,8 @@ import { UrlObject } from "url";
 import { getRouteName as getRouteNameStandalone } from "./enhancement-functions/getRouteName";
 
 interface EnhancedNextRouter<
-  RouteDefinitions extends Record<string, RouteProps>
+  RouteDefinitions extends Record<string, RouteProps>,
+  Locales extends string
 > {
   getCurrentDomain: GetCurrentDomain;
   getCurrentRoute: GetCurrentRoute<RouteDefinitions>;
@@ -30,6 +31,7 @@ interface EnhancedNextRouter<
   pushCustomUrl: PushCustomUrl;
   pushShallow: PushShallow<RouteDefinitions>;
   matchRealAddressByRouteName: MatchRealAddressByRouteName<RouteDefinitions>;
+  locale: Locales;
 }
 
 export function useRouterTyped<
@@ -42,7 +44,8 @@ export function useRouterTyped<
     LocalizedRoute<Locales, DefaultLocale>
   >,
   defaultLocale: DefaultLocale
-): EnhancedNextRouter<RouteDefinitions> & Omit<NextRouter, "push"> {
+): EnhancedNextRouter<RouteDefinitions, Locales> &
+  Omit<NextRouter, "push" | "locale"> {
   const router = useRouter();
 
   const pushShallow: PushShallow<RouteDefinitions> = async (route, as?) => {
@@ -121,6 +124,7 @@ export function useRouterTyped<
 
   return {
     ...router,
+    locale: router.locale as Locales,
     getCurrentDomain,
     getCurrentRoute,
     getRouteByName,

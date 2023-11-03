@@ -55,7 +55,7 @@ function useRouterTyped(routes, defaultLocale) {
     const getRouteName = (url) => (0, getRouteName_1.getRouteName)(url, routes);
     const getRouteByName = (route, params) => (0, getRouteByName_1.getRouteByName)(route, routes, params, router.locale, defaultLocale);
     const matchRealAddressByRouteName = (routeName) => (0, matchRealAddressByRouteName_1.matchRealAddressByRouteName)(routeName, routes, router.locale, defaultLocale);
-    return Object.assign(Object.assign({}, router), { getCurrentDomain,
+    return Object.assign(Object.assign({}, router), { locale: router.locale, getCurrentDomain,
         getCurrentRoute,
         getRouteByName,
         getRouteName,
