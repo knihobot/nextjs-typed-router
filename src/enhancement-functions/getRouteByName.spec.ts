@@ -1,60 +1,125 @@
-import { LocalizedRoute, RouteProps } from "@types-app/index";
+import { LocalizedRoute } from "@types-app/index";
 import { getRouteByName } from "./getRouteByName";
 
 describe("getRouteByName", () => {
-  const routes: Record<string, LocalizedRoute<"en" | "fr", "en">> = {
-    home: {
-      en: "/",
-      fr: "/accueil",
-    },
-    user: {
+  const routes: Record<
+    string,
+    LocalizedRoute<"en" | "sk" | "cs" | "de-DE" | "de-AT", "en">
+  > = {
+    // One Segment
+    users: {
       en: "/users/[id]",
-      fr: "/utilisateurs/[id]",
+      cs: "/uzivatele/[id]",
+      sk: "/pouzivatelia/[id]",
+      "de-DE": "/benutzer/[id]",
+      "de-AT": "/benutzer/[id]",
+    },
+    // Catch-all Segments
+    account: {
+      en: "/account/[...segments]",
+      cs: "/ucet/[...segments]",
+      sk: "/ucet/[...segments]",
+      "de-DE": "/konto/[...segments]",
+      "de-AT": "/konto/[...segments]",
+    },
+    // Optional Catch-all Segments
+    products: {
+      en: "/products/[[...segments]]",
+      cs: "/produkty/[[...segments]]",
+      sk: "/produkty/[[...segments]]",
+      "de-DE": "/produkte/[[...segments]]",
+      "de-AT": "/produkte/[[...segments]]",
     },
   };
 
-  const routeDefinitions: Record<string, RouteProps> = {
-    home: {
-      params: undefined,
-      query: undefined,
-    },
-    user: {
-      params: {
-        id: ["1"],
-      },
-      query: {
-        page: "2",
-      },
-    },
-  };
-
-  it("returns undefined if the route name does not exist in the routes object", () => {
-    const result = getRouteByName("nonexistent", routes, undefined, "en", "en");
-
-    expect(result).toBeUndefined();
+  it("should return the correct route for a given locale", () => {
+    const path = getRouteByName("users", routes, { id: "123" }, "cs");
+    expect(path).toBe("/uzivatele/123");
   });
 
-  it("returns the default locale route if the locale is undefined and the route is not defined in the specified locale", () => {
-    const result = getRouteByName("home", routes, undefined, undefined, "en");
-
-    expect(result).toBe("/");
+  it("should handle missing locale and use default locale", () => {
+    const path = getRouteByName("users", routes, { id: "123" }, "fr", "en");
+    expect(path).toBe("/users/123");
   });
 
-  it("returns the specified locale route if it is defined, even if a default locale route exists", () => {
-    const result = getRouteByName("home", routes, undefined, "fr", "en");
-
-    expect(result).toBe("/accueil");
+  it("should correctly replace parameters in the route", () => {
+    const path = getRouteByName("users", routes, { id: "456" }, "en");
+    expect(path).toBe("/users/456");
   });
 
-  it("returns the default locale route if the specified locale route is not defined", () => {
-    const result = getRouteByName("user", routes, undefined, "fr", "en");
-
-    expect(result).toBe("/utilisateurs/[id]");
+  it("should handle required catch-all segments with a single element array", () => {
+    const path = getRouteByName(
+      "account",
+      routes,
+      { segments: ["settings"] },
+      "en",
+    );
+    expect(path).toBe("/account/settings");
   });
 
-  it("replaces all occurrences of route parameters with their corresponding values", () => {
-    const result = getRouteByName("user", routes, { id: "2" }, "en", "en");
+  it("should handle required catch-all segments with a multi-element array", () => {
+    const path = getRouteByName(
+      "account",
+      routes,
+      { segments: ["settings", "security"] },
+      "en",
+    );
+    expect(path).toBe("/account/settings/security");
+  });
 
-    expect(result).toBe("/users/2");
+  it("should handle required catch-all segments with a deeply nested array", () => {
+    const path = getRouteByName(
+      "account",
+      routes,
+      { segments: ["user", "123", "edit", "password"] },
+      "en",
+    );
+    expect(path).toBe("/account/user/123/edit/password");
+  });
+
+  // Add a test case to ensure that it fails gracefully if 'segments' is not provided
+  it("should return undefined for required catch-all segments if not provided", () => {
+    const path = getRouteByName("account", routes, {}, "en");
+    expect(path).toBeUndefined();
+  });
+
+  it("should handle optional catch-all segments with no segments provided", () => {
+    const path = getRouteByName("products", routes, {}, "en");
+    expect(path).toBe("/products/");
+  });
+
+  it("should handle optional catch-all segments with empty array", () => {
+    const path = getRouteByName("products", routes, { segments: [] }, "en");
+    expect(path).toBe("/products/");
+  });
+
+  it("should handle optional catch-all segments with a single element array", () => {
+    const path = getRouteByName(
+      "products",
+      routes,
+      { segments: ["details"] },
+      "en",
+    );
+    expect(path).toBe("/products/details");
+  });
+
+  it("should handle optional catch-all segments with a multi-element array", () => {
+    const path = getRouteByName(
+      "products",
+      routes,
+      { segments: ["category", "123", "edit"] },
+      "en",
+    );
+    expect(path).toBe("/products/category/123/edit");
+  });
+
+  it("should return undefined for non-existent routes", () => {
+    const path = getRouteByName(
+      "nonExistentRoute",
+      routes,
+      { id: "789" },
+      "en",
+    );
+    expect(path).toBeUndefined();
   });
 });
