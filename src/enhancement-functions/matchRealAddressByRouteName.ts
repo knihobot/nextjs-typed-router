@@ -9,7 +9,7 @@ import { removeUndefined } from "../helpers/removeUndefined";
 export function matchRealAddressByRouteName<
   RouteDefinitions extends Record<string, RouteProps>,
   Locales extends string,
-  DefaultLocale extends Locales
+  DefaultLocale extends Locales,
 >(
   routeName: RouteInputType<RouteDefinitions>,
   routes: Record<
@@ -17,7 +17,7 @@ export function matchRealAddressByRouteName<
     LocalizedRoute<Locales, DefaultLocale>
   >,
   locale?: Locales,
-  defaultLocale?: DefaultLocale
+  defaultLocale?: DefaultLocale,
 ): string | UrlObjectGeneric<RouteDefinitions> | undefined {
   if (!locale) {
     return undefined;
@@ -47,9 +47,17 @@ export function matchRealAddressByRouteName<
     const localizedAddress = matched[locale];
 
     return {
-      pathname: localizedAddress ? localizedAddress : matched[defaultLocale as DefaultLocale],
+      pathname: localizedAddress
+        ? localizedAddress
+        : matched[defaultLocale as DefaultLocale],
       query: routeName.query,
     };
+  }
+
+  const matchedRouteSet = routes[routeName];
+
+  if (!matchedRouteSet) {
+    return undefined;
   }
 
   const matched = routes[routeName][locale];

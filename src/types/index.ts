@@ -22,7 +22,7 @@ export interface RouteProps<
     | undefined,
   Query extends Record<string, string> | undefined =
     | Record<string, string>
-    | undefined
+    | undefined,
 > {
   params: Params;
   query: Query;
@@ -39,7 +39,7 @@ export interface TransitionOptions {
 }
 
 export interface UrlObjectGeneric<
-  RouteDefinitions extends Record<string, RouteProps>
+  RouteDefinitions extends Record<string, RouteProps>,
 > extends Omit<UrlObject, "pathname" | "query"> {
   pathname: keyof RouteDefinitions | string;
   query: GetRoutePropType<
@@ -51,18 +51,18 @@ export interface UrlObjectGeneric<
 }
 
 export type RouteInputType<
-  RouteDefinitions extends Record<string, RouteProps>
+  RouteDefinitions extends Record<string, RouteProps>,
 > = UrlObjectGeneric<RouteDefinitions> | keyof RouteDefinitions;
 
 /**
  * Enhanced router functions types
  */
 export interface GetRouteByName<
-  RouteDefinitions extends Record<string, RouteProps>
+  RouteDefinitions extends Record<string, RouteProps>,
 > {
   (
     route: keyof RouteDefinitions,
-    params: RouteDefinitions[keyof RouteDefinitions]["params"]
+    params?: RouteDefinitions[keyof RouteDefinitions]["params"],
   ): Record<keyof RouteDefinitions, string>[keyof RouteDefinitions] | undefined;
 }
 
@@ -70,44 +70,43 @@ export interface Push<RouteDefinitions extends Record<string, RouteProps>> {
   (
     route: RouteInputType<RouteDefinitions>,
     as?: RouteInputType<RouteDefinitions>,
-    options?: TransitionOptions
+    options?: TransitionOptions,
   ): Promise<void>;
 }
 
 export interface PushShallow<
-  RouteDefinitions extends Record<string, RouteProps>
+  RouteDefinitions extends Record<string, RouteProps>,
 > {
   (
     route: RouteInputType<RouteDefinitions>,
-    as?: RouteInputType<RouteDefinitions>
+    as?: RouteInputType<RouteDefinitions>,
   ): Promise<void>;
 }
 
 export interface GetCurrentRoute<
-  RouteDefinitions extends Record<string, RouteProps>
+  RouteDefinitions extends Record<string, RouteProps>,
 > {
   (): keyof RouteDefinitions | undefined;
 }
 
 export interface GetRouteName<
-  RouteDefinitions extends Record<string, RouteProps>
+  RouteDefinitions extends Record<string, RouteProps>,
 > {
   (url: string): keyof RouteDefinitions | undefined;
 }
 
 export interface IsCurrentRoute<
-  RouteDefinitions extends Record<string, RouteProps>
+  RouteDefinitions extends Record<string, RouteProps>,
 > {
   (route: keyof RouteDefinitions): boolean;
 }
 
 export interface MatchRealAddressByRouteName<
-  RouteDefinitions extends Record<string, RouteProps>
+  RouteDefinitions extends Record<string, RouteProps>,
 > {
-  (routeName: RouteInputType<RouteDefinitions>):
-    | string
-    | UrlObjectGeneric<RouteDefinitions>
-    | undefined;
+  (
+    routeName: RouteInputType<RouteDefinitions>,
+  ): string | UrlObjectGeneric<RouteDefinitions> | undefined;
 }
 
 export interface GetCurrentDomain {
@@ -118,7 +117,7 @@ export interface PushCustomUrl {
   (
     url: UrlObject | string,
     as?: UrlObject | string,
-    options?: TransitionOptions
+    options?: TransitionOptions,
   ): Promise<void>;
 }
 
@@ -127,7 +126,7 @@ export interface PushCustomUrl {
  */
 export interface NextPageContext<
   RouteDefinitions extends Record<string, RouteProps>,
-  RouteName extends keyof RouteDefinitions
+  RouteName extends keyof RouteDefinitions,
 > extends Omit<NextPageContextDefault, "query"> {
   query: GetRoutePropType<RouteDefinitions, RouteName, "query", undefined>;
 }
@@ -136,7 +135,7 @@ export type NextPage<
   RouteDefinitions extends Record<string, RouteProps>,
   RouteName extends keyof RouteDefinitions,
   PageProps = Record<string, never>,
-  IPageProps = PageProps
+  IPageProps = PageProps,
 > = NextComponentType<
   NextPageContext<RouteDefinitions, RouteName>,
   IPageProps,
@@ -150,11 +149,11 @@ export interface GetStaticProps<
   RouteDefinitions extends Record<string, RouteProps>,
   RouteName extends keyof RouteDefinitions,
   Props extends Record<string, string> = Record<string, string>,
-  Data extends PreviewData = PreviewData
+  Data extends PreviewData = PreviewData,
 > {
-  (context: GetStaticPropsContext<RouteDefinitions, RouteName, Data>):
-    | Promise<GetStaticPropsResult<Props>>
-    | GetStaticPropsResult<Props>;
+  (
+    context: GetStaticPropsContext<RouteDefinitions, RouteName, Data>,
+  ): Promise<GetStaticPropsResult<Props>> | GetStaticPropsResult<Props>;
 }
 
 // TODO: Why?
@@ -162,7 +161,7 @@ export interface GetStaticProps<
 export interface GetStaticPropsContext<
   RouteDefinitions extends Record<string, RouteProps>,
   RouteName extends keyof RouteDefinitions,
-  Data extends PreviewData = PreviewData
+  Data extends PreviewData = PreviewData,
 > extends Exclude<GetStaticPropsContextNext<ParsedUrlQuery, Data>, "params"> {
   params: RouteDefinitions[RouteName] extends RouteProps
     ? RouteDefinitions[RouteName]["params"]
@@ -176,17 +175,17 @@ export interface GetServerSideProps<
   RouteDefinitions extends Record<string, RouteProps>,
   RouteName extends keyof RouteDefinitions,
   Props = unknown,
-  Data extends PreviewData = PreviewData
+  Data extends PreviewData = PreviewData,
 > {
   (
-    context: GetServerSidePropsContext<RouteDefinitions, RouteName, Data>
+    context: GetServerSidePropsContext<RouteDefinitions, RouteName, Data>,
   ): Promise<GetServerSidePropsResult<Props>>;
 }
 
 export type GetServerSidePropsContext<
   RouteDefinitions extends Record<string, RouteProps>,
   RouteName extends keyof RouteDefinitions,
-  Data extends PreviewData = PreviewData
+  Data extends PreviewData = PreviewData,
 > = Exclude<
   GetServerSidePropsContextNext<ParsedUrlQuery, Data>,
   "params" | "query"
@@ -207,7 +206,7 @@ type GetRoutePropType<
   RouteDefinitions extends Record<string, RouteProps>,
   RouteName extends keyof RouteDefinitions,
   RouteProp extends keyof RouteProps,
-  NotAvailableRoutePropType extends object | undefined
+  NotAvailableRoutePropType extends object | undefined,
 > = RouteDefinitions[RouteName] extends RouteProps
   ? RouteDefinitions[RouteName][RouteProp]
   : NotAvailableRoutePropType;
@@ -219,7 +218,7 @@ export type RouteDefinitions<RouteName extends string> = Record<
 
 export type LocalizedRoute<
   Locales extends string,
-  DefaultLocale extends Locales
+  DefaultLocale extends Locales,
 > = {
   [LocaleLabel in Locales]?: string;
 } & { [Locale in DefaultLocale]: string };
