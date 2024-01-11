@@ -8,7 +8,7 @@ function getRouteByName(route, routes, params, locale, defaultLocale) {
     }
     let path = routes[route][locale] || routes[route][defaultLocale];
     // Handle optional catch-all segments
-    const optionalCatchAllRegex = /\[\[\.\.\.(.*?)\]\]/g;
+    const optionalCatchAllRegex = /\[\[\.\.\.(.*?)]]/g;
     if (path.match(optionalCatchAllRegex)) {
         path = path.replace(optionalCatchAllRegex, (match, segmentKey) => {
             const paramValue = params && params[segmentKey];

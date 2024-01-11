@@ -3,7 +3,7 @@ import {
   LocaleLabelType,
   mockRoutes,
   MockRoutesType,
-} from "../__mocks__/routes";
+} from "../tests/data/routes";
 
 describe("getRouteName", () => {
   it("should return the correct route name for a normal route", () => {

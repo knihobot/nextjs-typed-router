@@ -1,11 +1,12 @@
-import { useRouterTyped } from "../useRouterTyped";
+import { useRouterTyped } from "../../useRouterTyped";
 import { mockRoutes } from "./routes";
+import { Router } from "next/router";
 
 export function useRouterTypedMock(): ReturnType<typeof useRouterTyped> {
   return useRouterTyped(mockRoutes, "en");
 }
 
-export const mockRouter = {
+export const mockRouter: Partial<Router> = {
   basePath: "",
   route: "/",
   pathname: "/",

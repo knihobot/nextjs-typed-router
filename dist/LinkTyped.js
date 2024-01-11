@@ -20,7 +20,7 @@ const link_1 = __importDefault(require("next/link"));
 const removeUndefined_1 = require("./helpers/removeUndefined");
 const router_1 = require("next/router");
 const LinkTyped = (props) => {
-    const { children, defaultLocale, href, hrefNext, locale, params, prefetch, query, ref, replace, route, routes, scroll, shallow } = props, anchorProps = __rest(props, ["children", "defaultLocale", "href", "hrefNext", "locale", "params", "prefetch", "query", "ref", "replace", "route", "routes", "scroll", "shallow"]);
+    const { children, defaultLocale, href, hrefNext, locale, params, prefetch, query, ref, replace, route, routes, scroll, shallow, legacyBehavior } = props, anchorProps = __rest(props, ["children", "defaultLocale", "href", "hrefNext", "locale", "params", "prefetch", "query", "ref", "replace", "route", "routes", "scroll", "shallow", "legacyBehavior"]);
     const keys = params ? Object.keys(params) : undefined;
     const { locale: routerLocale } = (0, router_1.useRouter)();
     const paramsExtracted = params && keys && keys.length > 0 ? params[keys[0]] : undefined;
@@ -29,11 +29,14 @@ const LinkTyped = (props) => {
             ? { [keys ? keys[0] : "params"]: (0, removeUndefined_1.removeUndefined)(paramsExtracted) }
             : params)), query) : undefined;
     if (route) {
-        const localizedPathname = routes[route][routerLocale];
+        const localizedRoutesSet = routes[route];
+        if (!localizedRoutesSet)
+            throw new Error(`No route with provided key ${String(route)} exists in routes object`);
+        const localizedPathname = localizedRoutesSet[routerLocale];
         return ((0, jsx_runtime_1.jsx)(link_1.default, { legacyBehavior // TODO: fix
             : true, href: Object.assign(Object.assign({}, hrefNext), { pathname: localizedPathname
                     ? localizedPathname
-                    : routes[route][defaultLocale], query: paramsAndQuery }), locale: locale, passHref: true, prefetch: prefetch, replace: replace, scroll: scroll, shallow: shallow, children: (0, jsx_runtime_1.jsx)("a", Object.assign({ ref: ref }, anchorProps, { children: children })) }));
+                    : localizedRoutesSet[defaultLocale], query: paramsAndQuery }), locale: locale, passHref: true, prefetch: prefetch, replace: replace, scroll: scroll, shallow: shallow, children: (0, jsx_runtime_1.jsx)("a", Object.assign({ ref: ref }, anchorProps, { children: children })) }));
     }
     return ((0, jsx_runtime_1.jsx)("a", Object.assign({ ref: ref, href: href ? href.toString() : " " }, anchorProps, { children: children })));
 };
