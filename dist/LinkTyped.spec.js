@@ -15,9 +15,9 @@ const jsx_runtime_1 = require("react/jsx-runtime");
 const react_1 = require("@testing-library/react");
 require("@testing-library/jest-dom");
 const LinkTyped_1 = require("./LinkTyped");
-const routes_1 = require("./tests/data/routes");
+const routes_1 = require("./mock-data/routes");
 const router_1 = require("next/router");
-const useRouterTypedMock_1 = require("./tests/data/useRouterTypedMock");
+const useRouterTypedMock_1 = require("./mock-data/useRouterTypedMock");
 const react_2 = require("react");
 jest.mock("next/router", () => ({
     useRouter: jest.fn(),

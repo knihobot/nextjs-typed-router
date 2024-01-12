@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const router_1 = require("next/router");
-const useRouterTypedMock_1 = require("./tests/data/useRouterTypedMock");
+const useRouterTypedMock_1 = require("./mock-data/useRouterTypedMock");
 jest.mock("next/router", () => ({
     useRouter: jest.fn(),
 }));

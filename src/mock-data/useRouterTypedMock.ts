@@ -1,4 +1,4 @@
-import { useRouterTyped } from "../../useRouterTyped";
+import { useRouterTyped } from "../useRouterTyped";
 import { mockRoutes } from "./routes";
 import { Router } from "next/router";
 

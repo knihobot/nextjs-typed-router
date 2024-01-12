@@ -3,7 +3,7 @@ import {
   LocaleLabelType,
   mockRoutes,
   MockRoutesType,
-} from "../tests/data/routes";
+} from "../mock-data/routes";
 import { matchRealAddressByRouteName } from "./matchRealAddressByRouteName";
 
 describe("matchRealAddressByRouteName", () => {

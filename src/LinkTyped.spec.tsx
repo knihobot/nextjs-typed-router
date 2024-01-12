@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { LinkTyped } from "./LinkTyped";
-import { mockRoutes } from "./tests/data/routes";
+import { mockRoutes } from "./mock-data/routes";
 import { useRouter } from "next/router";
-import { mockRouter } from "./tests/data/useRouterTypedMock";
+import { mockRouter } from "./mock-data/useRouterTypedMock";
 import { cloneElement, isValidElement, PropsWithChildren } from "react";
 import { LinkProps } from "next/link";
 import { UrlObject } from "url";

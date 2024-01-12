@@ -1,8 +1,5 @@
 import { useRouter } from "next/router";
-import {
-  mockRouter,
-  useRouterTypedMock,
-} from "./tests/data/useRouterTypedMock";
+import { mockRouter, useRouterTypedMock } from "./mock-data/useRouterTypedMock";
 
 jest.mock("next/router", () => ({
   useRouter: jest.fn(),

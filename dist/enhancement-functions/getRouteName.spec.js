@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const getRouteName_1 = require("./getRouteName");
-const routes_1 = require("../tests/data/routes");
+const routes_1 = require("../mock-data/routes");
 describe("getRouteName", () => {
     it("should return the correct route name for a normal route", () => {
         expect((0, getRouteName_1.getRouteName)("/about", routes_1.mockRoutes)).toBe("about");

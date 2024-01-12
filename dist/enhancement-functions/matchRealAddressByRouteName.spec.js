@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const routes_1 = require("../tests/data/routes");
+const routes_1 = require("../mock-data/routes");
 const matchRealAddressByRouteName_1 = require("./matchRealAddressByRouteName");
 describe("matchRealAddressByRouteName", () => {
     it("Non-existent route", () => {
