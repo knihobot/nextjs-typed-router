@@ -141,6 +141,31 @@ describe("matchRealAddressByRouteName", () => {
     });
   });
 
+  it("Existing optional catch-all route with specified locale with undefined on some indexes", () => {
+    expect(
+      matchRealAddressByRouteName<MockRoutesType, LocaleLabelType, "en">(
+        {
+          pathname: "optionalGallery",
+          query: {
+            images: [
+              "image1.jpg",
+              undefined,
+              undefined,
+              "image2.jpg",
+              undefined,
+              undefined,
+            ],
+          },
+        },
+        mockRoutes,
+        "en",
+      ),
+    ).toEqual({
+      pathname: "/optional-gallery/[[...images]]",
+      query: { images: ["image1.jpg", "image2.jpg"] },
+    });
+  });
+
   it("Existing optional catch-all route with default locale", () => {
     expect(
       matchRealAddressByRouteName<MockRoutesType, LocaleLabelType, "en">(

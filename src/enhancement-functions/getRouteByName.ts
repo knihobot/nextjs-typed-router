@@ -1,4 +1,5 @@
 import { LocalizedRoute, RouteProps } from "@types-app/index";
+import { removeUndefined } from "../helpers/removeUndefined";
 
 export function getRouteByName<
   RouteDefinitions extends Record<string, RouteProps>,
@@ -36,7 +37,7 @@ export function getRouteByName<
         Array.isArray(paramValue) &&
         paramValue.length > 0
       ) {
-        return paramValue.join("/");
+        return removeUndefined(paramValue).join("/");
       }
       return ""; // Remove optional catch-all segment if not provided or empty
     }) as typeof path;

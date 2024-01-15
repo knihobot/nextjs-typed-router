@@ -141,6 +141,23 @@ describe("LinkTyped Component", () => {
     });
   });
 
+  it("renders href correctly for an optional catch-all route with undefined on some indexes", () => {
+    render(
+      <LinkTyped
+        route="optionalGallery"
+        params={{
+          images: ["landscape", undefined, "portrait", undefined, undefined],
+        }}
+        routes={mockRoutes}
+        defaultLocale="en"
+      />,
+    );
+    expect(mockHref).toEqual({
+      pathname: "/optional-gallery/[[...images]]",
+      query: { images: ["landscape", "portrait"] },
+    });
+  });
+
   // Test case 8: Localized route in a different locale
   it("renders localized href in 'cs' locale", () => {
     (useRouter as jest.Mock).mockReturnValue({
