@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.26](https://github.com/knihobot/nextjs-typed-router/compare/v0.1.25...v0.1.26) (2024-01-15)
+
+
+### Features
+
+* add support for catch all routes in getRouteByName function ([30ad401](https://github.com/knihobot/nextjs-typed-router/commit/30ad401cd8cd1649bc5107d02cd17dab84467d68))
+* coverage for all the enhanced functions and router hook ([2cbcf00](https://github.com/knihobot/nextjs-typed-router/commit/2cbcf0055859a296ae15d3871dd61e6951f3909b))
+* coverage for link component ([6c6751c](https://github.com/knihobot/nextjs-typed-router/commit/6c6751c7af9f23000093ab73e3b8858b6801eac2))
+
 ### [0.1.25](https://github.com/knihobot/nextjs-typed-router/compare/v0.1.24...v0.1.25) (2023-11-03)
 
 
