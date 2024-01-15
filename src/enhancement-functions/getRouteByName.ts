@@ -3,7 +3,7 @@ import { LocalizedRoute, RouteProps } from "@types-app/index";
 export function getRouteByName<
   RouteDefinitions extends Record<string, RouteProps>,
   Locales extends string,
-  DefaultLocale extends Locales
+  DefaultLocale extends Locales,
 >(
   route: keyof RouteDefinitions,
   routes: Record<
@@ -12,7 +12,7 @@ export function getRouteByName<
   >,
   params: RouteDefinitions[keyof RouteDefinitions]["params"],
   locale?: Locales,
-  defaultLocale?: DefaultLocale
+  defaultLocale?: DefaultLocale,
 ): Record<keyof RouteDefinitions, string>[keyof RouteDefinitions] | undefined {
   const matchedRoute = routes[route];
 
@@ -20,27 +20,50 @@ export function getRouteByName<
     return undefined;
   }
 
-  const routeAddress = routes[route][locale as Locales];
-  const fallbackRouteAddress = routes[route][defaultLocale as Locales];
+  let path =
+    routes[route][locale as Locales] || routes[route][defaultLocale as Locales];
 
-  if (!params) {
-    if (!routeAddress) {
-      if (fallbackRouteAddress) {
-        return fallbackRouteAddress;
+  // Handle optional catch-all segments
+  const optionalCatchAllRegex = /\[\[\.\.\.(.*?)]]/g;
+
+  if (path.match(optionalCatchAllRegex)) {
+    path = path.replace(optionalCatchAllRegex, (match, segmentKey) => {
+      const paramValue = params && params[segmentKey];
+
+      if (
+        params &&
+        paramValue &&
+        Array.isArray(paramValue) &&
+        paramValue.length > 0
+      ) {
+        return paramValue.join("/");
+      }
+      return ""; // Remove optional catch-all segment if not provided or empty
+    }) as typeof path;
+  } else {
+    // Handle required catch-all segments and single parameters
+    if (params) {
+      const paramsKeys = Object.keys(params);
+
+      if (paramsKeys.length === 0) {
+        return undefined;
       }
 
-      return undefined;
-    }
+      for (const key of paramsKeys) {
+        const value = params[key];
+        const catchAllRegex = new RegExp(`\\[\\.\\.\\.${key}\\]`, "g");
+        const singleParamRegex = new RegExp(`\\[${key}\\]`, "gi");
 
-    return routeAddress;
+        if (Array.isArray(value)) {
+          const joinedValue = value.join("/") || "";
+          path = path.replace(catchAllRegex, joinedValue) as typeof path;
+        } else {
+          const stringValue = value || "";
+          path = path.replace(singleParamRegex, stringValue) as typeof path;
+        }
+      }
+    }
   }
 
-  const paramsKeys = Object.keys(params);
-  const key = paramsKeys[0];
-
-  return (routeAddress || fallbackRouteAddress).replace(
-    new RegExp(`\\[${key}\\]`, "gi"),
-    // @ts-ignore TODO: assign correct type for paramKey
-    params[key]
-  );
+  return path;
 }

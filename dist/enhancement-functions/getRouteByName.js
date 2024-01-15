@@ -6,21 +6,43 @@ function getRouteByName(route, routes, params, locale, defaultLocale) {
     if (!matchedRoute) {
         return undefined;
     }
-    const routeAddress = routes[route][locale];
-    const fallbackRouteAddress = routes[route][defaultLocale];
-    if (!params) {
-        if (!routeAddress) {
-            if (fallbackRouteAddress) {
-                return fallbackRouteAddress;
+    let path = routes[route][locale] || routes[route][defaultLocale];
+    // Handle optional catch-all segments
+    const optionalCatchAllRegex = /\[\[\.\.\.(.*?)]]/g;
+    if (path.match(optionalCatchAllRegex)) {
+        path = path.replace(optionalCatchAllRegex, (match, segmentKey) => {
+            const paramValue = params && params[segmentKey];
+            if (params &&
+                paramValue &&
+                Array.isArray(paramValue) &&
+                paramValue.length > 0) {
+                return paramValue.join("/");
             }
-            return undefined;
-        }
-        return routeAddress;
+            return ""; // Remove optional catch-all segment if not provided or empty
+        });
     }
-    const paramsKeys = Object.keys(params);
-    const key = paramsKeys[0];
-    return (routeAddress || fallbackRouteAddress).replace(new RegExp(`\\[${key}\\]`, "gi"), 
-    // @ts-ignore TODO: assign correct type for paramKey
-    params[key]);
+    else {
+        // Handle required catch-all segments and single parameters
+        if (params) {
+            const paramsKeys = Object.keys(params);
+            if (paramsKeys.length === 0) {
+                return undefined;
+            }
+            for (const key of paramsKeys) {
+                const value = params[key];
+                const catchAllRegex = new RegExp(`\\[\\.\\.\\.${key}\\]`, "g");
+                const singleParamRegex = new RegExp(`\\[${key}\\]`, "gi");
+                if (Array.isArray(value)) {
+                    const joinedValue = value.join("/") || "";
+                    path = path.replace(catchAllRegex, joinedValue);
+                }
+                else {
+                    const stringValue = value || "";
+                    path = path.replace(singleParamRegex, stringValue);
+                }
+            }
+        }
+    }
+    return path;
 }
 exports.getRouteByName = getRouteByName;

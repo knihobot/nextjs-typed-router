@@ -40,5 +40,5 @@ export declare const LinkTyped: <RouteDefinitions extends Record<string, RoutePr
     routes: Record<keyof RouteDefinitions, LocalizedRoute<Locales, DefaultLocale>>;
 } & {
     ref?: Ref<HTMLAnchorElement> | undefined;
-}) => JSX.Element;
+}) => import("react/jsx-runtime").JSX.Element;
 export {};

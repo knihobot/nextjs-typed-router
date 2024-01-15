@@ -23,9 +23,15 @@ function matchRealAddressByRouteName(routeName, routes, locale, defaultLocale) {
         }
         const localizedAddress = matched[locale];
         return {
-            pathname: localizedAddress ? localizedAddress : matched[defaultLocale],
+            pathname: localizedAddress
+                ? localizedAddress
+                : matched[defaultLocale],
             query: routeName.query,
         };
+    }
+    const matchedRouteSet = routes[routeName];
+    if (!matchedRouteSet) {
+        return undefined;
     }
     const matched = routes[routeName][locale];
     if (!matched) {

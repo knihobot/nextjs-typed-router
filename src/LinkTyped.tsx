@@ -10,7 +10,7 @@ type LinkTypedProps<
   RouteDefinitions extends Record<string, RouteProps>,
   RouteName extends keyof RouteDefinitions,
   Locales extends string,
-  DefaultLocale extends Locales
+  DefaultLocale extends Locales,
 > = Omit<NextLinkProps, "href" | "onClick" | "onMouseEnter"> &
   Omit<
     AnchorHTMLAttributes<HTMLAnchorElement>,
@@ -34,11 +34,11 @@ export const LinkTyped = <
   RouteDefinitions extends Record<string, RouteProps>,
   RouteName extends keyof RouteDefinitions,
   Locales extends string,
-  DefaultLocale extends Locales
+  DefaultLocale extends Locales,
 >(
   props: LinkTypedProps<RouteDefinitions, RouteName, Locales, DefaultLocale> & {
     ref?: Ref<HTMLAnchorElement>;
-  }
+  },
 ) => {
   const {
     children,
@@ -55,6 +55,7 @@ export const LinkTyped = <
     routes,
     scroll,
     shallow,
+    legacyBehavior,
     ...anchorProps
   } = props;
 
@@ -76,7 +77,14 @@ export const LinkTyped = <
       : undefined;
 
   if (route) {
-    const localizedPathname = routes[route][routerLocale as Locales];
+    const localizedRoutesSet = routes[route];
+
+    if (!localizedRoutesSet)
+      throw new Error(
+        `No route with provided key ${String(route)} exists in routes object`,
+      );
+
+    const localizedPathname = localizedRoutesSet[routerLocale as Locales];
 
     return (
       <NextLink
@@ -85,7 +93,7 @@ export const LinkTyped = <
           ...hrefNext,
           pathname: localizedPathname
             ? localizedPathname
-            : routes[route][defaultLocale as DefaultLocale],
+            : localizedRoutesSet[defaultLocale as DefaultLocale],
           query: paramsAndQuery,
         }}
         locale={locale}

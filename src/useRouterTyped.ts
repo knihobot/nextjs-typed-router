@@ -20,7 +20,7 @@ import { getRouteName as getRouteNameStandalone } from "./enhancement-functions/
 
 interface EnhancedNextRouter<
   RouteDefinitions extends Record<string, RouteProps>,
-  Locales extends string
+  Locales extends string,
 > {
   getCurrentDomain: GetCurrentDomain;
   getCurrentRoute: GetCurrentRoute<RouteDefinitions>;
@@ -37,13 +37,13 @@ interface EnhancedNextRouter<
 export function useRouterTyped<
   RouteDefinitions extends Record<string, RouteProps>,
   Locales extends string,
-  DefaultLocale extends Locales
+  DefaultLocale extends Locales,
 >(
   routes: Record<
     keyof RouteDefinitions,
     LocalizedRoute<Locales, DefaultLocale>
   >,
-  defaultLocale: DefaultLocale
+  defaultLocale: DefaultLocale,
 ): EnhancedNextRouter<RouteDefinitions, Locales> &
   Omit<NextRouter, "push" | "locale"> {
   const router = useRouter();
@@ -63,7 +63,7 @@ export function useRouterTyped<
     await router.push(
       url as string | UrlObject,
       as ? (matchRealAddressByRouteName(as) as string | UrlObject) : undefined,
-      options
+      options,
     );
   };
 
@@ -95,7 +95,7 @@ export function useRouterTyped<
       return;
     }
     const currentDomain = domainLocales?.find(
-      (domainLocale) => domainLocale?.defaultLocale === locale
+      (domainLocale) => domainLocale?.defaultLocale === locale,
     );
     return currentDomain?.domain;
   };
@@ -109,7 +109,7 @@ export function useRouterTyped<
       routes,
       params,
       router.locale as Locales,
-      defaultLocale
+      defaultLocale,
     );
 
   const matchRealAddressByRouteName: MatchRealAddressByRouteName<
@@ -119,7 +119,7 @@ export function useRouterTyped<
       routeName,
       routes,
       router.locale as Locales,
-      defaultLocale
+      defaultLocale,
     );
 
   return {
