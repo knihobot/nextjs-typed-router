@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.27](https://github.com/knihobot/nextjs-typed-router/compare/v0.1.26...v0.1.27) (2024-01-15)
+
+
+### Bug Fixes
+
+* getRouteByName undefined on some indexes ([b6747da](https://github.com/knihobot/nextjs-typed-router/commit/b6747da6e6992f8883c156a6ba086898dcd4f88d))
+
 ### [0.1.26](https://github.com/knihobot/nextjs-typed-router/compare/v0.1.25...v0.1.26) (2024-01-15)
 
 
