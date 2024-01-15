@@ -90,6 +90,15 @@ describe("LinkTyped Component", () => {
             query: { images: ["landscape", "portrait"] },
         });
     });
+    it("renders href correctly for an optional catch-all route with undefined on some indexes", () => {
+        (0, react_1.render)((0, jsx_runtime_1.jsx)(LinkTyped_1.LinkTyped, { route: "optionalGallery", params: {
+                images: ["landscape", undefined, "portrait", undefined, undefined],
+            }, routes: routes_1.mockRoutes, defaultLocale: "en" }));
+        expect(mockHref).toEqual({
+            pathname: "/optional-gallery/[[...images]]",
+            query: { images: ["landscape", "portrait"] },
+        });
+    });
     // Test case 8: Localized route in a different locale
     it("renders localized href in 'cs' locale", () => {
         router_1.useRouter.mockReturnValue(Object.assign(Object.assign({}, useRouterTypedMock_1.mockRouter), { locale: "cs" }));

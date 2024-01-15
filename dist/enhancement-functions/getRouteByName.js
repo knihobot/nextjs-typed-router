@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getRouteByName = void 0;
+const removeUndefined_1 = require("../helpers/removeUndefined");
 function getRouteByName(route, routes, params, locale, defaultLocale) {
     const matchedRoute = routes[route];
     if (!matchedRoute) {
@@ -16,7 +17,7 @@ function getRouteByName(route, routes, params, locale, defaultLocale) {
                 paramValue &&
                 Array.isArray(paramValue) &&
                 paramValue.length > 0) {
-                return paramValue.join("/");
+                return (0, removeUndefined_1.removeUndefined)(paramValue).join("/");
             }
             return ""; // Remove optional catch-all segment if not provided or empty
         });

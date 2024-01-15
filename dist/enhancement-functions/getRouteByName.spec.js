@@ -100,6 +100,25 @@ describe("getRouteByName", () => {
             }, "en");
             expect(path).toBe("/products/category1/item123/detail/review/image/specification/compare/offer/discount/history");
         });
+        it("should handle optional catch-all segments with a long array of segments including undefined on some indexes", () => {
+            const path = (0, getRouteByName_1.getRouteByName)("products", routes, {
+                segments: [
+                    "category1",
+                    "item123",
+                    undefined,
+                    undefined,
+                    "image",
+                    "specification",
+                    "compare",
+                    "offer",
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                ],
+            }, "en");
+            expect(path).toBe("/products/category1/item123/image/specification/compare/offer");
+        });
     });
     // Test case for non-existent routes
     it("should return undefined for non-existent routes", () => {

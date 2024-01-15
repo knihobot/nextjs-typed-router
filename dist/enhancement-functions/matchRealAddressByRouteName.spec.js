@@ -68,6 +68,24 @@ describe("matchRealAddressByRouteName", () => {
             query: { images: ["image1.jpg", "image2.jpg"] },
         });
     });
+    it("Existing optional catch-all route with specified locale with undefined on some indexes", () => {
+        expect((0, matchRealAddressByRouteName_1.matchRealAddressByRouteName)({
+            pathname: "optionalGallery",
+            query: {
+                images: [
+                    "image1.jpg",
+                    undefined,
+                    undefined,
+                    "image2.jpg",
+                    undefined,
+                    undefined,
+                ],
+            },
+        }, routes_1.mockRoutes, "en")).toEqual({
+            pathname: "/optional-gallery/[[...images]]",
+            query: { images: ["image1.jpg", "image2.jpg"] },
+        });
+    });
     it("Existing optional catch-all route with default locale", () => {
         expect((0, matchRealAddressByRouteName_1.matchRealAddressByRouteName)({
             pathname: "optionalGallery",
