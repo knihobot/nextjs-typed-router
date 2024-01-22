@@ -1,5 +1,11 @@
 import { useRouter } from "next/router";
 import { mockRouter, useRouterTypedMock } from "./mock-data/useRouterTypedMock";
+import { getLocalizedRouteFromPathname } from "./enhancement-functions/getLocalizedRouteFromPathname";
+import {
+  LocaleLabelType,
+  mockRoutes,
+  MockRoutesType,
+} from "./mock-data/routes";
 
 jest.mock("next/router", () => ({
   useRouter: jest.fn(),
@@ -124,6 +130,77 @@ describe("useRouterTyped", () => {
           undefined,
           undefined,
         );
+      });
+    });
+
+    // Get localized route from pathname
+    describe("get localized route from pathname", () => {
+      it("should return the correct localized route pathname for a requested pathname", () => {
+        (useRouter as jest.Mock).mockReturnValue({
+          ...mockRouter,
+          locale: "cs",
+        });
+        const routerMock = useRouterTypedMock();
+        expect(routerMock.getLocalizedRouteFromPathname("/about")).toBe(
+          "/o-nas",
+        );
+      });
+
+      it("should return the correct localized route pathname for a requested pathname with one param", () => {
+        (useRouter as jest.Mock).mockReturnValue({
+          ...mockRouter,
+          locale: "de-DE",
+        });
+        const routerMock = useRouterTypedMock();
+        expect(
+          routerMock.getLocalizedRouteFromPathname("/kategoria/slovensko"),
+        ).toBe("/kategorie/slovensko");
+      });
+
+      it("should return the correct localized route pathname for a requested pathname with one param and three segments", () => {
+        (useRouter as jest.Mock).mockReturnValue({
+          ...mockRouter,
+          locale: "sk",
+        });
+        const routerMock = useRouterTypedMock();
+        expect(
+          routerMock.getLocalizedRouteFromPathname("/benutzer/123/details"),
+        ).toBe("/uzivatel/123/detaily");
+      });
+
+      it("should return the correct localized route pathname for a requested pathname with two params and four segments", () => {
+        (useRouter as jest.Mock).mockReturnValue({
+          ...mockRouter,
+          locale: "de-AT",
+        });
+        const routerMock = useRouterTypedMock();
+        expect(
+          routerMock.getLocalizedRouteFromPathname("/product/cars/review/654"),
+        ).toBe("/produkt/cars/bewertung/654");
+      });
+
+      it("should return the correct localized route pathname for a requested pathname with required catch all params", () => {
+        (useRouter as jest.Mock).mockReturnValue({
+          ...mockRouter,
+          locale: "cs",
+        });
+        const routerMock = useRouterTypedMock();
+        expect(
+          routerMock.getLocalizedRouteFromPathname("/docs/guide/intro/123"),
+        ).toBe("/dokumentace/guide/intro/123");
+      });
+
+      it("should return the correct localized route pathname for a requested pathname with optional catch all params", () => {
+        (useRouter as jest.Mock).mockReturnValue({
+          ...mockRouter,
+          locale: "sk",
+        });
+        const routerMock = useRouterTypedMock();
+        expect(
+          routerMock.getLocalizedRouteFromPathname(
+            "/uzivatelSoubory/123/456/789/abc",
+          ),
+        ).toBe("/uzivatelSubory/123/456/789/abc");
       });
     });
 

@@ -11,8 +11,8 @@ describe("getLocalizedRouteFromPathname", () => {
       getLocalizedRouteFromPathname<MockRoutesType, LocaleLabelType, "en">(
         "/about",
         mockRoutes,
-        "cs",
         "en",
+        "cs",
       ),
     ).toBe("/o-nas");
   });
@@ -22,8 +22,8 @@ describe("getLocalizedRouteFromPathname", () => {
       getLocalizedRouteFromPathname<MockRoutesType, LocaleLabelType, "en">(
         "/kategoria/slovensko",
         mockRoutes,
-        "de-DE",
         "en",
+        "de-DE",
       ),
     ).toBe("/kategorie/slovensko");
   });
@@ -33,8 +33,8 @@ describe("getLocalizedRouteFromPathname", () => {
       getLocalizedRouteFromPathname<MockRoutesType, LocaleLabelType, "en">(
         "/benutzer/123/details",
         mockRoutes,
-        "sk",
         "en",
+        "sk",
       ),
     ).toBe("/uzivatel/123/detaily");
   });
@@ -44,8 +44,8 @@ describe("getLocalizedRouteFromPathname", () => {
       getLocalizedRouteFromPathname<MockRoutesType, LocaleLabelType, "en">(
         "/product/cars/review/654",
         mockRoutes,
-        "de-AT",
         "en",
+        "de-AT",
       ),
     ).toBe("/produkt/cars/bewertung/654");
   });
@@ -55,8 +55,8 @@ describe("getLocalizedRouteFromPathname", () => {
       getLocalizedRouteFromPathname<MockRoutesType, LocaleLabelType, "en">(
         "/docs/guide/intro/123",
         mockRoutes,
-        "cs",
         "en",
+        "cs",
       ),
     ).toBe("/dokumentace/guide/intro/123");
   });
@@ -66,8 +66,8 @@ describe("getLocalizedRouteFromPathname", () => {
       getLocalizedRouteFromPathname<MockRoutesType, LocaleLabelType, "en">(
         "/uzivatelSoubory/123/456/789/abc",
         mockRoutes,
-        "sk",
         "en",
+        "sk",
       ),
     ).toBe("/uzivatelSubory/123/456/789/abc");
   });

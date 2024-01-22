@@ -2,6 +2,7 @@ import { NextRouter, useRouter } from "next/router";
 import {
   GetCurrentDomain,
   GetCurrentRoute,
+  GetLocalizedRouteFromPathname,
   GetRouteByName,
   GetRouteName,
   IsCurrentRoute,
@@ -17,6 +18,7 @@ import { matchRealAddressByRouteName as matchRealAddressByRouteNameStandalone } 
 import { getRouteByName as getRouteByNameStandalone } from "./enhancement-functions/getRouteByName";
 import { UrlObject } from "url";
 import { getRouteName as getRouteNameStandalone } from "./enhancement-functions/getRouteName";
+import { getLocalizedRouteFromPathname as getLocalizedRouteFromPathnameStandalone } from "./enhancement-functions/getLocalizedRouteFromPathname";
 
 interface EnhancedNextRouter<
   RouteDefinitions extends Record<string, RouteProps>,
@@ -24,14 +26,15 @@ interface EnhancedNextRouter<
 > {
   getCurrentDomain: GetCurrentDomain;
   getCurrentRoute: GetCurrentRoute<RouteDefinitions>;
+  getLocalizedRouteFromPathname: GetLocalizedRouteFromPathname;
   getRouteByName: GetRouteByName<RouteDefinitions>;
   getRouteName: GetRouteName<RouteDefinitions>;
   isCurrentRoute: IsCurrentRoute<RouteDefinitions>;
+  locale: Locales;
+  matchRealAddressByRouteName: MatchRealAddressByRouteName<RouteDefinitions>;
   push: Push<RouteDefinitions>;
   pushCustomUrl: PushCustomUrl;
   pushShallow: PushShallow<RouteDefinitions>;
-  matchRealAddressByRouteName: MatchRealAddressByRouteName<RouteDefinitions>;
-  locale: Locales;
 }
 
 export function useRouterTyped<
@@ -103,6 +106,16 @@ export function useRouterTyped<
   const getRouteName: GetRouteName<RouteDefinitions> = (url) =>
     getRouteNameStandalone(url, routes);
 
+  const getLocalizedRouteFromPathname: GetLocalizedRouteFromPathname = (
+    pathname,
+  ) =>
+    getLocalizedRouteFromPathnameStandalone(
+      pathname,
+      routes,
+      defaultLocale,
+      router.locale as Locales,
+    );
+
   const getRouteByName: GetRouteByName<RouteDefinitions> = (route, params) =>
     getRouteByNameStandalone(
       route,
@@ -124,12 +137,13 @@ export function useRouterTyped<
 
   return {
     ...router,
-    locale: router.locale as Locales,
     getCurrentDomain,
     getCurrentRoute,
+    getLocalizedRouteFromPathname,
     getRouteByName,
     getRouteName,
     isCurrentRoute,
+    locale: router.locale as Locales,
     matchRealAddressByRouteName,
     push,
     pushCustomUrl,
