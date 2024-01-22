@@ -62,6 +62,8 @@ export const mockRoutes: Record<
 > = {
   // Normal routes without parameters
   home: { en: "/", cs: "/", sk: "/", "de-AT": "/", "de-DE": "/" },
+  // @ts-ignore
+  login: { en: "/login" },
   about: {
     en: "/about",
     cs: "/o-nas",

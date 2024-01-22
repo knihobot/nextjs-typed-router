@@ -6,6 +6,9 @@ describe("getLocalizedRouteFromPathname", () => {
     it("should return the correct localized route pathname for a requested pathname", () => {
         expect((0, getLocalizedRouteFromPathname_1.getLocalizedRouteFromPathname)("/about", routes_1.mockRoutes, "en", "cs")).toBe("/o-nas");
     });
+    it("should return the correct localized route pathname for a requested pathname", () => {
+        expect((0, getLocalizedRouteFromPathname_1.getLocalizedRouteFromPathname)("/login", routes_1.mockRoutes, "en", "cs")).toBe("/login");
+    });
     it("should return the correct localized route pathname for a requested pathname with one param", () => {
         expect((0, getLocalizedRouteFromPathname_1.getLocalizedRouteFromPathname)("/kategoria/slovensko", routes_1.mockRoutes, "en", "de-DE")).toBe("/kategorie/slovensko");
     });

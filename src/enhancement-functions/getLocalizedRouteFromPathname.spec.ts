@@ -17,6 +17,17 @@ describe("getLocalizedRouteFromPathname", () => {
     ).toBe("/o-nas");
   });
 
+  it("should return the correct localized route pathname for a requested pathname", () => {
+    expect(
+      getLocalizedRouteFromPathname<MockRoutesType, LocaleLabelType, "en">(
+        "/login",
+        mockRoutes,
+        "en",
+        "cs",
+      ),
+    ).toBe("/login");
+  });
+
   it("should return the correct localized route pathname for a requested pathname with one param", () => {
     expect(
       getLocalizedRouteFromPathname<MockRoutesType, LocaleLabelType, "en">(

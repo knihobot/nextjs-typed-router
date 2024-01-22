@@ -11,7 +11,7 @@ export function getLocalizedRouteFromPathname<
     LocalizedRoute<Locales, DefaultLocale>
   >,
   fallbackLocale: DefaultLocale,
-  locale?: Locales,
+  locale: Locales,
 ): string | undefined {
   const pathnameSegments = pathname.split("/").filter(Boolean);
 
@@ -24,7 +24,9 @@ export function getLocalizedRouteFromPathname<
       const routePatternSegments = routePattern.split("/").filter(Boolean);
 
       if (routePatternSegments[0] === pathnameSegments[0]) {
-        const localizedRoute = routePatternCollection[locale ?? fallbackLocale];
+        const localizedRoute =
+          routePatternCollection[locale] ||
+          routePatternCollection[fallbackLocale];
 
         // Normal params or without params
         if (routePatternSegments.length === pathnameSegments.length) {
