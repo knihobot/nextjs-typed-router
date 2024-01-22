@@ -95,6 +95,10 @@ export interface GetRouteName<
   (url: string): keyof RouteDefinitions | undefined;
 }
 
+export interface GetLocalizedRouteFromPathname {
+  (pathname: string): string | undefined;
+}
+
 export interface IsCurrentRoute<
   RouteDefinitions extends Record<string, RouteProps>,
 > {

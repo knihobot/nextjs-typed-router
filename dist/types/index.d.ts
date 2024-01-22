@@ -43,6 +43,9 @@ export interface GetCurrentRoute<RouteDefinitions extends Record<string, RoutePr
 export interface GetRouteName<RouteDefinitions extends Record<string, RouteProps>> {
     (url: string): keyof RouteDefinitions | undefined;
 }
+export interface GetLocalizedRouteFromPathname {
+    (pathname: string): string | undefined;
+}
 export interface IsCurrentRoute<RouteDefinitions extends Record<string, RouteProps>> {
     (route: keyof RouteDefinitions): boolean;
 }

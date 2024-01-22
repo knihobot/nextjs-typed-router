@@ -91,6 +91,39 @@ describe("useRouterTyped", () => {
                 expect(useRouterTypedMock_1.mockRouter.push).toHaveBeenCalledWith({ pathname: "/userFiles/[[...fileId]]", query: { fileId } }, undefined, undefined);
             }));
         });
+        // Get localized route from pathname
+        describe("get localized route from pathname", () => {
+            it("should return the correct localized route pathname for a requested pathname", () => {
+                router_1.useRouter.mockReturnValue(Object.assign(Object.assign({}, useRouterTypedMock_1.mockRouter), { locale: "cs" }));
+                const routerMock = (0, useRouterTypedMock_1.useRouterTypedMock)();
+                expect(routerMock.getLocalizedRouteFromPathname("/about")).toBe("/o-nas");
+            });
+            it("should return the correct localized route pathname for a requested pathname with one param", () => {
+                router_1.useRouter.mockReturnValue(Object.assign(Object.assign({}, useRouterTypedMock_1.mockRouter), { locale: "de-DE" }));
+                const routerMock = (0, useRouterTypedMock_1.useRouterTypedMock)();
+                expect(routerMock.getLocalizedRouteFromPathname("/kategoria/slovensko")).toBe("/kategorie/slovensko");
+            });
+            it("should return the correct localized route pathname for a requested pathname with one param and three segments", () => {
+                router_1.useRouter.mockReturnValue(Object.assign(Object.assign({}, useRouterTypedMock_1.mockRouter), { locale: "sk" }));
+                const routerMock = (0, useRouterTypedMock_1.useRouterTypedMock)();
+                expect(routerMock.getLocalizedRouteFromPathname("/benutzer/123/details")).toBe("/uzivatel/123/detaily");
+            });
+            it("should return the correct localized route pathname for a requested pathname with two params and four segments", () => {
+                router_1.useRouter.mockReturnValue(Object.assign(Object.assign({}, useRouterTypedMock_1.mockRouter), { locale: "de-AT" }));
+                const routerMock = (0, useRouterTypedMock_1.useRouterTypedMock)();
+                expect(routerMock.getLocalizedRouteFromPathname("/product/cars/review/654")).toBe("/produkt/cars/bewertung/654");
+            });
+            it("should return the correct localized route pathname for a requested pathname with required catch all params", () => {
+                router_1.useRouter.mockReturnValue(Object.assign(Object.assign({}, useRouterTypedMock_1.mockRouter), { locale: "cs" }));
+                const routerMock = (0, useRouterTypedMock_1.useRouterTypedMock)();
+                expect(routerMock.getLocalizedRouteFromPathname("/docs/guide/intro/123")).toBe("/dokumentace/guide/intro/123");
+            });
+            it("should return the correct localized route pathname for a requested pathname with optional catch all params", () => {
+                router_1.useRouter.mockReturnValue(Object.assign(Object.assign({}, useRouterTypedMock_1.mockRouter), { locale: "sk" }));
+                const routerMock = (0, useRouterTypedMock_1.useRouterTypedMock)();
+                expect(routerMock.getLocalizedRouteFromPathname("/uzivatelSoubory/123/456/789/abc")).toBe("/uzivatelSubory/123/456/789/abc");
+            });
+        });
         // Push custom url
         it("pushCustomUrl navigates to a custom URL", () => __awaiter(void 0, void 0, void 0, function* () {
             const routerMock = (0, useRouterTypedMock_1.useRouterTypedMock)();

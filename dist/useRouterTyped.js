@@ -14,6 +14,7 @@ const router_1 = require("next/router");
 const matchRealAddressByRouteName_1 = require("./enhancement-functions/matchRealAddressByRouteName");
 const getRouteByName_1 = require("./enhancement-functions/getRouteByName");
 const getRouteName_1 = require("./enhancement-functions/getRouteName");
+const getLocalizedRouteFromPathname_1 = require("./enhancement-functions/getLocalizedRouteFromPathname");
 function useRouterTyped(routes, defaultLocale) {
     const router = (0, router_1.useRouter)();
     const pushShallow = (route, as) => __awaiter(this, void 0, void 0, function* () {
@@ -53,14 +54,15 @@ function useRouterTyped(routes, defaultLocale) {
         return currentDomain === null || currentDomain === void 0 ? void 0 : currentDomain.domain;
     };
     const getRouteName = (url) => (0, getRouteName_1.getRouteName)(url, routes);
+    const getLocalizedRouteFromPathname = (pathname) => (0, getLocalizedRouteFromPathname_1.getLocalizedRouteFromPathname)(pathname, routes, defaultLocale, router.locale);
     const getRouteByName = (route, params) => (0, getRouteByName_1.getRouteByName)(route, routes, params, router.locale, defaultLocale);
     const matchRealAddressByRouteName = (routeName) => (0, matchRealAddressByRouteName_1.matchRealAddressByRouteName)(routeName, routes, router.locale, defaultLocale);
-    return Object.assign(Object.assign({}, router), { locale: router.locale, getCurrentDomain,
+    return Object.assign(Object.assign({}, router), { getCurrentDomain,
         getCurrentRoute,
+        getLocalizedRouteFromPathname,
         getRouteByName,
         getRouteName,
-        isCurrentRoute,
-        matchRealAddressByRouteName,
+        isCurrentRoute, locale: router.locale, matchRealAddressByRouteName,
         push,
         pushCustomUrl,
         pushShallow });
