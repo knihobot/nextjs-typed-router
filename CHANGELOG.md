@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.29](https://github.com/knihobot/nextjs-typed-router/compare/v0.1.28...v0.1.29) (2024-01-22)
+
+
+### Features
+
+* getLocalizedRouteFromPathname ([013461e](https://github.com/knihobot/nextjs-typed-router/commit/013461e11170b1dbca2adb9302f08d7eaf4bdd6c))
+* getLocalizedRouteFromPathname ([4fa22b4](https://github.com/knihobot/nextjs-typed-router/commit/4fa22b4eaeeb01980d769c51907faf80a75e8970))
+
 ### [0.1.28](https://github.com/knihobot/nextjs-typed-router/compare/v0.1.27...v0.1.28) (2024-01-15)
 
 ### [0.1.27](https://github.com/knihobot/nextjs-typed-router/compare/v0.1.26...v0.1.27) (2024-01-15)
