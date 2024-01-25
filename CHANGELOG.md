@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.34](https://github.com/knihobot/nextjs-typed-router/compare/v0.1.33...v0.1.34) (2024-01-25)
+
+
+### Bug Fixes
+
+* trailing slash edge case ([de53f37](https://github.com/knihobot/nextjs-typed-router/commit/de53f37a11c28ad7809e93bb8fd59e1323626e8d))
+
 ### [0.1.33](https://github.com/knihobot/nextjs-typed-router/compare/v0.1.32...v0.1.33) (2024-01-25)
 
 
