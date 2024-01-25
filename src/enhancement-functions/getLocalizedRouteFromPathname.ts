@@ -107,5 +107,5 @@ function replaceCatchAllSegments(
     }
   });
 
-  return `/${localizedSegments.join("/")}`;
+  return `/${localizedSegments.filter(Boolean).join("/")}`;
 }

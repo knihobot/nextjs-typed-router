@@ -64,5 +64,5 @@ function replaceCatchAllSegments(pathnameSegments, localizedSegments, routePatte
             localizedSegments[index] = pathnameSegments.slice(index).join("/");
         }
     });
-    return `/${localizedSegments.join("/")}`;
+    return `/${localizedSegments.filter(Boolean).join("/")}`;
 }

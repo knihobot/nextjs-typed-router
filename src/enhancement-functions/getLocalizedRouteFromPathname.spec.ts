@@ -93,4 +93,15 @@ describe("getLocalizedRouteFromPathname", () => {
       ),
     ).toBe("/uzivatelSubory/123/456/789/abc");
   });
+
+  it("should return the correct localized route pathname for a requested pathname with optional catch all params pattern, but without params specified", () => {
+    expect(
+      getLocalizedRouteFromPathname<MockRoutesType, LocaleLabelType, "en">(
+        "/p",
+        mockRoutes,
+        "en",
+        "de-DE",
+      ),
+    ).toBe("/p");
+  });
 });

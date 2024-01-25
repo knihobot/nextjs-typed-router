@@ -15,6 +15,7 @@ exports.mockRoutes = {
     "account/wishlist": { en: "/account/wishlist" },
     // @ts-ignore
     login: { en: "/login" },
+    listing: { en: "/p/[[...filters]]" },
     about: {
         en: "/about",
         cs: "/o-nas",
