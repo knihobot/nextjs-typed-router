@@ -63,6 +63,14 @@ export const mockRoutes: Record<
   // Normal routes without parameters
   home: { en: "/", cs: "/", sk: "/", "de-AT": "/", "de-DE": "/" },
   // @ts-ignore
+  account: { en: "/account" },
+  "account/billing-history": { en: "/account/billing-history" },
+  "account/books": { en: "/account/books" },
+  "account/details": { en: "/account/details" },
+  "account/orders": { en: "/account/orders" },
+  "account/watchdog": { en: "/account/watchdog" },
+  "account/wishlist": { en: "/account/wishlist" },
+  // @ts-ignore
   login: { en: "/login" },
   about: {
     en: "/about",
