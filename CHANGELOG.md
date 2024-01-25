@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.31](https://github.com/knihobot/nextjs-typed-router/compare/v0.1.30...v0.1.31) (2024-01-25)
+
+
+### Bug Fixes
+
+* cover missing tests, fix bugs ([cdccc71](https://github.com/knihobot/nextjs-typed-router/commit/cdccc71d23e5f5c077f1cb3124748c1bea000e65))
+
 ### [0.1.30](https://github.com/knihobot/nextjs-typed-router/compare/v0.1.29...v0.1.30) (2024-01-22)
 
 
