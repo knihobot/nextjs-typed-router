@@ -77,7 +77,7 @@ export function getLocalizedRouteFromPathname<
         }
 
         // Required catch-all params
-        if (localizedRoute.match(/(?<!\[)\[\.\.\./)) {
+        if (localizedRoute.includes("[...")) {
           return replaceCatchAllSegments(
             pathnameSegments,
             localizedRouteSegments,
