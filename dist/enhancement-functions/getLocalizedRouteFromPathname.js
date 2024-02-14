@@ -48,7 +48,7 @@ function getLocalizedRouteFromPathname(pathname, routes, fallbackLocale, locale)
                     return replaceCatchAllSegments(pathnameSegments, localizedRouteSegments, routePatternSegments, "optional");
                 }
                 // Required catch-all params
-                if (localizedRoute.match(/(?<!\[)\[\.\.\./)) {
+                if (localizedRoute.includes("[...")) {
                     return replaceCatchAllSegments(pathnameSegments, localizedRouteSegments, routePatternSegments, "required");
                 }
             }
