@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.35](https://github.com/knihobot/nextjs-typed-router/compare/v0.1.34...v0.1.35) (2024-02-14)
+
+
+### Bug Fixes
+
+* safari does not support lookbehind ([7f7018b](https://github.com/knihobot/nextjs-typed-router/commit/7f7018b3c46325c16c22b392863f7a1a6815545f))
+
 ### [0.1.34](https://github.com/knihobot/nextjs-typed-router/compare/v0.1.33...v0.1.34) (2024-01-25)
 
 
