@@ -15,7 +15,7 @@ const matchRealAddressByRouteName_1 = require("./enhancement-functions/matchReal
 const getRouteByName_1 = require("./enhancement-functions/getRouteByName");
 const getRouteName_1 = require("./enhancement-functions/getRouteName");
 const getLocalizedRouteFromPathname_1 = require("./enhancement-functions/getLocalizedRouteFromPathname");
-function useRouterTyped(routes, defaultLocale) {
+function useRouterTyped(routes) {
     const router = (0, router_1.useRouter)();
     const pushShallow = (route, as) => __awaiter(this, void 0, void 0, function* () {
         yield push(route, as, { shallow: true });
@@ -35,7 +35,7 @@ function useRouterTyped(routes, defaultLocale) {
         for (const routeKey in routes) {
             const currentNode = routes[routeKey][router.locale];
             if (!currentNode) {
-                const fallbackCurrentNode = routes[routeKey][defaultLocale];
+                const fallbackCurrentNode = routes[routeKey]["fallback"];
                 if (fallbackCurrentNode && fallbackCurrentNode === router.pathname) {
                     return routeKey;
                 }
@@ -54,9 +54,9 @@ function useRouterTyped(routes, defaultLocale) {
         return currentDomain === null || currentDomain === void 0 ? void 0 : currentDomain.domain;
     };
     const getRouteName = (url) => (0, getRouteName_1.getRouteName)(url, routes);
-    const getLocalizedRouteFromPathname = (pathname) => (0, getLocalizedRouteFromPathname_1.getLocalizedRouteFromPathname)(pathname, routes, defaultLocale, router.locale);
-    const getRouteByName = (route, params) => (0, getRouteByName_1.getRouteByName)(route, routes, params, router.locale, defaultLocale);
-    const matchRealAddressByRouteName = (routeName) => (0, matchRealAddressByRouteName_1.matchRealAddressByRouteName)(routeName, routes, router.locale, defaultLocale);
+    const getLocalizedRouteFromPathname = (pathname) => (0, getLocalizedRouteFromPathname_1.getLocalizedRouteFromPathname)(pathname, routes, router.locale);
+    const getRouteByName = (route, params) => (0, getRouteByName_1.getRouteByName)(route, routes, params, router.locale);
+    const matchRealAddressByRouteName = (routeName) => (0, matchRealAddressByRouteName_1.matchRealAddressByRouteName)(routeName, routes, router.locale);
     return Object.assign(Object.assign({}, router), { getCurrentDomain,
         getCurrentRoute,
         getLocalizedRouteFromPathname,

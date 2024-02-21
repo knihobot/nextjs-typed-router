@@ -4,10 +4,11 @@ import { getRouteByName } from "./getRouteByName";
 describe("getRouteByName", () => {
   const routes: Record<
     string,
-    LocalizedRoute<"en" | "sk" | "cs" | "de-DE" | "de-AT", "en">
+    LocalizedRoute<"en" | "sk" | "cs" | "de-DE" | "de-AT">
   > = {
     // One Segment
     users: {
+      fallback: "/users/[id]",
       en: "/users/[id]",
       cs: "/uzivatele/[id]",
       sk: "/pouzivatelia/[id]",
@@ -16,6 +17,7 @@ describe("getRouteByName", () => {
     },
     // Catch-all Segments
     account: {
+      fallback: "/account/[...segments]",
       en: "/account/[...segments]",
       cs: "/ucet/[...segments]",
       sk: "/ucet/[...segments]",
@@ -24,6 +26,7 @@ describe("getRouteByName", () => {
     },
     // Optional Catch-all Segments
     products: {
+      fallback: "/products/[[...segments]]",
       en: "/products/[[...segments]]",
       cs: "/produkty/[[...segments]]",
       sk: "/produkty/[[...segments]]",
@@ -40,7 +43,7 @@ describe("getRouteByName", () => {
     });
 
     it("should handle missing locale and use default locale", () => {
-      const path = getRouteByName("users", routes, { id: "123" }, "fr", "en");
+      const path = getRouteByName("users", routes, { id: "123" }, "fr");
       expect(path).toBe("/users/123");
     });
   });

@@ -2,12 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getRouteByName = void 0;
 const removeUndefined_1 = require("../helpers/removeUndefined");
-function getRouteByName(route, routes, params, locale, defaultLocale) {
+function getRouteByName(route, routes, params, locale) {
     const matchedRoute = routes[route];
     if (!matchedRoute) {
         return undefined;
     }
-    let path = routes[route][locale] || routes[route][defaultLocale];
+    let path = routes[route][locale] || routes[route]["fallback"];
     // Handle optional catch-all segments
     const optionalCatchAllRegex = /\[\[\.\.\.(.*?)]]/g;
     if (path.match(optionalCatchAllRegex)) {

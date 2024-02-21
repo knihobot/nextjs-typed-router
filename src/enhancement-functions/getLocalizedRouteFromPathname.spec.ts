@@ -8,10 +8,9 @@ import { getLocalizedRouteFromPathname } from "./getLocalizedRouteFromPathname";
 describe("getLocalizedRouteFromPathname", () => {
   it("should return the correct localized route pathname for a requested pathname", () => {
     expect(
-      getLocalizedRouteFromPathname<MockRoutesType, LocaleLabelType, "en">(
+      getLocalizedRouteFromPathname<MockRoutesType, LocaleLabelType>(
         "/about",
         mockRoutes,
-        "en",
         "cs",
       ),
     ).toBe("/o-nas");
@@ -19,65 +18,59 @@ describe("getLocalizedRouteFromPathname", () => {
 
   it("should return the correct localized route pathname for a requested pathname login", () => {
     expect(
-      getLocalizedRouteFromPathname<MockRoutesType, LocaleLabelType, "en">(
+      getLocalizedRouteFromPathname<MockRoutesType, LocaleLabelType>(
         "/login",
         mockRoutes,
         "en",
-        "cs",
       ),
     ).toBe("/login");
   });
 
   it("should return the correct localized route pathname for a requested pathname account details", () => {
     expect(
-      getLocalizedRouteFromPathname<MockRoutesType, LocaleLabelType, "en">(
+      getLocalizedRouteFromPathname<MockRoutesType, LocaleLabelType>(
         "/account/details",
         mockRoutes,
         "en",
-        "cs",
       ),
     ).toBe("/account/details");
   });
 
   it("should return the correct localized route pathname for a requested pathname with one param", () => {
     expect(
-      getLocalizedRouteFromPathname<MockRoutesType, LocaleLabelType, "en">(
+      getLocalizedRouteFromPathname<MockRoutesType, LocaleLabelType>(
         "/kategoria/slovensko",
         mockRoutes,
-        "en",
-        "de-DE",
+        "cs",
       ),
     ).toBe("/kategorie/slovensko");
   });
 
   it("should return the correct localized route pathname for a requested pathname with one param and three segments", () => {
     expect(
-      getLocalizedRouteFromPathname<MockRoutesType, LocaleLabelType, "en">(
+      getLocalizedRouteFromPathname<MockRoutesType, LocaleLabelType>(
         "/benutzer/123/details",
         mockRoutes,
-        "en",
-        "sk",
+        "cs",
       ),
     ).toBe("/uzivatel/123/detaily");
   });
 
   it("should return the correct localized route pathname for a requested pathname with two params and four segments", () => {
     expect(
-      getLocalizedRouteFromPathname<MockRoutesType, LocaleLabelType, "en">(
+      getLocalizedRouteFromPathname<MockRoutesType, LocaleLabelType>(
         "/product/cars/review/654",
         mockRoutes,
-        "en",
-        "de-AT",
+        "de-DE",
       ),
     ).toBe("/produkt/cars/bewertung/654");
   });
 
   it("should return the correct localized route pathname for a requested pathname with required catch all params", () => {
     expect(
-      getLocalizedRouteFromPathname<MockRoutesType, LocaleLabelType, "en">(
+      getLocalizedRouteFromPathname<MockRoutesType, LocaleLabelType>(
         "/docs/guide/intro/123",
         mockRoutes,
-        "en",
         "cs",
       ),
     ).toBe("/dokumentace/guide/intro/123");
@@ -85,10 +78,9 @@ describe("getLocalizedRouteFromPathname", () => {
 
   it("should return the correct localized route pathname for a requested pathname with optional catch all params", () => {
     expect(
-      getLocalizedRouteFromPathname<MockRoutesType, LocaleLabelType, "en">(
+      getLocalizedRouteFromPathname<MockRoutesType, LocaleLabelType>(
         "/uzivatelSoubory/123/456/789/abc",
         mockRoutes,
-        "en",
         "sk",
       ),
     ).toBe("/uzivatelSubory/123/456/789/abc");
@@ -96,11 +88,10 @@ describe("getLocalizedRouteFromPathname", () => {
 
   it("should return the correct localized route pathname for a requested pathname with optional catch all params pattern, but without params specified", () => {
     expect(
-      getLocalizedRouteFromPathname<MockRoutesType, LocaleLabelType, "en">(
+      getLocalizedRouteFromPathname<MockRoutesType, LocaleLabelType>(
         "/p",
         mockRoutes,
         "en",
-        "de-DE",
       ),
     ).toBe("/p");
   });

@@ -4,19 +4,36 @@ exports.mockRoutes = exports.defaultLocale = void 0;
 exports.defaultLocale = "en";
 exports.mockRoutes = {
     // Normal routes without parameters
-    home: { en: "/", cs: "/", sk: "/", "de-AT": "/", "de-DE": "/" },
+    home: {
+        fallback: "/",
+        en: "/",
+        cs: "/",
+        sk: "/",
+        "de-AT": "/",
+        "de-DE": "/",
+    },
     // @ts-ignore
-    account: { en: "/account" },
-    "account/billing-history": { en: "/account/billing-history" },
-    "account/books": { en: "/account/books" },
-    "account/details": { en: "/account/details" },
-    "account/orders": { en: "/account/orders" },
-    "account/watchdog": { en: "/account/watchdog" },
-    "account/wishlist": { en: "/account/wishlist" },
+    account: { fallback: "/account", en: "/account" },
+    "account/billing-history": {
+        fallback: "/account/billing-history",
+        en: "/account/billing-history",
+    },
+    "account/books": { fallback: "/account/books", en: "/account/books" },
+    "account/details": { fallback: "/account/details", en: "/account/details" },
+    "account/orders": { fallback: "/account/orders", en: "/account/orders" },
+    "account/watchdog": {
+        fallback: "/account/watchdog",
+        en: "/account/watchdog",
+    },
+    "account/wishlist": {
+        fallback: "/account/wishlist",
+        en: "/account/wishlist",
+    },
     // @ts-ignore
-    login: { en: "/login" },
-    listing: { en: "/p/[[...filters]]" },
+    login: { fallback: "/login", en: "/login" },
+    listing: { fallback: "/p/[[...filters]]", en: "/p/[[...filters]]" },
     about: {
+        fallback: "/about",
         en: "/about",
         cs: "/o-nas",
         sk: "/o-nas",
@@ -24,6 +41,7 @@ exports.mockRoutes = {
         "de-DE": "/ueber-uns",
     },
     contact: {
+        fallback: "/contact",
         en: "/contact",
         cs: "/kontakt",
         sk: "/kontakt",
@@ -31,6 +49,7 @@ exports.mockRoutes = {
         "de-DE": "/kontakt",
     },
     services: {
+        fallback: "/services",
         en: "/services",
         cs: "/sluzby",
         sk: "/sluzby",
@@ -38,6 +57,7 @@ exports.mockRoutes = {
         "de-DE": "/dienstleistungen",
     },
     blog: {
+        fallback: "/blog",
         en: "/blog",
         cs: "/blog",
         sk: "/blog",
@@ -46,6 +66,7 @@ exports.mockRoutes = {
     },
     // Routes with one parameter
     profile: {
+        fallback: "/profile/[username]",
         en: "/profile/[username]",
         cs: "/profil/[username]",
         sk: "/profil/[username]",
@@ -53,6 +74,7 @@ exports.mockRoutes = {
         "de-DE": "/profil/[username]",
     },
     post: {
+        fallback: "/post/[id]",
         en: "/post/[id]",
         cs: "/clanek/[id]",
         sk: "/prispevok/[id]",
@@ -60,6 +82,7 @@ exports.mockRoutes = {
         "de-DE": "/beitrag/[id]",
     },
     category: {
+        fallback: "/category/[name]",
         en: "/category/[name]",
         cs: "/kategorie/[name]",
         sk: "/kategoria/[name]",
@@ -67,6 +90,7 @@ exports.mockRoutes = {
         "de-DE": "/kategorie/[name]",
     },
     product: {
+        fallback: "/product/[productId]",
         en: "/product/[productId]",
         cs: "/produkt/[productId]",
         sk: "/produkt/[productId]",
@@ -74,6 +98,7 @@ exports.mockRoutes = {
         "de-DE": "/produkt/[productId]",
     },
     article: {
+        fallback: "/article/[slug]",
         en: "/article/[slug]",
         cs: "/clanek/[slug]",
         sk: "/prispevok/[slug]",
@@ -82,6 +107,7 @@ exports.mockRoutes = {
     },
     // Routes with multiple parameters
     userDetails: {
+        fallback: "/user/[userId]/details/[detailsKey]",
         en: "/user/[userId]/details",
         cs: "/uzivatel/[userId]/detaily",
         sk: "/uzivatel/[userId]/detaily",
@@ -89,6 +115,7 @@ exports.mockRoutes = {
         "de-DE": "/benutzer/[userId]/details",
     },
     productReview: {
+        fallback: "/product/[productId]/review/[reviewId]",
         en: "/product/[productId]/review/[reviewId]",
         cs: "/produkt/[productId]/recenze/[reviewId]",
         sk: "/produkt/[productId]/recenzia/[reviewId]",
@@ -96,6 +123,7 @@ exports.mockRoutes = {
         "de-DE": "/produkt/[productId]/bewertung/[reviewId]",
     },
     blogPost: {
+        fallback: "/blog/[year]/[month]/[slug]",
         en: "/blog/[year]/[month]/[slug]",
         cs: "/blog/[year]/[month]/[slug]",
         sk: "/blog/[year]/[month]/[slug]",
@@ -103,6 +131,7 @@ exports.mockRoutes = {
         "de-DE": "/blog/[year]/[month]/[slug]",
     },
     event: {
+        fallback: "/event/[year]/[month]/[day]",
         en: "/event/[year]/[month]/[day]",
         cs: "/udalost/[year]/[month]/[day]",
         sk: "/udalost/[year]/[month]/[day]",
@@ -110,6 +139,7 @@ exports.mockRoutes = {
         "de-DE": "/veranstaltung/[year]/[month]/[day]",
     },
     bookChapter: {
+        fallback: "/book/[isbn]/chapter/[chapter]",
         en: "/book/[isbn]/chapter/[chapter]",
         cs: "/kniha/[isbn]/kapitola/[chapter]",
         sk: "/kniha/[isbn]/kapitola/[chapter]",
@@ -118,6 +148,7 @@ exports.mockRoutes = {
     },
     // Required catch-all routes
     docs: {
+        fallback: "/docs/[...path]",
         en: "/docs/[...path]",
         cs: "/dokumentace/[...path]",
         sk: "/dokumentacia/[...path]",
@@ -125,6 +156,7 @@ exports.mockRoutes = {
         "de-DE": "/dokumentation/[...path]",
     },
     gallery: {
+        fallback: "/gallery/[...images]",
         en: "/gallery/[...images]",
         cs: "/galerie/[...images]",
         sk: "/galeria/[...images]",
@@ -132,6 +164,7 @@ exports.mockRoutes = {
         "de-DE": "/galerie/[...images]",
     },
     files: {
+        fallback: "/files/[...fileId]",
         en: "/files/[...fileId]",
         cs: "/soubory/[...fileId]",
         sk: "/subory/[...fileId]",
@@ -140,6 +173,7 @@ exports.mockRoutes = {
     },
     // Optional catch-all routes
     userFiles: {
+        fallback: "/userFiles/[[...fileId]]",
         en: "/userFiles/[[...fileId]]",
         cs: "/uzivatelSoubory/[[...fileId]]",
         sk: "/uzivatelSubory/[[...fileId]]",
@@ -147,7 +181,8 @@ exports.mockRoutes = {
         "de-DE": "/benutzer/[[...fileId]]",
     },
     optionalGallery: {
-        en: "/optional-gallery/[[...images]]",
+        fallback: "/optional-gallery/[[...images]]",
+        en: null,
         cs: "/volitelna-galerie/[[...images]]",
         sk: "/volitelna-galeria/[[...images]]",
         "de-AT": "/optionale-galerie/[[...images]]",

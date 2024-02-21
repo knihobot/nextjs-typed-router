@@ -4,7 +4,7 @@ exports.mockRouter = exports.useRouterTypedMock = void 0;
 const useRouterTyped_1 = require("../useRouterTyped");
 const routes_1 = require("./routes");
 function useRouterTypedMock() {
-    return (0, useRouterTyped_1.useRouterTyped)(routes_1.mockRoutes, "en");
+    return (0, useRouterTyped_1.useRouterTyped)(routes_1.mockRoutes);
 }
 exports.useRouterTypedMock = useRouterTypedMock;
 exports.mockRouter = {

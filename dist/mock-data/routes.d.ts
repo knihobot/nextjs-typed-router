@@ -76,4 +76,4 @@ export type MockRoutesType = {
 };
 export type LocaleLabelType = "cs" | "sk" | "de-AT" | "de-DE" | "en";
 export declare const defaultLocale: "en";
-export declare const mockRoutes: Record<keyof MockRoutesType, LocalizedRoute<LocaleLabelType, "en" | "cs" | "sk" | "de-AT" | "de-DE">>;
+export declare const mockRoutes: Record<keyof MockRoutesType, LocalizedRoute<LocaleLabelType>>;

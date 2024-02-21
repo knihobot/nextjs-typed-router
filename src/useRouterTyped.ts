@@ -40,13 +40,8 @@ interface EnhancedNextRouter<
 export function useRouterTyped<
   RouteDefinitions extends Record<string, RouteProps>,
   Locales extends string,
-  DefaultLocale extends Locales,
 >(
-  routes: Record<
-    keyof RouteDefinitions,
-    LocalizedRoute<Locales, DefaultLocale>
-  >,
-  defaultLocale: DefaultLocale,
+  routes: Record<keyof RouteDefinitions, LocalizedRoute<Locales>>,
 ): EnhancedNextRouter<RouteDefinitions, Locales> &
   Omit<NextRouter, "push" | "locale"> {
   const router = useRouter();
@@ -79,7 +74,7 @@ export function useRouterTyped<
       const currentNode = routes[routeKey][router.locale as Locales];
 
       if (!currentNode) {
-        const fallbackCurrentNode = routes[routeKey][defaultLocale];
+        const fallbackCurrentNode = routes[routeKey]["fallback"];
 
         if (fallbackCurrentNode && fallbackCurrentNode === router.pathname) {
           return routeKey;
@@ -112,18 +107,11 @@ export function useRouterTyped<
     getLocalizedRouteFromPathnameStandalone(
       pathname,
       routes,
-      defaultLocale,
       router.locale as Locales,
     );
 
   const getRouteByName: GetRouteByName<RouteDefinitions> = (route, params) =>
-    getRouteByNameStandalone(
-      route,
-      routes,
-      params,
-      router.locale as Locales,
-      defaultLocale,
-    );
+    getRouteByNameStandalone(route, routes, params, router.locale as Locales);
 
   const matchRealAddressByRouteName: MatchRealAddressByRouteName<
     RouteDefinitions
@@ -132,7 +120,6 @@ export function useRouterTyped<
       routeName,
       routes,
       router.locale as Locales,
-      defaultLocale,
     );
 
   return {

@@ -3,14 +3,9 @@ import { LocalizedRoute, RouteProps } from "@types-app/index";
 export function getLocalizedRouteFromPathname<
   RouteDefinitions extends Record<string, RouteProps>,
   Locales extends string,
-  DefaultLocale extends Locales,
 >(
   pathname: string,
-  routes: Record<
-    keyof RouteDefinitions,
-    LocalizedRoute<Locales, DefaultLocale>
-  >,
-  fallbackLocale: DefaultLocale,
+  routes: Record<keyof RouteDefinitions, LocalizedRoute<Locales>>,
   locale: Locales,
 ): string | undefined {
   const pathnameSegments = pathname.split("/").filter(Boolean);
@@ -22,6 +17,10 @@ export function getLocalizedRouteFromPathname<
     // Iterate through localized route group
     for (const localeKey in routePatternCollection) {
       const routePattern = routePatternCollection[localeKey];
+
+      if (!routePattern) {
+        continue;
+      }
 
       const routePatternSegments = routePattern.split("/").filter(Boolean);
 
@@ -42,8 +41,7 @@ export function getLocalizedRouteFromPathname<
 
       if (pathnameSegments[0] === routePatternSegments[0]) {
         const localizedRoute =
-          routePatternCollection[locale] ||
-          routePatternCollection[fallbackLocale];
+          routePatternCollection[locale] || routePatternCollection["fallback"];
 
         const localizedRouteSegments = localizedRoute
           .split("/")

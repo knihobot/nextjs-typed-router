@@ -9,7 +9,7 @@ import { matchRealAddressByRouteName } from "./matchRealAddressByRouteName";
 describe("matchRealAddressByRouteName", () => {
   it("Non-existent route", () => {
     expect(
-      matchRealAddressByRouteName<MockRoutesType, LocaleLabelType, "en">(
+      matchRealAddressByRouteName<MockRoutesType, LocaleLabelType>(
         {
           pathname: "non-existent-route",
           query: { params: ["testParam", "testParamValue"] },
@@ -22,7 +22,7 @@ describe("matchRealAddressByRouteName", () => {
 
   it("Existing route with no locale specified", () => {
     expect(
-      matchRealAddressByRouteName<MockRoutesType, LocaleLabelType, "en">(
+      matchRealAddressByRouteName<MockRoutesType, LocaleLabelType>(
         "home",
         mockRoutes,
       ),
@@ -31,7 +31,7 @@ describe("matchRealAddressByRouteName", () => {
 
   it("Existing route with specified locale", () => {
     expect(
-      matchRealAddressByRouteName<MockRoutesType, LocaleLabelType, "en">(
+      matchRealAddressByRouteName<MockRoutesType, LocaleLabelType>(
         "home",
         mockRoutes,
         "en",
@@ -41,7 +41,7 @@ describe("matchRealAddressByRouteName", () => {
 
   it("Existing route with specified locale and query", () => {
     expect(
-      matchRealAddressByRouteName<MockRoutesType, LocaleLabelType, "en">(
+      matchRealAddressByRouteName<MockRoutesType, LocaleLabelType>(
         {
           pathname: "profile",
           query: { username: "testUser" },
@@ -57,7 +57,7 @@ describe("matchRealAddressByRouteName", () => {
 
   it("Existing route with specified locale and multiple query parameters", () => {
     expect(
-      matchRealAddressByRouteName<MockRoutesType, LocaleLabelType, "en">(
+      matchRealAddressByRouteName<MockRoutesType, LocaleLabelType>(
         {
           pathname: "product",
           query: { productId: "123", param1: "value1", param2: "value2" },
@@ -73,29 +73,28 @@ describe("matchRealAddressByRouteName", () => {
 
   it("Non-existent route with default locale", () => {
     expect(
-      matchRealAddressByRouteName<MockRoutesType, LocaleLabelType, "en">(
+      matchRealAddressByRouteName<MockRoutesType, LocaleLabelType>(
         // @ts-ignore
         "nonexistent",
         mockRoutes,
         "en",
-        defaultLocale,
       ),
     ).toBeUndefined();
   });
 
   it("Existing route with default locale", () => {
     expect(
-      matchRealAddressByRouteName<MockRoutesType, LocaleLabelType, "en">(
+      matchRealAddressByRouteName<MockRoutesType, LocaleLabelType>(
         "home",
         mockRoutes,
-        defaultLocale,
+        "en",
       ),
     ).toEqual("/");
   });
 
   it("Existing required catch-all route with specified locale", () => {
     expect(
-      matchRealAddressByRouteName<MockRoutesType, LocaleLabelType, "en">(
+      matchRealAddressByRouteName<MockRoutesType, LocaleLabelType>(
         {
           pathname: "docs",
           query: { path: ["folder1", "file.txt"] },
@@ -111,13 +110,13 @@ describe("matchRealAddressByRouteName", () => {
 
   it("Existing required catch-all route with default locale", () => {
     expect(
-      matchRealAddressByRouteName<MockRoutesType, LocaleLabelType, "en">(
+      matchRealAddressByRouteName<MockRoutesType, LocaleLabelType>(
         {
           pathname: "docs",
           query: { path: ["folder1", "file.txt"] },
         },
         mockRoutes,
-        defaultLocale,
+        "en",
       ),
     ).toEqual({
       pathname: "/docs/[...path]",
@@ -125,9 +124,9 @@ describe("matchRealAddressByRouteName", () => {
     });
   });
 
-  it("Existing optional catch-all route with specified locale", () => {
+  it("Existing optional catch-all route with disabled english variant", () => {
     expect(
-      matchRealAddressByRouteName<MockRoutesType, LocaleLabelType, "en">(
+      matchRealAddressByRouteName<MockRoutesType, LocaleLabelType>(
         {
           pathname: "optionalGallery",
           query: { images: ["image1.jpg", "image2.jpg"] },
@@ -135,15 +134,12 @@ describe("matchRealAddressByRouteName", () => {
         mockRoutes,
         "en",
       ),
-    ).toEqual({
-      pathname: "/optional-gallery/[[...images]]",
-      query: { images: ["image1.jpg", "image2.jpg"] },
-    });
+    ).toEqual(null);
   });
 
   it("Existing optional catch-all route with specified locale with undefined on some indexes", () => {
     expect(
-      matchRealAddressByRouteName<MockRoutesType, LocaleLabelType, "en">(
+      matchRealAddressByRouteName<MockRoutesType, LocaleLabelType>(
         {
           pathname: "optionalGallery",
           query: {
@@ -158,26 +154,26 @@ describe("matchRealAddressByRouteName", () => {
           },
         },
         mockRoutes,
-        "en",
+        "cs",
       ),
     ).toEqual({
-      pathname: "/optional-gallery/[[...images]]",
+      pathname: "/volitelna-galerie/[[...images]]",
       query: { images: ["image1.jpg", "image2.jpg"] },
     });
   });
 
   it("Existing optional catch-all route with default locale", () => {
     expect(
-      matchRealAddressByRouteName<MockRoutesType, LocaleLabelType, "en">(
+      matchRealAddressByRouteName<MockRoutesType, LocaleLabelType>(
         {
           pathname: "optionalGallery",
           query: { images: ["image1.jpg", "image2.jpg"] },
         },
         mockRoutes,
-        defaultLocale,
+        "de-DE",
       ),
     ).toEqual({
-      pathname: "/optional-gallery/[[...images]]",
+      pathname: "/optionale-galerie/[[...images]]",
       query: { images: ["image1.jpg", "image2.jpg"] },
     });
   });

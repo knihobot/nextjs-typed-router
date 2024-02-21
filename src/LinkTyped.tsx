@@ -10,13 +10,11 @@ type LinkTypedProps<
   RouteDefinitions extends Record<string, RouteProps>,
   RouteName extends keyof RouteDefinitions,
   Locales extends string,
-  DefaultLocale extends Locales,
 > = Omit<NextLinkProps, "href" | "onClick" | "onMouseEnter"> &
   Omit<
     AnchorHTMLAttributes<HTMLAnchorElement>,
     "href" | "onClick" | "onMouseEnter"
   > & {
-    defaultLocale: DefaultLocale;
     href?: string;
     hrefNext?: Omit<UrlObject, "pathname" | "query">;
     onClick?: MouseEventHandler<HTMLAnchorElement>;
@@ -24,10 +22,7 @@ type LinkTypedProps<
     params?: RouteDefinitions[RouteName]["params"];
     query?: RouteDefinitions[RouteName]["query"];
     route?: RouteName;
-    routes: Record<
-      keyof RouteDefinitions,
-      LocalizedRoute<Locales, DefaultLocale>
-    >;
+    routes: Record<keyof RouteDefinitions, LocalizedRoute<Locales>>;
   };
 
 export const LinkTyped = <
@@ -36,13 +31,12 @@ export const LinkTyped = <
   Locales extends string,
   DefaultLocale extends Locales,
 >(
-  props: LinkTypedProps<RouteDefinitions, RouteName, Locales, DefaultLocale> & {
+  props: LinkTypedProps<RouteDefinitions, RouteName, Locales> & {
     ref?: Ref<HTMLAnchorElement>;
   },
 ) => {
   const {
     children,
-    defaultLocale,
     href,
     hrefNext,
     locale,
@@ -93,7 +87,7 @@ export const LinkTyped = <
           ...hrefNext,
           pathname: localizedPathname
             ? localizedPathname
-            : localizedRoutesSet[defaultLocale as DefaultLocale],
+            : localizedRoutesSet["fallback"],
           query: paramsAndQuery,
         }}
         locale={locale}

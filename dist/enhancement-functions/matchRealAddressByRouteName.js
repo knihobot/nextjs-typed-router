@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.matchRealAddressByRouteName = void 0;
 const removeUndefined_1 = require("../helpers/removeUndefined");
-function matchRealAddressByRouteName(routeName, routes, locale, defaultLocale) {
+function matchRealAddressByRouteName(routeName, routes, locale) {
     if (!locale) {
         return undefined;
     }
@@ -22,10 +22,11 @@ function matchRealAddressByRouteName(routeName, routes, locale, defaultLocale) {
             });
         }
         const localizedAddress = matched[locale];
+        if (localizedAddress === null) {
+            return null;
+        }
         return {
-            pathname: localizedAddress
-                ? localizedAddress
-                : matched[defaultLocale],
+            pathname: localizedAddress ? localizedAddress : matched["fallback"],
             query: routeName.query,
         };
     }
@@ -35,7 +36,7 @@ function matchRealAddressByRouteName(routeName, routes, locale, defaultLocale) {
     }
     const matched = routes[routeName][locale];
     if (!matched) {
-        const fallbackMatch = routes[routeName][defaultLocale];
+        const fallbackMatch = routes[routeName]["fallback"];
         if (fallbackMatch) {
             return fallbackMatch;
         }

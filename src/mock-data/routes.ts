@@ -58,22 +58,39 @@ export const defaultLocale: "en" = "en";
 
 export const mockRoutes: Record<
   keyof MockRoutesType,
-  LocalizedRoute<LocaleLabelType, "en" | "cs" | "sk" | "de-AT" | "de-DE">
+  LocalizedRoute<LocaleLabelType>
 > = {
   // Normal routes without parameters
-  home: { en: "/", cs: "/", sk: "/", "de-AT": "/", "de-DE": "/" },
+  home: {
+    fallback: "/",
+    en: "/",
+    cs: "/",
+    sk: "/",
+    "de-AT": "/",
+    "de-DE": "/",
+  },
   // @ts-ignore
-  account: { en: "/account" },
-  "account/billing-history": { en: "/account/billing-history" },
-  "account/books": { en: "/account/books" },
-  "account/details": { en: "/account/details" },
-  "account/orders": { en: "/account/orders" },
-  "account/watchdog": { en: "/account/watchdog" },
-  "account/wishlist": { en: "/account/wishlist" },
+  account: { fallback: "/account", en: "/account" },
+  "account/billing-history": {
+    fallback: "/account/billing-history",
+    en: "/account/billing-history",
+  },
+  "account/books": { fallback: "/account/books", en: "/account/books" },
+  "account/details": { fallback: "/account/details", en: "/account/details" },
+  "account/orders": { fallback: "/account/orders", en: "/account/orders" },
+  "account/watchdog": {
+    fallback: "/account/watchdog",
+    en: "/account/watchdog",
+  },
+  "account/wishlist": {
+    fallback: "/account/wishlist",
+    en: "/account/wishlist",
+  },
   // @ts-ignore
-  login: { en: "/login" },
-  listing: { en: "/p/[[...filters]]" },
+  login: { fallback: "/login", en: "/login" },
+  listing: { fallback: "/p/[[...filters]]", en: "/p/[[...filters]]" },
   about: {
+    fallback: "/about",
     en: "/about",
     cs: "/o-nas",
     sk: "/o-nas",
@@ -81,6 +98,7 @@ export const mockRoutes: Record<
     "de-DE": "/ueber-uns",
   },
   contact: {
+    fallback: "/contact",
     en: "/contact",
     cs: "/kontakt",
     sk: "/kontakt",
@@ -88,6 +106,7 @@ export const mockRoutes: Record<
     "de-DE": "/kontakt",
   },
   services: {
+    fallback: "/services",
     en: "/services",
     cs: "/sluzby",
     sk: "/sluzby",
@@ -95,6 +114,7 @@ export const mockRoutes: Record<
     "de-DE": "/dienstleistungen",
   },
   blog: {
+    fallback: "/blog",
     en: "/blog",
     cs: "/blog",
     sk: "/blog",
@@ -104,6 +124,7 @@ export const mockRoutes: Record<
 
   // Routes with one parameter
   profile: {
+    fallback: "/profile/[username]",
     en: "/profile/[username]",
     cs: "/profil/[username]",
     sk: "/profil/[username]",
@@ -111,6 +132,7 @@ export const mockRoutes: Record<
     "de-DE": "/profil/[username]",
   },
   post: {
+    fallback: "/post/[id]",
     en: "/post/[id]",
     cs: "/clanek/[id]",
     sk: "/prispevok/[id]",
@@ -118,6 +140,7 @@ export const mockRoutes: Record<
     "de-DE": "/beitrag/[id]",
   },
   category: {
+    fallback: "/category/[name]",
     en: "/category/[name]",
     cs: "/kategorie/[name]",
     sk: "/kategoria/[name]",
@@ -125,6 +148,7 @@ export const mockRoutes: Record<
     "de-DE": "/kategorie/[name]",
   },
   product: {
+    fallback: "/product/[productId]",
     en: "/product/[productId]",
     cs: "/produkt/[productId]",
     sk: "/produkt/[productId]",
@@ -132,6 +156,7 @@ export const mockRoutes: Record<
     "de-DE": "/produkt/[productId]",
   },
   article: {
+    fallback: "/article/[slug]",
     en: "/article/[slug]",
     cs: "/clanek/[slug]",
     sk: "/prispevok/[slug]",
@@ -141,6 +166,7 @@ export const mockRoutes: Record<
 
   // Routes with multiple parameters
   userDetails: {
+    fallback: "/user/[userId]/details/[detailsKey]",
     en: "/user/[userId]/details",
     cs: "/uzivatel/[userId]/detaily",
     sk: "/uzivatel/[userId]/detaily",
@@ -148,6 +174,7 @@ export const mockRoutes: Record<
     "de-DE": "/benutzer/[userId]/details",
   },
   productReview: {
+    fallback: "/product/[productId]/review/[reviewId]",
     en: "/product/[productId]/review/[reviewId]",
     cs: "/produkt/[productId]/recenze/[reviewId]",
     sk: "/produkt/[productId]/recenzia/[reviewId]",
@@ -155,6 +182,7 @@ export const mockRoutes: Record<
     "de-DE": "/produkt/[productId]/bewertung/[reviewId]",
   },
   blogPost: {
+    fallback: "/blog/[year]/[month]/[slug]",
     en: "/blog/[year]/[month]/[slug]",
     cs: "/blog/[year]/[month]/[slug]",
     sk: "/blog/[year]/[month]/[slug]",
@@ -162,6 +190,7 @@ export const mockRoutes: Record<
     "de-DE": "/blog/[year]/[month]/[slug]",
   },
   event: {
+    fallback: "/event/[year]/[month]/[day]",
     en: "/event/[year]/[month]/[day]",
     cs: "/udalost/[year]/[month]/[day]",
     sk: "/udalost/[year]/[month]/[day]",
@@ -169,6 +198,7 @@ export const mockRoutes: Record<
     "de-DE": "/veranstaltung/[year]/[month]/[day]",
   },
   bookChapter: {
+    fallback: "/book/[isbn]/chapter/[chapter]",
     en: "/book/[isbn]/chapter/[chapter]",
     cs: "/kniha/[isbn]/kapitola/[chapter]",
     sk: "/kniha/[isbn]/kapitola/[chapter]",
@@ -178,6 +208,7 @@ export const mockRoutes: Record<
 
   // Required catch-all routes
   docs: {
+    fallback: "/docs/[...path]",
     en: "/docs/[...path]",
     cs: "/dokumentace/[...path]",
     sk: "/dokumentacia/[...path]",
@@ -185,6 +216,7 @@ export const mockRoutes: Record<
     "de-DE": "/dokumentation/[...path]",
   },
   gallery: {
+    fallback: "/gallery/[...images]",
     en: "/gallery/[...images]",
     cs: "/galerie/[...images]",
     sk: "/galeria/[...images]",
@@ -192,6 +224,7 @@ export const mockRoutes: Record<
     "de-DE": "/galerie/[...images]",
   },
   files: {
+    fallback: "/files/[...fileId]",
     en: "/files/[...fileId]",
     cs: "/soubory/[...fileId]",
     sk: "/subory/[...fileId]",
@@ -201,6 +234,7 @@ export const mockRoutes: Record<
 
   // Optional catch-all routes
   userFiles: {
+    fallback: "/userFiles/[[...fileId]]",
     en: "/userFiles/[[...fileId]]",
     cs: "/uzivatelSoubory/[[...fileId]]",
     sk: "/uzivatelSubory/[[...fileId]]",
@@ -208,7 +242,8 @@ export const mockRoutes: Record<
     "de-DE": "/benutzer/[[...fileId]]",
   },
   optionalGallery: {
-    en: "/optional-gallery/[[...images]]",
+    fallback: "/optional-gallery/[[...images]]",
+    en: null,
     cs: "/volitelna-galerie/[[...images]]",
     sk: "/volitelna-galeria/[[...images]]",
     "de-AT": "/optionale-galerie/[[...images]]",

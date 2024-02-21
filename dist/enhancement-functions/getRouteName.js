@@ -6,6 +6,9 @@ function getRouteName(url, routes) {
         const selectedRoute = routes[routeName];
         for (const localeKey in selectedRoute) {
             const localizedRoute = selectedRoute[localeKey];
+            if (localizedRoute === null || localizedRoute === undefined) {
+                continue;
+            }
             // Check if the route matches using pattern matching
             if (doesRouteMatch(url, localizedRoute)) {
                 return routeName;

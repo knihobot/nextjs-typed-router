@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getLocalizedRouteFromPathname = void 0;
-function getLocalizedRouteFromPathname(pathname, routes, fallbackLocale, locale) {
+function getLocalizedRouteFromPathname(pathname, routes, locale) {
     const pathnameSegments = pathname.split("/").filter(Boolean);
     // Iterate through the routes object which contains localized groups of routes
     for (const routeKey in routes) {
@@ -9,6 +9,9 @@ function getLocalizedRouteFromPathname(pathname, routes, fallbackLocale, locale)
         // Iterate through localized route group
         for (const localeKey in routePatternCollection) {
             const routePattern = routePatternCollection[localeKey];
+            if (!routePattern) {
+                continue;
+            }
             const routePatternSegments = routePattern.split("/").filter(Boolean);
             const segmentsMatching = () => {
                 for (const [index, pathnameSegment] of pathnameSegments.entries()) {
@@ -22,8 +25,7 @@ function getLocalizedRouteFromPathname(pathname, routes, fallbackLocale, locale)
                 return true;
             };
             if (pathnameSegments[0] === routePatternSegments[0]) {
-                const localizedRoute = routePatternCollection[locale] ||
-                    routePatternCollection[fallbackLocale];
+                const localizedRoute = routePatternCollection[locale] || routePatternCollection["fallback"];
                 const localizedRouteSegments = localizedRoute
                     .split("/")
                     .filter(Boolean);

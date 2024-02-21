@@ -4,16 +4,11 @@ import { removeUndefined } from "../helpers/removeUndefined";
 export function getRouteByName<
   RouteDefinitions extends Record<string, RouteProps>,
   Locales extends string,
-  DefaultLocale extends Locales,
 >(
   route: keyof RouteDefinitions,
-  routes: Record<
-    keyof RouteDefinitions,
-    LocalizedRoute<Locales, DefaultLocale>
-  >,
+  routes: Record<keyof RouteDefinitions, LocalizedRoute<Locales>>,
   params: RouteDefinitions[keyof RouteDefinitions]["params"],
   locale?: Locales,
-  defaultLocale?: DefaultLocale,
 ): Record<keyof RouteDefinitions, string>[keyof RouteDefinitions] | undefined {
   const matchedRoute = routes[route];
 
@@ -21,8 +16,7 @@ export function getRouteByName<
     return undefined;
   }
 
-  let path =
-    routes[route][locale as Locales] || routes[route][defaultLocale as Locales];
+  let path = routes[route][locale as Locales] || routes[route]["fallback"];
 
   // Handle optional catch-all segments
   const optionalCatchAllRegex = /\[\[\.\.\.(.*?)]]/g;

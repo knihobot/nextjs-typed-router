@@ -47,7 +47,7 @@ describe("LinkTyped Component", () => {
 
   it("renders href correctly for a normal route", () => {
     render(
-      <LinkTyped route="home" routes={mockRoutes} defaultLocale="en">
+      <LinkTyped route="home" routes={mockRoutes}>
         Link
       </LinkTyped>,
     );
@@ -60,7 +60,6 @@ describe("LinkTyped Component", () => {
         route="profile"
         params={{ username: "johnDoe" }}
         routes={mockRoutes}
-        defaultLocale="en"
       />,
     );
     expect(mockHref).toEqual({
@@ -75,20 +74,14 @@ describe("LinkTyped Component", () => {
       locale: "de-DE",
     });
 
-    render(<LinkTyped route="about" routes={mockRoutes} defaultLocale="en" />);
+    render(<LinkTyped route="about" routes={mockRoutes} />);
     expect(mockHref).toEqual({
       pathname: "/ueber-uns",
     });
   });
 
   it("renders href from href prop when no route is provided", () => {
-    render(
-      <LinkTyped
-        href="https://example.com"
-        routes={mockRoutes}
-        defaultLocale="en"
-      />,
-    );
+    render(<LinkTyped href="https://example.com" routes={mockRoutes} />);
     const linkElement = screen.getByRole("link");
     expect(linkElement).toHaveAttribute("href", "https://example.com");
   });
@@ -100,7 +93,6 @@ describe("LinkTyped Component", () => {
         route="userDetails"
         params={{ userId: "123", detailsKey: "bio" }}
         routes={mockRoutes}
-        defaultLocale="en"
       />,
     );
     expect(mockHref).toEqual({
@@ -116,7 +108,6 @@ describe("LinkTyped Component", () => {
         route="docs"
         params={{ path: ["docs", "guide", "introduction"] }}
         routes={mockRoutes}
-        defaultLocale="en"
       />,
     );
     expect(mockHref).toEqual({
@@ -132,7 +123,6 @@ describe("LinkTyped Component", () => {
         route="optionalGallery"
         params={{ images: ["landscape", "portrait"] }}
         routes={mockRoutes}
-        defaultLocale="en"
       />,
     );
     expect(mockHref).toEqual({
@@ -149,7 +139,6 @@ describe("LinkTyped Component", () => {
           images: ["landscape", undefined, "portrait", undefined, undefined],
         }}
         routes={mockRoutes}
-        defaultLocale="en"
       />,
     );
     expect(mockHref).toEqual({
@@ -165,7 +154,7 @@ describe("LinkTyped Component", () => {
       locale: "cs",
     });
 
-    render(<LinkTyped route="about" routes={mockRoutes} defaultLocale="en" />);
+    render(<LinkTyped route="about" routes={mockRoutes} />);
     expect(mockHref).toEqual({
       pathname: "/o-nas",
     });
@@ -178,7 +167,6 @@ describe("LinkTyped Component", () => {
         route="blog"
         query={{ author: "JohnDoe", page: "2" }}
         routes={mockRoutes}
-        defaultLocale="en"
       />,
     );
     expect(mockHref).toEqual({
@@ -199,7 +187,6 @@ describe("LinkTyped Component", () => {
         route="profile"
         params={{ username: "maxMustermann" }}
         routes={mockRoutes}
-        defaultLocale="en"
       />,
     );
     expect(mockHref).toEqual({
@@ -220,7 +207,6 @@ describe("LinkTyped Component", () => {
         route="productReview"
         params={{ productId: "1001", reviewId: "5002" }}
         routes={mockRoutes}
-        defaultLocale="en"
       />,
     );
     expect(mockHref).toEqual({
@@ -245,7 +231,6 @@ describe("LinkTyped Component", () => {
           ],
         }}
         routes={mockRoutes}
-        defaultLocale="en"
       />,
     );
     expect(mockHref).toEqual({
@@ -276,7 +261,6 @@ describe("LinkTyped Component", () => {
         params={{ year: "2020", month: "03", slug: "spring-festival" }}
         query={{ highlight: "yes", comments: "open" }}
         routes={mockRoutes}
-        defaultLocale="en"
       />,
     );
     expect(mockHref).toEqual({
@@ -314,7 +298,6 @@ describe("LinkTyped Component", () => {
           ],
         }}
         routes={mockRoutes}
-        defaultLocale="sk"
       />,
     );
     expect(mockHref).toEqual({
@@ -347,7 +330,6 @@ describe("LinkTyped Component", () => {
         route="event"
         params={{ year: "2023", month: "07", day: "15" }}
         routes={mockRoutes}
-        defaultLocale="en"
       />,
     );
     expect(mockHref).toEqual({
@@ -362,7 +344,7 @@ describe("LinkTyped Component", () => {
       locale: "invalid-locale",
     });
 
-    render(<LinkTyped route="about" routes={mockRoutes} defaultLocale="en" />);
+    render(<LinkTyped route="about" routes={mockRoutes} />);
     expect(mockHref).toEqual({
       pathname: "/about",
     });
@@ -370,13 +352,7 @@ describe("LinkTyped Component", () => {
 
   it("fails to render href for an unsupported route", () => {
     const renderLinkTypedWithUnsupportedRoute = () => {
-      render(
-        <LinkTyped
-          route="unsupportedRoute"
-          routes={mockRoutes}
-          defaultLocale="en"
-        />,
-      );
+      render(<LinkTyped route="unsupportedRoute" routes={mockRoutes} />);
     };
 
     expect(mockHref).toBeUndefined();
@@ -390,7 +366,6 @@ describe("LinkTyped Component", () => {
         // @ts-ignore
         params={{ productId: 123 }} // productId should be a string, not a number
         routes={mockRoutes}
-        defaultLocale="en"
       />,
     );
     expect(mockHref).toBeInstanceOf(Object);

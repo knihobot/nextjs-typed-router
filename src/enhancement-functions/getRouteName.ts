@@ -3,19 +3,19 @@ import { LocalizedRoute, RouteProps } from "@types-app/index";
 export function getRouteName<
   RouteDefinitions extends Record<string, RouteProps>,
   Locales extends string,
-  DefaultLocale extends Locales,
 >(
   url: string,
-  routes: Record<
-    keyof RouteDefinitions,
-    LocalizedRoute<Locales, DefaultLocale>
-  >,
-): keyof RouteDefinitions | undefined {
+  routes: Record<keyof RouteDefinitions, LocalizedRoute<Locales>>,
+): keyof RouteDefinitions | undefined | null {
   for (const routeName in routes) {
     const selectedRoute = routes[routeName];
 
     for (const localeKey in selectedRoute) {
       const localizedRoute = selectedRoute[localeKey];
+
+      if (localizedRoute === null || localizedRoute === undefined) {
+        continue;
+      }
 
       // Check if the route matches using pattern matching
       if (doesRouteMatch(url, localizedRoute)) {
