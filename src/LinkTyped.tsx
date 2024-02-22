@@ -78,16 +78,19 @@ export const LinkTyped = <
         `No route with provided key ${String(route)} exists in routes object`,
       );
 
-    const localizedPathname = localizedRoutesSet[routerLocale as Locales];
+    const localizedPathname =
+      localizedRoutesSet[routerLocale as Locales] ||
+      localizedRoutesSet["fallback"];
 
     return (
       <NextLink
         legacyBehavior // TODO: fix
         href={{
           ...hrefNext,
-          pathname: localizedPathname
-            ? localizedPathname
-            : localizedRoutesSet["fallback"],
+          pathname:
+            typeof localizedPathname === "object"
+              ? localizedPathname.pathname
+              : localizedPathname,
           query: paramsAndQuery,
         }}
         locale={locale}

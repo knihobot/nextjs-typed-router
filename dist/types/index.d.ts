@@ -96,8 +96,12 @@ export type GetServerSidePropsResult<Props> = {
  */
 type GetRoutePropType<RouteDefinitions extends Record<string, RouteProps>, RouteName extends keyof RouteDefinitions, RouteProp extends keyof RouteProps, NotAvailableRoutePropType extends object | undefined> = RouteDefinitions[RouteName] extends RouteProps ? RouteDefinitions[RouteName][RouteProp] : NotAvailableRoutePropType;
 export type RouteDefinitions<RouteName extends string> = Record<RouteName, RouteProps>;
+export type LocalizedRouteConfig = {
+    pathname: string;
+    disabled?: boolean;
+};
 export type LocalizedRoute<Locales extends string> = {
-    [LocaleLabel in Locales]?: string | null;
+    [LocaleLabel in Locales]?: LocalizedRouteConfig;
 } & {
     fallback: string;
 };

@@ -13,7 +13,7 @@ export function matchRealAddressByRouteName<
   routeName: RouteInputType<RouteDefinitions>,
   routes: Record<keyof RouteDefinitions, LocalizedRoute<Locales>>,
   locale?: Locales,
-): string | UrlObjectGeneric<RouteDefinitions> | undefined | null {
+): string | UrlObjectGeneric<RouteDefinitions> | undefined {
   if (!locale) {
     return undefined;
   }
@@ -39,14 +39,13 @@ export function matchRealAddressByRouteName<
       });
     }
 
-    const localizedAddress = matched[locale];
-
-    if (localizedAddress === null) {
-      return null;
-    }
+    const localizedAddress = matched[locale] || matched["fallback"];
 
     return {
-      pathname: localizedAddress ? localizedAddress : matched["fallback"],
+      pathname:
+        typeof localizedAddress === "object"
+          ? localizedAddress.pathname
+          : localizedAddress,
       query: routeName.query,
     };
   }
@@ -67,6 +66,10 @@ export function matchRealAddressByRouteName<
     }
 
     return undefined;
+  }
+
+  if (typeof matched === "object") {
+    return matched.pathname;
   }
 
   return matched;

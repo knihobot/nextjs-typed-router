@@ -29,7 +29,8 @@ function useRouterTyped(routes) {
         yield router.push(url, as ? matchRealAddressByRouteName(as) : undefined, options);
     });
     const isCurrentRoute = (route) => {
-        return routes[route][router.locale] === router.pathname;
+        var _a;
+        return (((_a = routes[route][router.locale]) === null || _a === void 0 ? void 0 : _a.pathname) === router.pathname);
     };
     const getCurrentRoute = () => {
         for (const routeKey in routes) {
@@ -40,7 +41,7 @@ function useRouterTyped(routes) {
                     return routeKey;
                 }
             }
-            if (currentNode === router.pathname) {
+            if ((currentNode === null || currentNode === void 0 ? void 0 : currentNode.pathname) === router.pathname) {
                 return routeKey;
             }
         }

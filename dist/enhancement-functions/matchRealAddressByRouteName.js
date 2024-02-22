@@ -21,12 +21,11 @@ function matchRealAddressByRouteName(routeName, routes, locale) {
                 }
             });
         }
-        const localizedAddress = matched[locale];
-        if (localizedAddress === null) {
-            return null;
-        }
+        const localizedAddress = matched[locale] || matched["fallback"];
         return {
-            pathname: localizedAddress ? localizedAddress : matched["fallback"],
+            pathname: typeof localizedAddress === "object"
+                ? localizedAddress.pathname
+                : localizedAddress,
             query: routeName.query,
         };
     }
@@ -41,6 +40,9 @@ function matchRealAddressByRouteName(routeName, routes, locale) {
             return fallbackMatch;
         }
         return undefined;
+    }
+    if (typeof matched === "object") {
+        return matched.pathname;
     }
     return matched;
 }

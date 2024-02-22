@@ -32,11 +32,12 @@ const LinkTyped = (props) => {
         const localizedRoutesSet = routes[route];
         if (!localizedRoutesSet)
             throw new Error(`No route with provided key ${String(route)} exists in routes object`);
-        const localizedPathname = localizedRoutesSet[routerLocale];
+        const localizedPathname = localizedRoutesSet[routerLocale] ||
+            localizedRoutesSet["fallback"];
         return ((0, jsx_runtime_1.jsx)(link_1.default, { legacyBehavior // TODO: fix
-            : true, href: Object.assign(Object.assign({}, hrefNext), { pathname: localizedPathname
-                    ? localizedPathname
-                    : localizedRoutesSet["fallback"], query: paramsAndQuery }), locale: locale, passHref: true, prefetch: prefetch, replace: replace, scroll: scroll, shallow: shallow, children: (0, jsx_runtime_1.jsx)("a", Object.assign({ ref: ref }, anchorProps, { children: children })) }));
+            : true, href: Object.assign(Object.assign({}, hrefNext), { pathname: typeof localizedPathname === "object"
+                    ? localizedPathname.pathname
+                    : localizedPathname, query: paramsAndQuery }), locale: locale, passHref: true, prefetch: prefetch, replace: replace, scroll: scroll, shallow: shallow, children: (0, jsx_runtime_1.jsx)("a", Object.assign({ ref: ref }, anchorProps, { children: children })) }));
     }
     return ((0, jsx_runtime_1.jsx)("a", Object.assign({ ref: ref, href: href ? href.toString() : " " }, anchorProps, { children: children })));
 };

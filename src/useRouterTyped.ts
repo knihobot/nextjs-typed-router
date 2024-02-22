@@ -66,7 +66,9 @@ export function useRouterTyped<
   };
 
   const isCurrentRoute: IsCurrentRoute<RouteDefinitions> = (route) => {
-    return routes[route][router.locale as Locales] === router.pathname;
+    return (
+      routes[route][router.locale as Locales]?.pathname === router.pathname
+    );
   };
 
   const getCurrentRoute: GetCurrentRoute<RouteDefinitions> = () => {
@@ -81,7 +83,7 @@ export function useRouterTyped<
         }
       }
 
-      if (currentNode === router.pathname) {
+      if (currentNode?.pathname === router.pathname) {
         return routeKey;
       }
     }

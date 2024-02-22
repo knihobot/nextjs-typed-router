@@ -1,4 +1,8 @@
-import { LocalizedRoute, RouteProps } from "@types-app/index";
+import {
+  LocalizedRoute,
+  LocalizedRouteConfig,
+  RouteProps,
+} from "@types-app/index";
 
 export function getRouteName<
   RouteDefinitions extends Record<string, RouteProps>,
@@ -13,22 +17,36 @@ export function getRouteName<
     for (const localeKey in selectedRoute) {
       const localizedRoute = selectedRoute[localeKey];
 
-      if (localizedRoute === null || localizedRoute === undefined) {
+      if (!localizedRoute) {
         continue;
       }
 
       // Check if the route matches using pattern matching
-      if (doesRouteMatch(url, localizedRoute)) {
+      if (
+        doesRouteMatch(
+          url,
+          typeof localizedRoute === "object"
+            ? localizedRoute.pathname
+            : localizedRoute,
+        )
+      ) {
         return routeName;
       }
     }
   }
 }
 
-function doesRouteMatch(url: string, routePattern: string): boolean {
+function doesRouteMatch(
+  url: string,
+  routePattern: string | LocalizedRouteConfig,
+): boolean {
   // Split the URL and the route pattern into segments
   const urlSegments = url.split("/").filter((segment) => segment);
-  const patternSegments = routePattern.split("/").filter((segment) => segment);
+  const patternSegments = (
+    typeof routePattern === "object" ? routePattern.pathname : routePattern
+  )
+    .split("/")
+    .filter((segment) => segment);
 
   let urlIndex = 0,
     patternIndex = 0;

@@ -9,29 +9,29 @@ describe("getRouteByName", () => {
     // One Segment
     users: {
       fallback: "/users/[id]",
-      en: "/users/[id]",
-      cs: "/uzivatele/[id]",
-      sk: "/pouzivatelia/[id]",
-      "de-DE": "/benutzer/[id]",
-      "de-AT": "/benutzer/[id]",
+      en: { pathname: "/users/[id]" },
+      cs: { pathname: "/uzivatele/[id]" },
+      sk: { pathname: "/pouzivatelia/[id]" },
+      "de-DE": { pathname: "/benutzer/[id]" },
+      "de-AT": { pathname: "/benutzer/[id]" },
     },
     // Catch-all Segments
     account: {
       fallback: "/account/[...segments]",
-      en: "/account/[...segments]",
-      cs: "/ucet/[...segments]",
-      sk: "/ucet/[...segments]",
-      "de-DE": "/konto/[...segments]",
-      "de-AT": "/konto/[...segments]",
+      en: { pathname: "/account/[...segments]" },
+      cs: { pathname: "/ucet/[...segments]" },
+      sk: { pathname: "/ucet/[...segments]" },
+      "de-DE": { pathname: "/konto/[...segments]" },
+      "de-AT": { pathname: "/konto/[...segments]" },
     },
     // Optional Catch-all Segments
     products: {
       fallback: "/products/[[...segments]]",
-      en: "/products/[[...segments]]",
-      cs: "/produkty/[[...segments]]",
-      sk: "/produkty/[[...segments]]",
-      "de-DE": "/produkte/[[...segments]]",
-      "de-AT": "/produkte/[[...segments]]",
+      en: { pathname: "/products/[[...segments]]" },
+      cs: { pathname: "/produkty/[[...segments]]" },
+      sk: { pathname: "/produkty/[[...segments]]" },
+      "de-DE": { pathname: "/produkte/[[...segments]]" },
+      "de-AT": { pathname: "/produkte/[[...segments]]" },
     },
   };
 

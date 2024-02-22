@@ -96,7 +96,7 @@ describe("LinkTyped Component", () => {
       />,
     );
     expect(mockHref).toEqual({
-      pathname: "/user/[userId]/details",
+      pathname: "/user/[userId]/details/[detailsKey]",
       query: { userId: "123", detailsKey: "bio" },
     });
   });

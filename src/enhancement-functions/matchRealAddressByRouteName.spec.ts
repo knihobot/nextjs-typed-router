@@ -1,5 +1,4 @@
 import {
-  defaultLocale,
   LocaleLabelType,
   mockRoutes,
   MockRoutesType,
@@ -134,7 +133,10 @@ describe("matchRealAddressByRouteName", () => {
         mockRoutes,
         "en",
       ),
-    ).toEqual(null);
+    ).toEqual({
+      pathname: "/optional-gallery/[[...images]]",
+      query: { images: ["image1.jpg", "image2.jpg"] },
+    });
   });
 
   it("Existing optional catch-all route with specified locale with undefined on some indexes", () => {

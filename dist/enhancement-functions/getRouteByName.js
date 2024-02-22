@@ -10,8 +10,10 @@ function getRouteByName(route, routes, params, locale) {
     let path = routes[route][locale] || routes[route]["fallback"];
     // Handle optional catch-all segments
     const optionalCatchAllRegex = /\[\[\.\.\.(.*?)]]/g;
-    if (path.match(optionalCatchAllRegex)) {
-        path = path.replace(optionalCatchAllRegex, (match, segmentKey) => {
+    if (typeof path === "object"
+        ? path.pathname.match(optionalCatchAllRegex)
+        : path.match(optionalCatchAllRegex)) {
+        path = (typeof path === "object" ? path.pathname : path).replace(optionalCatchAllRegex, (match, segmentKey) => {
             const paramValue = params && params[segmentKey];
             if (params &&
                 paramValue &&
@@ -35,14 +37,17 @@ function getRouteByName(route, routes, params, locale) {
                 const singleParamRegex = new RegExp(`\\[${key}\\]`, "gi");
                 if (Array.isArray(value)) {
                     const joinedValue = value.join("/") || "";
-                    path = path.replace(catchAllRegex, joinedValue);
+                    path = (typeof path === "object" ? path.pathname : path).replace(catchAllRegex, joinedValue);
                 }
                 else {
                     const stringValue = value || "";
-                    path = path.replace(singleParamRegex, stringValue);
+                    path = (typeof path === "object" ? path.pathname : path).replace(singleParamRegex, stringValue);
                 }
             }
         }
+    }
+    if (typeof path === "object") {
+        return path.pathname;
     }
     return path;
 }

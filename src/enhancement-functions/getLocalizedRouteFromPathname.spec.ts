@@ -49,11 +49,11 @@ describe("getLocalizedRouteFromPathname", () => {
   it("should return the correct localized route pathname for a requested pathname with one param and three segments", () => {
     expect(
       getLocalizedRouteFromPathname<MockRoutesType, LocaleLabelType>(
-        "/benutzer/123/details",
+        "/benutzer/123/details/abc",
         mockRoutes,
         "cs",
       ),
-    ).toBe("/uzivatel/123/detaily");
+    ).toBe("/uzivatel/123/detaily/abc");
   });
 
   it("should return the correct localized route pathname for a requested pathname with two params and four segments", () => {

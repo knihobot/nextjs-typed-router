@@ -22,7 +22,11 @@ export function getLocalizedRouteFromPathname<
         continue;
       }
 
-      const routePatternSegments = routePattern.split("/").filter(Boolean);
+      const routePatternSegments = (
+        typeof routePattern === "object" ? routePattern.pathname : routePattern
+      )
+        .split("/")
+        .filter(Boolean);
 
       const segmentsMatching = () => {
         for (const [index, pathnameSegment] of pathnameSegments.entries()) {
@@ -43,13 +47,22 @@ export function getLocalizedRouteFromPathname<
         const localizedRoute =
           routePatternCollection[locale] || routePatternCollection["fallback"];
 
-        const localizedRouteSegments = localizedRoute
+        const localizedRouteSegments = (
+          typeof localizedRoute === "object"
+            ? localizedRoute.pathname
+            : localizedRoute
+        )
           .split("/")
           .filter(Boolean);
 
         if (routePatternSegments.length === pathnameSegments.length) {
           // Normal params
-          if (localizedRoute.match(/\/\[[a-zA-Z]+\]/g)) {
+          if (
+            (typeof localizedRoute === "object"
+              ? localizedRoute.pathname
+              : localizedRoute
+            ).match(/\/\[[a-zA-Z]+\]/g)
+          ) {
             routePatternSegments.map((segment, index) => {
               if (segment.startsWith("[") && segment.endsWith("]")) {
                 localizedRouteSegments[index] = pathnameSegments[index];
@@ -59,13 +72,22 @@ export function getLocalizedRouteFromPathname<
             return `/${localizedRouteSegments.join("/")}`;
           } else {
             if (segmentsMatching()) {
+              if (typeof localizedRoute === "object") {
+                return localizedRoute.pathname;
+              }
+
               return localizedRoute;
             }
           }
         }
 
         // Optional catch-all params
-        if (localizedRoute.includes("[[...")) {
+        if (
+          (typeof localizedRoute === "object"
+            ? localizedRoute.pathname
+            : localizedRoute
+          ).includes("[[...")
+        ) {
           return replaceCatchAllSegments(
             pathnameSegments,
             localizedRouteSegments,
@@ -75,7 +97,12 @@ export function getLocalizedRouteFromPathname<
         }
 
         // Required catch-all params
-        if (localizedRoute.includes("[...")) {
+        if (
+          (typeof localizedRoute === "object"
+            ? localizedRoute.pathname
+            : localizedRoute
+          ).includes("[...")
+        ) {
           return replaceCatchAllSegments(
             pathnameSegments,
             localizedRouteSegments,

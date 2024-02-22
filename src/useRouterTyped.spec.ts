@@ -164,8 +164,8 @@ describe("useRouterTyped", () => {
         });
         const routerMock = useRouterTypedMock();
         expect(
-          routerMock.getLocalizedRouteFromPathname("/benutzer/123/details"),
-        ).toBe("/uzivatel/123/detaily");
+          routerMock.getLocalizedRouteFromPathname("/benutzer/123/details/abc"),
+        ).toBe("/uzivatel/123/detaily/abc");
       });
 
       it("should return the correct localized route pathname for a requested pathname with two params and four segments", () => {

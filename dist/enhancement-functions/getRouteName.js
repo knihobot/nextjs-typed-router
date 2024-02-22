@@ -6,11 +6,13 @@ function getRouteName(url, routes) {
         const selectedRoute = routes[routeName];
         for (const localeKey in selectedRoute) {
             const localizedRoute = selectedRoute[localeKey];
-            if (localizedRoute === null || localizedRoute === undefined) {
+            if (!localizedRoute) {
                 continue;
             }
             // Check if the route matches using pattern matching
-            if (doesRouteMatch(url, localizedRoute)) {
+            if (doesRouteMatch(url, typeof localizedRoute === "object"
+                ? localizedRoute.pathname
+                : localizedRoute)) {
                 return routeName;
             }
         }
@@ -20,7 +22,9 @@ exports.getRouteName = getRouteName;
 function doesRouteMatch(url, routePattern) {
     // Split the URL and the route pattern into segments
     const urlSegments = url.split("/").filter((segment) => segment);
-    const patternSegments = routePattern.split("/").filter((segment) => segment);
+    const patternSegments = (typeof routePattern === "object" ? routePattern.pathname : routePattern)
+        .split("/")
+        .filter((segment) => segment);
     let urlIndex = 0, patternIndex = 0;
     while (urlIndex < urlSegments.length &&
         patternIndex < patternSegments.length) {

@@ -12,7 +12,9 @@ function getLocalizedRouteFromPathname(pathname, routes, locale) {
             if (!routePattern) {
                 continue;
             }
-            const routePatternSegments = routePattern.split("/").filter(Boolean);
+            const routePatternSegments = (typeof routePattern === "object" ? routePattern.pathname : routePattern)
+                .split("/")
+                .filter(Boolean);
             const segmentsMatching = () => {
                 for (const [index, pathnameSegment] of pathnameSegments.entries()) {
                     // Check if the segment doesn't match or if the index is out of bounds for routePatternSegments
@@ -26,12 +28,16 @@ function getLocalizedRouteFromPathname(pathname, routes, locale) {
             };
             if (pathnameSegments[0] === routePatternSegments[0]) {
                 const localizedRoute = routePatternCollection[locale] || routePatternCollection["fallback"];
-                const localizedRouteSegments = localizedRoute
+                const localizedRouteSegments = (typeof localizedRoute === "object"
+                    ? localizedRoute.pathname
+                    : localizedRoute)
                     .split("/")
                     .filter(Boolean);
                 if (routePatternSegments.length === pathnameSegments.length) {
                     // Normal params
-                    if (localizedRoute.match(/\/\[[a-zA-Z]+\]/g)) {
+                    if ((typeof localizedRoute === "object"
+                        ? localizedRoute.pathname
+                        : localizedRoute).match(/\/\[[a-zA-Z]+\]/g)) {
                         routePatternSegments.map((segment, index) => {
                             if (segment.startsWith("[") && segment.endsWith("]")) {
                                 localizedRouteSegments[index] = pathnameSegments[index];
@@ -41,16 +47,23 @@ function getLocalizedRouteFromPathname(pathname, routes, locale) {
                     }
                     else {
                         if (segmentsMatching()) {
+                            if (typeof localizedRoute === "object") {
+                                return localizedRoute.pathname;
+                            }
                             return localizedRoute;
                         }
                     }
                 }
                 // Optional catch-all params
-                if (localizedRoute.includes("[[...")) {
+                if ((typeof localizedRoute === "object"
+                    ? localizedRoute.pathname
+                    : localizedRoute).includes("[[...")) {
                     return replaceCatchAllSegments(pathnameSegments, localizedRouteSegments, routePatternSegments, "optional");
                 }
                 // Required catch-all params
-                if (localizedRoute.includes("[...")) {
+                if ((typeof localizedRoute === "object"
+                    ? localizedRoute.pathname
+                    : localizedRoute).includes("[...")) {
                     return replaceCatchAllSegments(pathnameSegments, localizedRouteSegments, routePatternSegments, "required");
                 }
             }

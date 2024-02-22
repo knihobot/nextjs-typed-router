@@ -220,8 +220,10 @@ export type RouteDefinitions<RouteName extends string> = Record<
   RouteProps
 >;
 
+export type LocalizedRouteConfig = { pathname: string; disabled?: boolean };
+
 export type LocalizedRoute<Locales extends string> = {
-  [LocaleLabel in Locales]?: string | null;
+  [LocaleLabel in Locales]?: LocalizedRouteConfig;
 } & {
   fallback: string;
 };
