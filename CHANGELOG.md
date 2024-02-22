@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.37](https://github.com/knihobot/nextjs-typed-router/compare/v0.1.36...v0.1.37) (2024-02-22)
+
+
+### Features
+
+* change the disabled route logic ([70351b5](https://github.com/knihobot/nextjs-typed-router/commit/70351b536982e18a61c704a2259d289d4177bcb0))
+
 ### [0.1.36](https://github.com/knihobot/nextjs-typed-router/compare/v0.1.35...v0.1.36) (2024-02-21)
 
 
