@@ -43,11 +43,23 @@ function getLocalizedRouteFromPathname(pathname, routes, locale) {
                                 localizedRouteSegments[index] = pathnameSegments[index];
                             }
                         });
+                        if (typeof localizedRoute === "object" && localizedRoute.disabled) {
+                            return {
+                                pathname: `/${localizedRouteSegments
+                                    .filter(Boolean)
+                                    .join("/")}`,
+                                disabled: true,
+                            };
+                        }
                         return `/${localizedRouteSegments.join("/")}`;
                     }
                     else {
+                        // Without params
                         if (segmentsMatching()) {
                             if (typeof localizedRoute === "object") {
+                                if (localizedRoute.disabled) {
+                                    return localizedRoute;
+                                }
                                 return localizedRoute.pathname;
                             }
                             return localizedRoute;
@@ -58,13 +70,21 @@ function getLocalizedRouteFromPathname(pathname, routes, locale) {
                 if ((typeof localizedRoute === "object"
                     ? localizedRoute.pathname
                     : localizedRoute).includes("[[...")) {
-                    return replaceCatchAllSegments(pathnameSegments, localizedRouteSegments, routePatternSegments, "optional");
+                    const withReplacedSegments = replaceCatchAllSegments(pathnameSegments, localizedRouteSegments, routePatternSegments, "optional");
+                    if (typeof localizedRoute === "object" && localizedRoute.disabled) {
+                        return { pathname: withReplacedSegments, disabled: true };
+                    }
+                    return withReplacedSegments;
                 }
                 // Required catch-all params
                 if ((typeof localizedRoute === "object"
                     ? localizedRoute.pathname
                     : localizedRoute).includes("[...")) {
-                    return replaceCatchAllSegments(pathnameSegments, localizedRouteSegments, routePatternSegments, "required");
+                    const withReplacedSegments = replaceCatchAllSegments(pathnameSegments, localizedRouteSegments, routePatternSegments, "required");
+                    if (typeof localizedRoute === "object" && localizedRoute.disabled) {
+                        return { pathname: withReplacedSegments, disabled: true };
+                    }
+                    return withReplacedSegments;
                 }
             }
         }

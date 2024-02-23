@@ -102,7 +102,7 @@ export const mockRoutes: Record<
   },
   about: {
     fallback: "/about",
-    en: { pathname: "/about" },
+    en: { pathname: "/about", disabled: true },
     cs: { pathname: "/o-nas" },
     sk: { pathname: "/o-nas" },
     "de-AT": { pathname: "/ueber-uns" },
@@ -197,7 +197,7 @@ export const mockRoutes: Record<
     en: { pathname: "/blog/[year]/[month]/[slug]" },
     cs: { pathname: "/blog/[year]/[month]/[slug]" },
     sk: { pathname: "/blog/[year]/[month]/[slug]" },
-    "de-AT": { pathname: "/blog/[year]/[month]/[slug]" },
+    "de-AT": { pathname: "/blog/[year]/[month]/[slug]", disabled: true },
     "de-DE": { pathname: "/blog/[year]/[month]/[slug]" },
   },
   event: {
@@ -248,7 +248,7 @@ export const mockRoutes: Record<
     fallback: "/userFiles/[[...fileId]]",
     en: { pathname: "/userFiles/[[...fileId]]" },
     cs: { pathname: "/uzivatelSoubory/[[...fileId]]" },
-    sk: { pathname: "/uzivatelSubory/[[...fileId]]" },
+    sk: { pathname: "/uzivatelSubory/[[...fileId]]", disabled: true },
     "de-AT": { pathname: "/benutzerDateien/[[...fileId]]" },
     "de-DE": { pathname: "/benutzerDateien/[[...fileId]]" },
   },

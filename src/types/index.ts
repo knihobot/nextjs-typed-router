@@ -96,7 +96,7 @@ export interface GetRouteName<
 }
 
 export interface GetLocalizedRouteFromPathname {
-  (pathname: string): string | undefined;
+  (pathname: string): string | LocalizedRouteConfig | undefined;
 }
 
 export interface IsCurrentRoute<

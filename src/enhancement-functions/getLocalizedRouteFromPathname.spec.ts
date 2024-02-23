@@ -83,7 +83,10 @@ describe("getLocalizedRouteFromPathname", () => {
         mockRoutes,
         "sk",
       ),
-    ).toBe("/uzivatelSubory/123/456/789/abc");
+    ).toStrictEqual({
+      disabled: true,
+      pathname: "/uzivatelSubory/123/456/789/abc",
+    });
   });
 
   it("should return the correct localized route pathname for a requested pathname with optional catch all params pattern, but without params specified", () => {
@@ -94,5 +97,48 @@ describe("getLocalizedRouteFromPathname", () => {
         "en",
       ),
     ).toBe("/p");
+  });
+
+  it("should handle disabled route without params", () => {
+    expect(
+      getLocalizedRouteFromPathname<MockRoutesType, LocaleLabelType>(
+        "/about",
+        mockRoutes,
+        "en",
+      ),
+    ).toStrictEqual({ pathname: "/about", disabled: true });
+  });
+
+  it("should handle disabled route with params", () => {
+    expect(
+      getLocalizedRouteFromPathname<MockRoutesType, LocaleLabelType>(
+        "/blog/123/456/abc",
+        mockRoutes,
+        "de-AT",
+      ),
+    ).toStrictEqual({ pathname: "/blog/123/456/abc", disabled: true });
+  });
+
+  it("should handle disabled route with optional catch-all params", () => {
+    expect(
+      getLocalizedRouteFromPathname<MockRoutesType, LocaleLabelType>(
+        "/uzivatelSoubory/123/456/789/abc",
+        mockRoutes,
+        "sk",
+      ),
+    ).toStrictEqual({
+      pathname: "/uzivatelSubory/123/456/789/abc",
+      disabled: true,
+    });
+  });
+
+  it("should handle disabled route with required catch-all params", () => {
+    expect(
+      getLocalizedRouteFromPathname<MockRoutesType, LocaleLabelType>(
+        "/about",
+        mockRoutes,
+        "en",
+      ),
+    ).toStrictEqual({ pathname: "/about", disabled: true });
   });
 });

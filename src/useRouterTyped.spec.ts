@@ -200,7 +200,10 @@ describe("useRouterTyped", () => {
           routerMock.getLocalizedRouteFromPathname(
             "/uzivatelSoubory/123/456/789/abc",
           ),
-        ).toBe("/uzivatelSubory/123/456/789/abc");
+        ).toStrictEqual({
+          disabled: true,
+          pathname: "/uzivatelSubory/123/456/789/abc",
+        });
       });
     });
 

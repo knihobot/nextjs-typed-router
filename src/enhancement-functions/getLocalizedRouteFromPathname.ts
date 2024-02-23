@@ -1,4 +1,8 @@
-import { LocalizedRoute, RouteProps } from "@types-app/index";
+import {
+  LocalizedRoute,
+  LocalizedRouteConfig,
+  RouteProps,
+} from "@types-app/index";
 
 export function getLocalizedRouteFromPathname<
   RouteDefinitions extends Record<string, RouteProps>,
@@ -7,7 +11,7 @@ export function getLocalizedRouteFromPathname<
   pathname: string,
   routes: Record<keyof RouteDefinitions, LocalizedRoute<Locales>>,
   locale: Locales,
-): string | undefined {
+): string | LocalizedRouteConfig | undefined {
   const pathnameSegments = pathname.split("/").filter(Boolean);
 
   // Iterate through the routes object which contains localized groups of routes
@@ -69,10 +73,24 @@ export function getLocalizedRouteFromPathname<
               }
             });
 
+            if (typeof localizedRoute === "object" && localizedRoute.disabled) {
+              return {
+                pathname: `/${localizedRouteSegments
+                  .filter(Boolean)
+                  .join("/")}`,
+                disabled: true,
+              };
+            }
+
             return `/${localizedRouteSegments.join("/")}`;
           } else {
+            // Without params
             if (segmentsMatching()) {
               if (typeof localizedRoute === "object") {
+                if (localizedRoute.disabled) {
+                  return localizedRoute;
+                }
+
                 return localizedRoute.pathname;
               }
 
@@ -88,12 +106,18 @@ export function getLocalizedRouteFromPathname<
             : localizedRoute
           ).includes("[[...")
         ) {
-          return replaceCatchAllSegments(
+          const withReplacedSegments = replaceCatchAllSegments(
             pathnameSegments,
             localizedRouteSegments,
             routePatternSegments,
             "optional",
           );
+
+          if (typeof localizedRoute === "object" && localizedRoute.disabled) {
+            return { pathname: withReplacedSegments, disabled: true };
+          }
+
+          return withReplacedSegments;
         }
 
         // Required catch-all params
@@ -103,12 +127,18 @@ export function getLocalizedRouteFromPathname<
             : localizedRoute
           ).includes("[...")
         ) {
-          return replaceCatchAllSegments(
+          const withReplacedSegments = replaceCatchAllSegments(
             pathnameSegments,
             localizedRouteSegments,
             routePatternSegments,
             "required",
           );
+
+          if (typeof localizedRoute === "object" && localizedRoute.disabled) {
+            return { pathname: withReplacedSegments, disabled: true };
+          }
+
+          return withReplacedSegments;
         }
       }
     }
