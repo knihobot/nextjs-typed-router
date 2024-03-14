@@ -6,8 +6,8 @@ import {
 import { matchRealAddressByRouteName } from "./matchRealAddressByRouteName";
 
 describe("matchRealAddressByRouteName", () => {
-  it("Non-existent route", () => {
-    expect(
+  it("Non-existent route with params", () => {
+    expect(() =>
       matchRealAddressByRouteName<MockRoutesType, LocaleLabelType>(
         {
           pathname: "non-existent-route",
@@ -16,16 +16,20 @@ describe("matchRealAddressByRouteName", () => {
         mockRoutes,
         "en",
       ),
-    ).toBeUndefined();
+    ).toThrow(
+      new Error(
+        "No route with provided key non-existent-route exists in routes object",
+      ),
+    );
   });
 
   it("Existing route with no locale specified", () => {
-    expect(
+    expect(() =>
       matchRealAddressByRouteName<MockRoutesType, LocaleLabelType>(
         "home",
         mockRoutes,
       ),
-    ).toBeUndefined();
+    ).toThrow(new Error("Locale is not defined."));
   });
 
   it("Existing route with specified locale", () => {
@@ -70,15 +74,34 @@ describe("matchRealAddressByRouteName", () => {
     });
   });
 
-  it("Non-existent route with default locale", () => {
-    expect(
+  it("Non-existent simple route with default locale", () => {
+    expect(() =>
       matchRealAddressByRouteName<MockRoutesType, LocaleLabelType>(
-        // @ts-ignore
+        // @ts-expect-error
         "nonexistent",
         mockRoutes,
         "en",
       ),
-    ).toBeUndefined();
+    ).toThrow(
+      new Error(
+        "No route with provided key nonexistent exists in routes object",
+      ),
+    );
+  });
+
+  it("Simple route with non-existent locale and without fallback", () => {
+    expect(() =>
+      matchRealAddressByRouteName<MockRoutesType, LocaleLabelType>(
+        "no-fallback",
+        mockRoutes,
+        // @ts-expect-error
+        "fr",
+      ),
+    ).toThrow(
+      new Error(
+        "No route with provided key no-fallback exists in routes object for locale fr",
+      ),
+    );
   });
 
   it("Existing route with default locale", () => {

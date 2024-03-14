@@ -13,16 +13,20 @@ export function matchRealAddressByRouteName<
   routeName: RouteInputType<RouteDefinitions>,
   routes: Record<keyof RouteDefinitions, LocalizedRoute<Locales>>,
   locale?: Locales,
-): string | UrlObjectGeneric<RouteDefinitions> | undefined {
+): string | UrlObjectGeneric<RouteDefinitions> {
   if (!locale) {
-    return undefined;
+    throw new Error("Locale is not defined.");
   }
 
   if (typeof routeName === "object") {
     const matched = routes[routeName.pathname];
 
     if (!matched) {
-      return undefined;
+      throw new Error(
+        `No route with provided key ${String(
+          routeName.pathname,
+        )} exists in routes object`,
+      );
     }
 
     const query = routeName.query;
@@ -53,7 +57,9 @@ export function matchRealAddressByRouteName<
   const matchedRouteSet = routes[routeName];
 
   if (!matchedRouteSet) {
-    return undefined;
+    throw new Error(
+      `No route with provided key ${String(routeName)} exists in routes object`,
+    );
   }
 
   const matched = routes[routeName][locale];
@@ -65,7 +71,11 @@ export function matchRealAddressByRouteName<
       return fallbackMatch;
     }
 
-    return undefined;
+    throw new Error(
+      `No route with provided key ${String(
+        routeName,
+      )} exists in routes object for locale ${locale}`,
+    );
   }
 
   if (typeof matched === "object") {

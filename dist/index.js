@@ -19,5 +19,4 @@ __exportStar(require("./useRouterTyped"), exports);
 __exportStar(require("./enhancement-functions/matchRealAddressByRouteName"), exports);
 __exportStar(require("./enhancement-functions/getLocalizedRouteFromPathname"), exports);
 __exportStar(require("./enhancement-functions/getRouteByName"), exports);
-__exportStar(require("./enhancement-functions/getRouteName"), exports);
 __exportStar(require("./LinkTyped"), exports);

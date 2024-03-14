@@ -11,7 +11,7 @@ export function getLocalizedRouteFromPathname<
   pathname: string,
   routes: Record<keyof RouteDefinitions, LocalizedRoute<Locales>>,
   locale: Locales,
-): string | LocalizedRouteConfig | undefined {
+): string | LocalizedRouteConfig {
   const pathnameSegments = pathname.split("/").filter(Boolean);
 
   // Iterate through the routes object which contains localized groups of routes
@@ -144,7 +144,7 @@ export function getLocalizedRouteFromPathname<
     }
   }
 
-  return undefined;
+  throw new Error(`No route with pathname ${pathname} exists in routes object`);
 }
 
 function replaceCatchAllSegments(

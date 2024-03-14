@@ -5,7 +5,7 @@ const removeUndefined_1 = require("../helpers/removeUndefined");
 function getRouteByName(route, routes, params, locale) {
     const matchedRoute = routes[route];
     if (!matchedRoute) {
-        return undefined;
+        throw new Error("Route not found.");
     }
     let path = routes[route][locale] || routes[route]["fallback"];
     // Handle optional catch-all segments
@@ -29,7 +29,7 @@ function getRouteByName(route, routes, params, locale) {
         if (params) {
             const paramsKeys = Object.keys(params);
             if (paramsKeys.length === 0) {
-                return undefined;
+                throw new Error("No parameters provided for the route.");
             }
             for (const key of paramsKeys) {
                 const value = params[key];

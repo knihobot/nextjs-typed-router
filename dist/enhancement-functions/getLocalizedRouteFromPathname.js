@@ -89,7 +89,7 @@ function getLocalizedRouteFromPathname(pathname, routes, locale) {
             }
         }
     }
-    return undefined;
+    throw new Error(`No route with pathname ${pathname} exists in routes object`);
 }
 exports.getLocalizedRouteFromPathname = getLocalizedRouteFromPathname;
 function replaceCatchAllSegments(pathnameSegments, localizedSegments, routePatternSegments, type) {

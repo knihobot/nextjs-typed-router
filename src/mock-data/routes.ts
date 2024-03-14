@@ -7,6 +7,7 @@ export type MockRoutesType = {
   contact: RouteProps;
   services: RouteProps;
   blog: RouteProps;
+  "no-fallback": RouteProps;
 
   // Routes with one parameter
   profile: RouteProps<{ username: string }>;
@@ -64,6 +65,14 @@ export const mockRoutes: Record<
   home: {
     fallback: "/",
     en: { pathname: "/" },
+    cs: { pathname: "/" },
+    sk: { pathname: "/" },
+    "de-AT": { pathname: "/" },
+    "de-DE": { pathname: "/" },
+  },
+  // @ts-expect-error
+  "no-fallback": {
+    en: { pathname: "/example" },
     cs: { pathname: "/" },
     sk: { pathname: "/" },
     "de-AT": { pathname: "/" },

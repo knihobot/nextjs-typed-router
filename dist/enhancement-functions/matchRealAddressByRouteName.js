@@ -4,12 +4,12 @@ exports.matchRealAddressByRouteName = void 0;
 const removeUndefined_1 = require("../helpers/removeUndefined");
 function matchRealAddressByRouteName(routeName, routes, locale) {
     if (!locale) {
-        return undefined;
+        throw new Error("Locale is not defined.");
     }
     if (typeof routeName === "object") {
         const matched = routes[routeName.pathname];
         if (!matched) {
-            return undefined;
+            throw new Error(`No route with provided key ${String(routeName.pathname)} exists in routes object`);
         }
         const query = routeName.query;
         const keys = query ? Object.keys(query) : undefined;
@@ -31,7 +31,7 @@ function matchRealAddressByRouteName(routeName, routes, locale) {
     }
     const matchedRouteSet = routes[routeName];
     if (!matchedRouteSet) {
-        return undefined;
+        throw new Error(`No route with provided key ${String(routeName)} exists in routes object`);
     }
     const matched = routes[routeName][locale];
     if (!matched) {
@@ -39,7 +39,7 @@ function matchRealAddressByRouteName(routeName, routes, locale) {
         if (fallbackMatch) {
             return fallbackMatch;
         }
-        return undefined;
+        throw new Error(`No route with provided key ${String(routeName)} exists in routes object for locale ${locale}`);
     }
     if (typeof matched === "object") {
         return matched.pathname;

@@ -5,6 +5,7 @@ export type MockRoutesType = {
     contact: RouteProps;
     services: RouteProps;
     blog: RouteProps;
+    "no-fallback": RouteProps;
     profile: RouteProps<{
         username: string;
     }>;
