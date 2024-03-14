@@ -1,11 +1,10 @@
 import { NextRouter } from "next/router";
-import { GetCurrentDomain, GetCurrentRoute, GetLocalizedRouteFromPathname, GetRouteByName, GetRouteName, IsCurrentRoute, LocalizedRoute, MatchRealAddressByRouteName, Push, PushCustomUrl, PushShallow, RouteProps } from "./types";
+import { GetCurrentDomain, GetCurrentRoute, GetLocalizedRouteFromPathname, GetRouteByName, IsCurrentRoute, LocalizedRoute, MatchRealAddressByRouteName, Push, PushCustomUrl, PushShallow, RouteProps } from "./types";
 interface EnhancedNextRouter<RouteDefinitions extends Record<string, RouteProps>, Locales extends string> {
     getCurrentDomain: GetCurrentDomain;
     getCurrentRoute: GetCurrentRoute<RouteDefinitions>;
     getLocalizedRouteFromPathname: GetLocalizedRouteFromPathname;
     getRouteByName: GetRouteByName<RouteDefinitions>;
-    getRouteName: GetRouteName<RouteDefinitions>;
     isCurrentRoute: IsCurrentRoute<RouteDefinitions>;
     locale: Locales;
     matchRealAddressByRouteName: MatchRealAddressByRouteName<RouteDefinitions>;

@@ -12,6 +12,14 @@ exports.mockRoutes = {
         "de-AT": { pathname: "/" },
         "de-DE": { pathname: "/" },
     },
+    // @ts-expect-error
+    "no-fallback": {
+        en: { pathname: "/example" },
+        cs: { pathname: "/" },
+        sk: { pathname: "/" },
+        "de-AT": { pathname: "/" },
+        "de-DE": { pathname: "/" },
+    },
     // @ts-ignore
     account: { fallback: "/account", en: { pathname: "/account" } },
     "account/billing-history": {

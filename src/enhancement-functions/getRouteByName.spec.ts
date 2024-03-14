@@ -88,9 +88,10 @@ describe("getRouteByName", () => {
       expect(path).toBe("/account/settings/security");
     });
 
-    it("should return undefined for required catch-all segments if not provided", () => {
-      const path = getRouteByName("account", routes, {}, "en");
-      expect(path).toBeUndefined();
+    it("should handle optional catch-all segments with a long array of segments including undefined on some indexes", () => {
+      expect(() => getRouteByName("account", routes, {}, "en")).toThrow(
+        new Error("No parameters provided for the route."),
+      );
     });
   });
 
@@ -180,13 +181,9 @@ describe("getRouteByName", () => {
   });
 
   // Test case for non-existent routes
-  it("should return undefined for non-existent routes", () => {
-    const path = getRouteByName(
-      "nonExistentRoute",
-      routes,
-      { id: "789" },
-      "en",
-    );
-    expect(path).toBeUndefined();
+  it("should throw an error for non-existent routes", () => {
+    expect(() =>
+      getRouteByName("nonExistentRoute", routes, { id: "789" }, "en"),
+    ).toThrow(new Error("Route not found."));
   });
 });

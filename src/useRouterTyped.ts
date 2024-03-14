@@ -17,7 +17,6 @@ import {
 import { matchRealAddressByRouteName as matchRealAddressByRouteNameStandalone } from "./enhancement-functions/matchRealAddressByRouteName";
 import { getRouteByName as getRouteByNameStandalone } from "./enhancement-functions/getRouteByName";
 import { UrlObject } from "url";
-import { getRouteName as getRouteNameStandalone } from "./enhancement-functions/getRouteName";
 import { getLocalizedRouteFromPathname as getLocalizedRouteFromPathnameStandalone } from "./enhancement-functions/getLocalizedRouteFromPathname";
 
 interface EnhancedNextRouter<
@@ -28,7 +27,6 @@ interface EnhancedNextRouter<
   getCurrentRoute: GetCurrentRoute<RouteDefinitions>;
   getLocalizedRouteFromPathname: GetLocalizedRouteFromPathname;
   getRouteByName: GetRouteByName<RouteDefinitions>;
-  getRouteName: GetRouteName<RouteDefinitions>;
   isCurrentRoute: IsCurrentRoute<RouteDefinitions>;
   locale: Locales;
   matchRealAddressByRouteName: MatchRealAddressByRouteName<RouteDefinitions>;
@@ -100,9 +98,6 @@ export function useRouterTyped<
     return currentDomain?.domain;
   };
 
-  const getRouteName: GetRouteName<RouteDefinitions> = (url) =>
-    getRouteNameStandalone(url, routes);
-
   const getLocalizedRouteFromPathname: GetLocalizedRouteFromPathname = (
     pathname,
   ) =>
@@ -130,7 +125,6 @@ export function useRouterTyped<
     getCurrentRoute,
     getLocalizedRouteFromPathname,
     getRouteByName,
-    getRouteName,
     isCurrentRoute,
     locale: router.locale as Locales,
     matchRealAddressByRouteName,

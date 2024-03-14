@@ -7,13 +7,13 @@ export function getRouteByName<
 >(
   route: keyof RouteDefinitions,
   routes: Record<keyof RouteDefinitions, LocalizedRoute<Locales>>,
-  params: RouteDefinitions[keyof RouteDefinitions]["params"],
+  params?: RouteDefinitions[keyof RouteDefinitions]["params"],
   locale?: Locales,
-): Record<keyof RouteDefinitions, string>[keyof RouteDefinitions] | undefined {
+): Record<keyof RouteDefinitions, string>[keyof RouteDefinitions] {
   const matchedRoute = routes[route];
 
   if (!matchedRoute) {
-    return undefined;
+    throw new Error("Route not found.");
   }
 
   let path = routes[route][locale as Locales] || routes[route]["fallback"];
@@ -48,7 +48,7 @@ export function getRouteByName<
       const paramsKeys = Object.keys(params);
 
       if (paramsKeys.length === 0) {
-        return undefined;
+        throw new Error("No parameters provided for the route.");
       }
 
       for (const key of paramsKeys) {
