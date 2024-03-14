@@ -29,10 +29,9 @@ export const LinkTyped = <
   RouteDefinitions extends Record<string, RouteProps>,
   RouteName extends keyof RouteDefinitions,
   Locales extends string,
-  DefaultLocale extends Locales,
 >(
   props: LinkTypedProps<RouteDefinitions, RouteName, Locales> & {
-    ref?: Ref<HTMLAnchorElement>;
+    forwardRef?: Ref<HTMLAnchorElement>;
   },
 ) => {
   const {
@@ -43,7 +42,7 @@ export const LinkTyped = <
     params,
     prefetch,
     query,
-    ref,
+    forwardRef,
     replace,
     route,
     routes,
@@ -100,7 +99,7 @@ export const LinkTyped = <
         scroll={scroll}
         shallow={shallow}
       >
-        <a ref={ref} {...anchorProps}>
+        <a ref={forwardRef} {...anchorProps}>
           {children}
         </a>
       </NextLink>
@@ -108,7 +107,7 @@ export const LinkTyped = <
   }
 
   return (
-    <a ref={ref} href={href ? href.toString() : " "} {...anchorProps}>
+    <a ref={forwardRef} href={href ? href.toString() : " "} {...anchorProps}>
       {children}
     </a>
   );

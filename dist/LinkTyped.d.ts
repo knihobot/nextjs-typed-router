@@ -14,7 +14,7 @@ type LinkTypedProps<RouteDefinitions extends Record<string, RouteProps>, RouteNa
     route?: RouteName;
     routes: Record<keyof RouteDefinitions, LocalizedRoute<Locales>>;
 };
-export declare const LinkTyped: <RouteDefinitions extends Record<string, RouteProps<Record<string, string | (string | undefined)[]> | undefined, Record<string, string> | undefined>>, RouteName extends keyof RouteDefinitions, Locales extends string, DefaultLocale extends Locales>(props: Omit<{
+export declare const LinkTyped: <RouteDefinitions extends Record<string, RouteProps<Record<string, string | (string | undefined)[]> | undefined, Record<string, string> | undefined>>, RouteName extends keyof RouteDefinitions, Locales extends string>(props: Omit<{
     href: string | UrlObject;
     as?: (string | UrlObject) | undefined;
     replace?: boolean | undefined;
@@ -37,6 +37,6 @@ export declare const LinkTyped: <RouteDefinitions extends Record<string, RoutePr
     route?: RouteName | undefined;
     routes: Record<keyof RouteDefinitions, LocalizedRoute<Locales>>;
 } & {
-    ref?: Ref<HTMLAnchorElement> | undefined;
+    forwardRef?: Ref<HTMLAnchorElement> | undefined;
 }) => import("react/jsx-runtime").JSX.Element;
 export {};
