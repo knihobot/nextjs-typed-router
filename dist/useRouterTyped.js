@@ -54,7 +54,7 @@ function useRouterTyped(routes) {
         return currentDomain === null || currentDomain === void 0 ? void 0 : currentDomain.domain;
     };
     const getLocalizedRouteFromPathname = (pathname) => (0, getLocalizedRouteFromPathname_1.getLocalizedRouteFromPathname)(pathname, routes, router.locale);
-    const getRouteByName = (route, params) => (0, getRouteByName_1.getRouteByName)(route, routes, params, router.locale);
+    const getRouteByName = (route, params) => (0, getRouteByName_1.getRouteByName)(route, routes, router.locale, params);
     const matchRealAddressByRouteName = (routeName) => (0, matchRealAddressByRouteName_1.matchRealAddressByRouteName)(routeName, routes, router.locale);
     return Object.assign(Object.assign({}, router), { getCurrentDomain,
         getCurrentRoute,

@@ -5,6 +5,7 @@ import {
   UrlObjectGeneric,
 } from "@types-app/index";
 import { removeUndefined } from "../helpers/removeUndefined";
+import { ValidationError } from "../ValidationError/ValidationError";
 
 export function matchRealAddressByRouteName<
   RouteDefinitions extends Record<string, RouteProps>,
@@ -12,21 +13,16 @@ export function matchRealAddressByRouteName<
 >(
   routeName: RouteInputType<RouteDefinitions>,
   routes: Record<keyof RouteDefinitions, LocalizedRoute<Locales>>,
-  locale?: Locales,
+  locale: Locales,
 ): string | UrlObjectGeneric<RouteDefinitions> {
-  if (!locale) {
-    throw new Error("Locale is not defined.");
-  }
-
   if (typeof routeName === "object") {
     const matched = routes[routeName.pathname];
 
     if (!matched) {
-      throw new Error(
-        `No route with provided key ${String(
-          routeName.pathname,
-        )} exists in routes object`,
-      );
+      throw new ValidationError("route-key-not-found", {
+        routeName: String(routeName.pathname),
+        locale,
+      });
     }
 
     const query = routeName.query;
@@ -57,9 +53,10 @@ export function matchRealAddressByRouteName<
   const matchedRouteSet = routes[routeName];
 
   if (!matchedRouteSet) {
-    throw new Error(
-      `No route with provided key ${String(routeName)} exists in routes object`,
-    );
+    throw new ValidationError("route-key-not-found", {
+      routeName: String(routeName),
+      locale,
+    });
   }
 
   const matched = routes[routeName][locale];
@@ -71,11 +68,9 @@ export function matchRealAddressByRouteName<
       return fallbackMatch;
     }
 
-    throw new Error(
-      `No route with provided key ${String(
-        routeName,
-      )} exists in routes object for locale ${locale}`,
-    );
+    throw new ValidationError("fallback-required", {
+      routeName: String(routeName),
+    });
   }
 
   if (typeof matched === "object") {

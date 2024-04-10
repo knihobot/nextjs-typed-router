@@ -2,14 +2,15 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.matchRealAddressByRouteName = void 0;
 const removeUndefined_1 = require("../helpers/removeUndefined");
+const ValidationError_1 = require("../ValidationError/ValidationError");
 function matchRealAddressByRouteName(routeName, routes, locale) {
-    if (!locale) {
-        throw new Error("Locale is not defined.");
-    }
     if (typeof routeName === "object") {
         const matched = routes[routeName.pathname];
         if (!matched) {
-            throw new Error(`No route with provided key ${String(routeName.pathname)} exists in routes object`);
+            throw new ValidationError_1.ValidationError("route-key-not-found", {
+                routeName: String(routeName.pathname),
+                locale,
+            });
         }
         const query = routeName.query;
         const keys = query ? Object.keys(query) : undefined;
@@ -31,7 +32,10 @@ function matchRealAddressByRouteName(routeName, routes, locale) {
     }
     const matchedRouteSet = routes[routeName];
     if (!matchedRouteSet) {
-        throw new Error(`No route with provided key ${String(routeName)} exists in routes object`);
+        throw new ValidationError_1.ValidationError("route-key-not-found", {
+            routeName: String(routeName),
+            locale,
+        });
     }
     const matched = routes[routeName][locale];
     if (!matched) {
@@ -39,7 +43,9 @@ function matchRealAddressByRouteName(routeName, routes, locale) {
         if (fallbackMatch) {
             return fallbackMatch;
         }
-        throw new Error(`No route with provided key ${String(routeName)} exists in routes object for locale ${locale}`);
+        throw new ValidationError_1.ValidationError("fallback-required", {
+            routeName: String(routeName),
+        });
     }
     if (typeof matched === "object") {
         return matched.pathname;

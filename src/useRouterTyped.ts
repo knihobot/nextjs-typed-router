@@ -108,7 +108,7 @@ export function useRouterTyped<
     );
 
   const getRouteByName: GetRouteByName<RouteDefinitions> = (route, params) =>
-    getRouteByNameStandalone(route, routes, params, router.locale as Locales);
+    getRouteByNameStandalone(route, routes, router.locale as Locales, params);
 
   const matchRealAddressByRouteName: MatchRealAddressByRouteName<
     RouteDefinitions

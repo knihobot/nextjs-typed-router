@@ -1,5 +1,6 @@
 import { LocalizedRoute } from "@types-app/index";
 import { getRouteByName } from "./getRouteByName";
+import { ValidationError } from "../ValidationError/ValidationError";
 
 describe("getRouteByName", () => {
   const routes: Record<
@@ -38,12 +39,12 @@ describe("getRouteByName", () => {
   // Test cases for handling different locales
   describe("should return the correct route for a given locale", () => {
     it("should return the correct route for a given locale", () => {
-      const path = getRouteByName("users", routes, { id: "123" }, "cs");
+      const path = getRouteByName("users", routes, "cs", { id: "123" });
       expect(path).toBe("/uzivatele/123");
     });
 
     it("should handle missing locale and use default locale", () => {
-      const path = getRouteByName("users", routes, { id: "123" }, "fr");
+      const path = getRouteByName("users", routes, "fr", { id: "123" });
       expect(path).toBe("/users/123");
     });
   });
@@ -51,17 +52,15 @@ describe("getRouteByName", () => {
   // Test cases for handling parameters in the route
   describe("should correctly replace parameters in the route", () => {
     it("should correctly replace parameters in the route", () => {
-      const path = getRouteByName("users", routes, { id: "456" }, "en");
+      const path = getRouteByName("users", routes, "en", { id: "456" });
       expect(path).toBe("/users/456");
     });
 
     it("should ignore extra unnecessary parameters", () => {
-      const path = getRouteByName(
-        "users",
-        routes,
-        { id: "123", extra: "unused" },
-        "en",
-      );
+      const path = getRouteByName("users", routes, "en", {
+        id: "123",
+        extra: "unused",
+      });
       expect(path).toBe("/users/123");
     });
   });
@@ -69,28 +68,25 @@ describe("getRouteByName", () => {
   // Test cases for handling required catch-all segments
   describe("should correctly replace required catch-all segments", () => {
     it("should handle required catch-all segments with a single element array", () => {
-      const path = getRouteByName(
-        "account",
-        routes,
-        { segments: ["settings"] },
-        "en",
-      );
+      const path = getRouteByName("account", routes, "en", {
+        segments: ["settings"],
+      });
       expect(path).toBe("/account/settings");
     });
 
     it("should handle required catch-all segments with a multi-element array", () => {
-      const path = getRouteByName(
-        "account",
-        routes,
-        { segments: ["settings", "security"] },
-        "en",
-      );
+      const path = getRouteByName("account", routes, "en", {
+        segments: ["settings", "security"],
+      });
       expect(path).toBe("/account/settings/security");
     });
 
     it("should handle optional catch-all segments with a long array of segments including undefined on some indexes", () => {
-      expect(() => getRouteByName("account", routes, {}, "en")).toThrow(
-        new Error("No parameters provided for the route."),
+      expect(() => getRouteByName("account", routes, "en", {})).toThrow(
+        new ValidationError("params-required", {
+          routeName: "account",
+          locale: "en",
+        }),
       );
     });
   });
@@ -98,82 +94,66 @@ describe("getRouteByName", () => {
   // Test cases for handling optional catch-all segments
   describe("should correctly replace optional catch-all segments", () => {
     it("should handle optional catch-all segments with no segments provided", () => {
-      const path = getRouteByName("products", routes, {}, "en");
+      const path = getRouteByName("products", routes, "en", {});
       expect(path).toBe("/products/");
     });
 
     it("should handle optional catch-all segments with empty array", () => {
-      const path = getRouteByName("products", routes, { segments: [] }, "en");
+      const path = getRouteByName("products", routes, "en", { segments: [] });
       expect(path).toBe("/products/");
     });
 
     it("should handle optional catch-all segments with a single element array", () => {
-      const path = getRouteByName(
-        "products",
-        routes,
-        { segments: ["details"] },
-        "en",
-      );
+      const path = getRouteByName("products", routes, "en", {
+        segments: ["details"],
+      });
       expect(path).toBe("/products/details");
     });
 
     it("should handle optional catch-all segments with a multi-element array", () => {
-      const path = getRouteByName(
-        "products",
-        routes,
-        { segments: ["category", "123", "edit"] },
-        "en",
-      );
+      const path = getRouteByName("products", routes, "en", {
+        segments: ["category", "123", "edit"],
+      });
       expect(path).toBe("/products/category/123/edit");
     });
 
     it("should handle optional catch-all segments with a long array of segments", () => {
-      const path = getRouteByName(
-        "products",
-        routes,
-        {
-          segments: [
-            "category1",
-            "item123",
-            "detail",
-            "review",
-            "image",
-            "specification",
-            "compare",
-            "offer",
-            "discount",
-            "history",
-          ],
-        },
-        "en",
-      );
+      const path = getRouteByName("products", routes, "en", {
+        segments: [
+          "category1",
+          "item123",
+          "detail",
+          "review",
+          "image",
+          "specification",
+          "compare",
+          "offer",
+          "discount",
+          "history",
+        ],
+      });
       expect(path).toBe(
         "/products/category1/item123/detail/review/image/specification/compare/offer/discount/history",
       );
     });
 
     it("should handle optional catch-all segments with a long array of segments including undefined on some indexes", () => {
-      const path = getRouteByName(
-        "products",
-        routes,
-        {
-          segments: [
-            "category1",
-            "item123",
-            undefined,
-            undefined,
-            "image",
-            "specification",
-            "compare",
-            "offer",
-            undefined,
-            undefined,
-            undefined,
-            undefined,
-          ],
-        },
-        "en",
-      );
+      const path = getRouteByName("products", routes, "en", {
+        segments: [
+          "category1",
+          "item123",
+          undefined,
+          undefined,
+          "image",
+          "specification",
+          "compare",
+          "offer",
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+        ],
+      });
       expect(path).toBe(
         "/products/category1/item123/image/specification/compare/offer",
       );
@@ -183,7 +163,11 @@ describe("getRouteByName", () => {
   // Test case for non-existent routes
   it("should throw an error for non-existent routes", () => {
     expect(() =>
-      getRouteByName("nonExistentRoute", routes, { id: "789" }, "en"),
-    ).toThrow(new Error("Route not found."));
+      getRouteByName("nonExistentRoute", routes, "en", { id: "789" }),
+    ).toThrow(
+      new ValidationError("route-key-not-found", {
+        routeName: "nonExistentRoute",
+      }),
+    );
   });
 });

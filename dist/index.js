@@ -20,3 +20,4 @@ __exportStar(require("./enhancement-functions/matchRealAddressByRouteName"), exp
 __exportStar(require("./enhancement-functions/getLocalizedRouteFromPathname"), exports);
 __exportStar(require("./enhancement-functions/getRouteByName"), exports);
 __exportStar(require("./LinkTyped"), exports);
+__exportStar(require("./ValidationError"), exports);

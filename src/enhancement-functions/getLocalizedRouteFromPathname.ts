@@ -3,6 +3,7 @@ import {
   LocalizedRouteConfig,
   RouteProps,
 } from "@types-app/index";
+import { ValidationError } from "../ValidationError/ValidationError";
 
 export function getLocalizedRouteFromPathname<
   RouteDefinitions extends Record<string, RouteProps>,
@@ -144,7 +145,7 @@ export function getLocalizedRouteFromPathname<
     }
   }
 
-  throw new Error(`No route with pathname ${pathname} exists in routes object`);
+  throw new ValidationError("route-by-pathname-not-found", { pathname });
 }
 
 function replaceCatchAllSegments(

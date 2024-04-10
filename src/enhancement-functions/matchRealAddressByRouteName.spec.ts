@@ -4,6 +4,7 @@ import {
   MockRoutesType,
 } from "../mock-data/routes";
 import { matchRealAddressByRouteName } from "./matchRealAddressByRouteName";
+import { ValidationError } from "../ValidationError/ValidationError";
 
 describe("matchRealAddressByRouteName", () => {
   it("Non-existent route with params", () => {
@@ -17,19 +18,11 @@ describe("matchRealAddressByRouteName", () => {
         "en",
       ),
     ).toThrow(
-      new Error(
-        "No route with provided key non-existent-route exists in routes object",
-      ),
+      new ValidationError("route-key-not-found", {
+        routeName: "non-existent-route",
+        locale: "en",
+      }),
     );
-  });
-
-  it("Existing route with no locale specified", () => {
-    expect(() =>
-      matchRealAddressByRouteName<MockRoutesType, LocaleLabelType>(
-        "home",
-        mockRoutes,
-      ),
-    ).toThrow(new Error("Locale is not defined."));
   });
 
   it("Existing route with specified locale", () => {
@@ -83,9 +76,10 @@ describe("matchRealAddressByRouteName", () => {
         "en",
       ),
     ).toThrow(
-      new Error(
-        "No route with provided key nonexistent exists in routes object",
-      ),
+      new ValidationError("route-key-not-found", {
+        routeName: "nonexistent",
+        locale: "en",
+      }),
     );
   });
 
@@ -98,9 +92,7 @@ describe("matchRealAddressByRouteName", () => {
         "fr",
       ),
     ).toThrow(
-      new Error(
-        "No route with provided key no-fallback exists in routes object for locale fr",
-      ),
+      new ValidationError("fallback-required", { routeName: "no-fallback" }),
     );
   });
 

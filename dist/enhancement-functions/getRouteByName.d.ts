@@ -1,2 +1,2 @@
 import { LocalizedRoute, RouteProps } from "@types-app/index";
-export declare function getRouteByName<RouteDefinitions extends Record<string, RouteProps>, Locales extends string>(route: keyof RouteDefinitions, routes: Record<keyof RouteDefinitions, LocalizedRoute<Locales>>, params?: RouteDefinitions[keyof RouteDefinitions]["params"], locale?: Locales): Record<keyof RouteDefinitions, string>[keyof RouteDefinitions];
+export declare function getRouteByName<RouteDefinitions extends Record<string, RouteProps>, Locales extends string>(route: keyof RouteDefinitions, routes: Record<keyof RouteDefinitions, LocalizedRoute<Locales>>, locale: Locales, params?: RouteDefinitions[keyof RouteDefinitions]["params"]): Record<keyof RouteDefinitions, string>[keyof RouteDefinitions];
