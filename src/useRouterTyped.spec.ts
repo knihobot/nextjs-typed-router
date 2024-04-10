@@ -39,19 +39,6 @@ describe("useRouterTyped", () => {
       expect(routerMock.getRouteByName("about")).toBe("/about");
     });
 
-    // Get route name
-    describe("getRouteName", () => {
-      it("getRouteName returns the correct route name for a URL", () => {
-        const routerMock = useRouterTypedMock();
-        expect(routerMock.getRouteName("/about")).toBe("about");
-      });
-
-      it("getRouteName returns the correct route name for a parameterized URL", () => {
-        const routerMock = useRouterTypedMock();
-        expect(routerMock.getRouteName("/profile/johnDoe")).toBe("profile");
-      });
-    });
-
     // Is current route
     describe("isCurrentRoute", () => {
       it("isCurrentRoute returns true for the current route", () => {

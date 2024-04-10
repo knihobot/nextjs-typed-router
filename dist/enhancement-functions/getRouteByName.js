@@ -2,10 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getRouteByName = void 0;
 const removeUndefined_1 = require("../helpers/removeUndefined");
-function getRouteByName(route, routes, params, locale) {
+const ValidationError_1 = require("../ValidationError/ValidationError");
+function getRouteByName(route, routes, locale, params) {
     const matchedRoute = routes[route];
     if (!matchedRoute) {
-        return undefined;
+        throw new ValidationError_1.ValidationError("route-key-not-found", {
+            routeName: String(route),
+        });
     }
     let path = routes[route][locale] || routes[route]["fallback"];
     // Handle optional catch-all segments
@@ -29,7 +32,10 @@ function getRouteByName(route, routes, params, locale) {
         if (params) {
             const paramsKeys = Object.keys(params);
             if (paramsKeys.length === 0) {
-                return undefined;
+                throw new ValidationError_1.ValidationError("params-required", {
+                    routeName: String(route),
+                    locale,
+                });
             }
             for (const key of paramsKeys) {
                 const value = params[key];

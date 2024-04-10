@@ -4,10 +4,11 @@ import {
   MockRoutesType,
 } from "../mock-data/routes";
 import { matchRealAddressByRouteName } from "./matchRealAddressByRouteName";
+import { ValidationError } from "../ValidationError/ValidationError";
 
 describe("matchRealAddressByRouteName", () => {
-  it("Non-existent route", () => {
-    expect(
+  it("Non-existent route with params", () => {
+    expect(() =>
       matchRealAddressByRouteName<MockRoutesType, LocaleLabelType>(
         {
           pathname: "non-existent-route",
@@ -16,16 +17,12 @@ describe("matchRealAddressByRouteName", () => {
         mockRoutes,
         "en",
       ),
-    ).toBeUndefined();
-  });
-
-  it("Existing route with no locale specified", () => {
-    expect(
-      matchRealAddressByRouteName<MockRoutesType, LocaleLabelType>(
-        "home",
-        mockRoutes,
-      ),
-    ).toBeUndefined();
+    ).toThrow(
+      new ValidationError("route-key-not-found", {
+        routeName: "non-existent-route",
+        locale: "en",
+      }),
+    );
   });
 
   it("Existing route with specified locale", () => {
@@ -70,15 +67,33 @@ describe("matchRealAddressByRouteName", () => {
     });
   });
 
-  it("Non-existent route with default locale", () => {
-    expect(
+  it("Non-existent simple route with default locale", () => {
+    expect(() =>
       matchRealAddressByRouteName<MockRoutesType, LocaleLabelType>(
-        // @ts-ignore
+        // @ts-expect-error
         "nonexistent",
         mockRoutes,
         "en",
       ),
-    ).toBeUndefined();
+    ).toThrow(
+      new ValidationError("route-key-not-found", {
+        routeName: "nonexistent",
+        locale: "en",
+      }),
+    );
+  });
+
+  it("Simple route with non-existent locale and without fallback", () => {
+    expect(() =>
+      matchRealAddressByRouteName<MockRoutesType, LocaleLabelType>(
+        "no-fallback",
+        mockRoutes,
+        // @ts-expect-error
+        "fr",
+      ),
+    ).toThrow(
+      new ValidationError("fallback-required", { routeName: "no-fallback" }),
+    );
   });
 
   it("Existing route with default locale", () => {

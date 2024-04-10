@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getLocalizedRouteFromPathname = void 0;
+const ValidationError_1 = require("../ValidationError/ValidationError");
 function getLocalizedRouteFromPathname(pathname, routes, locale) {
     const pathnameSegments = pathname.split("/").filter(Boolean);
     // Iterate through the routes object which contains localized groups of routes
@@ -89,7 +90,7 @@ function getLocalizedRouteFromPathname(pathname, routes, locale) {
             }
         }
     }
-    return undefined;
+    throw new ValidationError_1.ValidationError("route-by-pathname-not-found", { pathname });
 }
 exports.getLocalizedRouteFromPathname = getLocalizedRouteFromPathname;
 function replaceCatchAllSegments(pathnameSegments, localizedSegments, routePatternSegments, type) {

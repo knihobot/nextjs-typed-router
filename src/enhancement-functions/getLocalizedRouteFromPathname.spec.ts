@@ -141,4 +141,16 @@ describe("getLocalizedRouteFromPathname", () => {
       ),
     ).toStrictEqual({ pathname: "/about", disabled: true });
   });
+
+  it("should throw an error for non-existent route", () => {
+    expect(() =>
+      getLocalizedRouteFromPathname<MockRoutesType, LocaleLabelType>(
+        "/non-existent",
+        mockRoutes,
+        "en",
+      ),
+    ).toThrow(
+      new Error("No route with pathname /non-existent exists in routes object"),
+    );
+  });
 });

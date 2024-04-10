@@ -1,5 +1,6 @@
 import { LocalizedRoute, RouteProps } from "@types-app/index";
 import { removeUndefined } from "../helpers/removeUndefined";
+import { ValidationError } from "../ValidationError/ValidationError";
 
 export function getRouteByName<
   RouteDefinitions extends Record<string, RouteProps>,
@@ -7,13 +8,15 @@ export function getRouteByName<
 >(
   route: keyof RouteDefinitions,
   routes: Record<keyof RouteDefinitions, LocalizedRoute<Locales>>,
-  params: RouteDefinitions[keyof RouteDefinitions]["params"],
-  locale?: Locales,
-): Record<keyof RouteDefinitions, string>[keyof RouteDefinitions] | undefined {
+  locale: Locales,
+  params?: RouteDefinitions[keyof RouteDefinitions]["params"],
+): Record<keyof RouteDefinitions, string>[keyof RouteDefinitions] {
   const matchedRoute = routes[route];
 
   if (!matchedRoute) {
-    return undefined;
+    throw new ValidationError("route-key-not-found", {
+      routeName: String(route),
+    });
   }
 
   let path = routes[route][locale as Locales] || routes[route]["fallback"];
@@ -48,7 +51,10 @@ export function getRouteByName<
       const paramsKeys = Object.keys(params);
 
       if (paramsKeys.length === 0) {
-        return undefined;
+        throw new ValidationError("params-required", {
+          routeName: String(route),
+          locale,
+        });
       }
 
       for (const key of paramsKeys) {
